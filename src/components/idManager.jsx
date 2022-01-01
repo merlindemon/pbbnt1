@@ -1,0 +1,158 @@
+import React, { Component } from "react";
+import awsconfig from "../aws-exports";
+import Amplify, { API, Auth } from "aws-amplify";
+import IdDisplayer from "./idDisplayer";
+import LoadingSpinner from "./loadingSpinner";
+
+Amplify.configure(awsconfig);
+API.configure(awsconfig);
+Auth.configure(awsconfig);
+
+class UserIds extends Component {
+  state = {
+    loading: true,
+    email: "",
+    id: "",
+    jwtToken: "",
+    entries: [],
+  };
+
+  async componentDidMount() {
+    await Auth.currentAuthenticatedUser().then((user) => {
+      this.setState({
+        jwtKey: user.signInUserSession.idToken.jwtToken,
+        email: user.signInUserSession.idToken.payload["email"],
+      });
+      this.reloadEntries();
+    });
+  }
+
+  async reloadEntries() {
+    if (this.state.loading === false) {
+      this.setState({ loading: true });
+    }
+    let data = await getEntireEmailTable(this.state.jwtKey);
+    this.setState({ loading: false, entries: data });
+  }
+
+  async addButtonAction() {
+    if (this.state.email !== "" && this.state.id !== "") {
+      this.setState({ loading: true });
+      await associateEmailWithUserId(
+        this.state.jwtKey,
+        this.state.email,
+        this.state.id
+      );
+      this.setState({ id: "", email: "" });
+      this.reloadEntries();
+    }
+  }
+
+  async removeButtonAction() {
+    if (this.state.email !== "" && this.state.id !== "") {
+      this.setState({ loading: true });
+      await deassociateEmailWithUserId(
+        this.state.jwtKey,
+        this.state.email,
+        this.state.id
+      );
+      this.setState({ id: "", email: "" });
+      this.reloadEntries();
+    }
+  }
+
+  handleEmail = (event) => {
+    this.setState({ email: event.target.value });
+  };
+
+  handleId = (event) => {
+    this.setState({ id: event.target.value });
+  };
+
+  render() {
+    return (
+      <div class="center">
+        <h4>User Ids</h4>
+        <label>Email: </label>
+        <input onChange={this.handleEmail} value={this.state.email}></input>
+        <label>ID: </label>
+        <input
+          placeholder="#12345"
+          onChange={this.handleId}
+          value={this.state.id}
+        ></input>
+        <br></br>
+        <button onClick={() => this.addButtonAction()}>Associate ID</button>
+        <button onClick={() => this.removeButtonAction()}>Remove ID</button>
+        <br></br>
+        {/* <button onClick={() => this.reloadEntries()}>Reload User Table</button>
+        <br></br> */}
+        {this.state.loading && this.state.entries.length === 0 ? (
+          <LoadingSpinner />
+        ) : (
+          <IdDisplayer entries={this.state.entries} />
+        )}
+      </div>
+    );
+  }
+}
+
+async function getEntireEmailTable(jwtKey) {
+  const myInit = {
+    headers: {
+      Authorization: "Bearer " + jwtKey,
+    },
+  };
+  let response = await API.get("pbbntuser", "/ids", myInit)
+    .then((result) => {
+      return result.Items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return response;
+}
+
+async function associateEmailWithUserId(jwtKey, email, id) {
+  const myInit = {
+    headers: {
+      Authorization: "Bearer " + jwtKey,
+    },
+    body: {
+      email: email.toLowerCase(),
+      id: id,
+    },
+  };
+  let response;
+  response = await API.put("pbbntuser", "/ids", myInit)
+    .then((result) => {
+      return result.success;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return response;
+}
+
+async function deassociateEmailWithUserId(jwtKey, email, id) {
+  const myInit = {
+    headers: {
+      Authorization: "Bearer " + jwtKey,
+    },
+    body: {
+      email: email.toLowerCase(),
+      id: id,
+    },
+  };
+  let response;
+  response = await API.del("pbbntuser", "/ids", myInit)
+    .then((result) => {
+      return result.success;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return response;
+}
+
+export default UserIds;

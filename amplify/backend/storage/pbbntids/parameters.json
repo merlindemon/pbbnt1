@@ -1,0 +1,5 @@
+{
+    "tableName": "pbbntids",
+    "partitionKeyName": "email",
+    "partitionKeyType": "S"
+}

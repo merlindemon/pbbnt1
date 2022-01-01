@@ -1,0 +1,7 @@
+{
+    "tableName": "pbbnttransactions",
+    "partitionKeyName": "ID",
+    "partitionKeyType": "S",
+    "sortKeyName": "Date",
+    "sortKeyType": "S"
+}

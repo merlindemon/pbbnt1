@@ -1,0 +1,38 @@
+{
+  "paths": [
+    {
+      "name": "/user",
+      "lambdaFunction": "pbbntuser",
+      "privacy": {
+        "private": true,
+        "auth": [
+          "/GET"
+        ]
+      },
+      "policyResourceName": "/user"
+    }
+  ],
+  "resourceName": "pbbntuser",
+  "apiName": "pbbntuser",
+  "functionArns": [
+    {
+      "lambdaFunction": "pbbntuser"
+    }
+  ],
+  "privacy": {
+    "auth": 1,
+    "unauth": 0,
+    "authRoleName": "amplify-pbbnt-dev-130207-authRole",
+    "unAuthRoleName": "amplify-pbbnt-dev-130207-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "pbbntuser",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    }
+  ]
+}

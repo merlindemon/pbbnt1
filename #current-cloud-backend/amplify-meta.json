@@ -1,0 +1,240 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pbbnt-dev-130207-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt-dev-130207-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt-dev-130207-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-pbbnt-dev-130207-deployment",
+      "UnauthRoleName": "amplify-pbbnt-dev-130207-unauthRole",
+      "StackName": "amplify-pbbnt-dev-130207",
+      "StackId": "arn:aws:cloudformation:us-east-1:104005586102:stack/amplify-pbbnt-dev-130207/5fe4ae50-f3b3-11eb-a520-0eb55df318d5",
+      "AmplifyAppId": "d1qphudajmhz8h",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    }
+  },
+  "storage": {
+    "dynamo317d232a": {
+      "service": "DynamoDB",
+      "providerPlugin": "awscloudformation",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/storage/dynamo317d232a-cloudformation-template.json",
+        "logicalId": "storagedynamo317d232a"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.270Z",
+      "output": {
+        "PartitionKeyName": "ID",
+        "SortKeyName": "Player",
+        "SortKeyType": "S",
+        "Region": "us-east-1",
+        "Arn": "arn:aws:dynamodb:us-east-1:104005586102:table/dynamo317d232a-dev",
+        "StreamArn": "arn:aws:dynamodb:us-east-1:104005586102:table/dynamo317d232a-dev/stream/2021-08-02T17:11:22.509",
+        "PartitionKeyType": "S",
+        "Name": "dynamo317d232a-dev"
+      },
+      "lastPushDirHash": "Mz7Ujc6O9Ph3Hlbf4oQyLbWq5v8="
+    }
+  },
+  "auth": {
+    "pbbnt5cf00a19": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/auth/pbbnt5cf00a19-cloudformation-template.yml",
+        "logicalId": "authpbbnt5cf00a19"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.272Z",
+      "output": {
+        "UserPoolId": "us-east-1_ErJr84e1u",
+        "AppClientIDWeb": "7f2r04co165plp5qbng20gv62t",
+        "AppClientID": "6d0rl6uqg563kogueo00jf8nvl",
+        "IdentityPoolId": "us-east-1:5e3f6cab-3495-4161-bfad-8fa50984bc44",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:104005586102:userpool/us-east-1_ErJr84e1u",
+        "IdentityPoolName": "pbbnt5cf00a19_identitypool_5cf00a19__dev",
+        "UserPoolName": "pbbnt5cf00a19_userpool_5cf00a19"
+      },
+      "lastPushDirHash": "leEvXitQRO/T9NQ7Vc3GILzNp54="
+    },
+    "userPoolGroups": {
+      "service": "Cognito-UserPool-Groups",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19",
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ]
+        }
+      ],
+      "lastPushTimeStamp": "2021-08-02T19:29:43.273Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/auth/template.json",
+        "logicalId": "authuserPoolGroups"
+      },
+      "output": {
+        "adminGroupRole": "arn:aws:iam::104005586102:role/us-east-1_ErJr84e1u-adminGroupRole"
+      },
+      "lastPushDirHash": "PFSASqLArMe29gbwcyZp9s/MMTk="
+    }
+  },
+  "function": {
+    "pbbntuser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "dynamo317d232a",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2021-08-02T18:36:43.399Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2021-08-02T18:36:44.836Z",
+      "distZipFilename": "pbbntuser-432b7849475a4b72732b-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-pbbnt-dev-130207-deployment",
+        "s3Key": "amplify-builds/pbbntuser-432b7849475a4b72732b-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/function/pbbntuser-cloudformation-template.json",
+        "logicalId": "functionpbbntuser"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.274Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:104005586102:function:pbbntuser-dev",
+        "Name": "pbbntuser-dev",
+        "LambdaExecutionRole": "pbbntLambdaRolee87719c7-dev"
+      },
+      "lastPushDirHash": "L1U0+Uxi19ELTx61cDHVV17xkSA="
+    },
+    "pbbntadmin": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "dynamo317d232a",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ],
+      "lastBuildTimeStamp": "2021-08-02T18:54:23.199Z",
+      "lastBuildType": "PROD",
+      "lastPackageTimeStamp": "2021-08-02T18:54:24.607Z",
+      "distZipFilename": "pbbntadmin-67724c55672b5a654d62-build.zip",
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-pbbnt-dev-130207-deployment",
+        "s3Key": "amplify-builds/pbbntadmin-67724c55672b5a654d62-build.zip"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/function/pbbntadmin-cloudformation-template.json",
+        "logicalId": "functionpbbntadmin"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.275Z",
+      "output": {
+        "Region": "us-east-1",
+        "Arn": "arn:aws:lambda:us-east-1:104005586102:function:pbbntadmin-dev",
+        "Name": "pbbntadmin-dev",
+        "LambdaExecutionRole": "pbbntLambdaRole3850a63b-dev"
+      },
+      "lastPushDirHash": "SmNR/AB2p0Om+NVrrIvITeAoXzQ="
+    }
+  },
+  "api": {
+    "pbbntuser": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "pbbntuser",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/api/pbbntuser-cloudformation-template.json",
+        "logicalId": "apipbbntuser"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.276Z",
+      "output": {
+        "ApiName": "pbbntuser",
+        "RootUrl": "https://llwrws7098.execute-api.us-east-1.amazonaws.com/dev",
+        "ApiId": "llwrws7098"
+      },
+      "lastPushDirHash": "QcJ/5Epw+wibgnEYo8jG9X0PcDU="
+    },
+    "pbbntadmin": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "pbbntadmin",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "adminGroupRole"
+          ]
+        }
+      ],
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/api/pbbntadmin-cloudformation-template.json",
+        "logicalId": "apipbbntadmin"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.277Z",
+      "output": {
+        "ApiName": "pbbntadmin",
+        "RootUrl": "https://ir4zcyfmh7.execute-api.us-east-1.amazonaws.com/dev",
+        "ApiId": "ir4zcyfmh7"
+      },
+      "lastPushDirHash": "xVE2QfZDFu7om7S3fWmAWpOi4HM="
+    }
+  },
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "providerPlugin": "awscloudformation",
+      "type": "manual",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-pbbnt-dev-130207-deployment/amplify-cfn-templates/hosting/amplifyhosting-template.json",
+        "logicalId": "hostingamplifyhosting"
+      },
+      "lastPushTimeStamp": "2021-08-02T19:29:43.282Z",
+      "output": {},
+      "lastPushDirHash": "/+VZ33seFFqAr6wbtptwbINUfSA="
+    }
+  }
+}

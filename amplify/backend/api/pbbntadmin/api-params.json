@@ -1,0 +1,86 @@
+{
+    "paths": [
+        {
+            "name": "/pbbntadmin",
+            "lambdaFunction": "pbbntadmin",
+            "privacy": {
+                "userPoolGroups": {
+                    "admin": [
+                        "/POST",
+                        "/GET",
+                        "/PUT",
+                        "/PATCH",
+                        "/DELETE"
+                    ]
+                }
+            },
+            "policyResourceName": "/pbbntadmin"
+        },
+        {
+            "name": "/hands",
+            "lambdaFunction": "resetHands",
+            "privacy": {
+                "userPoolGroups": {
+                    "admin": [
+                        "/POST",
+                        "/GET",
+                        "/PUT",
+                        "/PATCH",
+                        "/DELETE"
+                    ]
+                }
+            },
+            "policyResourceName": "/hands"
+        }
+    ],
+    "resourceName": "pbbntadmin",
+    "apiName": "pbbntadmin",
+    "authResourceName": "pbbnt5cf00a19",
+    "functionArns": [
+        {
+            "lambdaFunction": "pbbntadmin"
+        },
+        {
+            "lambdaFunction": "resetHands"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-pbbnt1-dev-154147-authRole",
+        "unAuthRoleName": "amplify-pbbnt1-dev-154147-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "pbbntadmin",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        },
+        {
+            "category": "auth",
+            "resourceName": "pbbnt5cf00a19",
+            "attributes": [
+                "UserPoolId"
+            ]
+        },
+        {
+            "category": "auth",
+            "resourceName": "userPoolGroups",
+            "attributes": [
+                "adminGroupRole"
+            ]
+        },
+        {
+            "category": "function",
+            "resourceName": "resetHands",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ],
+    "uuid": "90cb7be6"
+}

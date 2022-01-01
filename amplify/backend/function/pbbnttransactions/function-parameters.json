@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "storage": {
+      "dynamo317d232a": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "pbbntids": [
+        "read"
+      ],
+      "pbbnttransactions": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

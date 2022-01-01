@@ -1,0 +1,58 @@
+{
+  "paths": [
+    {
+      "name": "/pbbntadmin",
+      "lambdaFunction": "pbbntadmin",
+      "privacy": {
+        "userPoolGroups": {
+          "admin": [
+            "/POST",
+            "/GET",
+            "/PUT",
+            "/PATCH",
+            "/DELETE"
+          ]
+        }
+      },
+      "policyResourceName": "/pbbntadmin"
+    }
+  ],
+  "resourceName": "pbbntadmin",
+  "apiName": "pbbntadmin",
+  "authResourceName": "pbbnt5cf00a19",
+  "functionArns": [
+    {
+      "lambdaFunction": "pbbntadmin"
+    }
+  ],
+  "privacy": {
+    "auth": 0,
+    "unauth": 0,
+    "authRoleName": "amplify-pbbnt-dev-130207-authRole",
+    "unAuthRoleName": "amplify-pbbnt-dev-130207-unauthRole"
+  },
+  "dependsOn": [
+    {
+      "category": "function",
+      "resourceName": "pbbntadmin",
+      "attributes": [
+        "Name",
+        "Arn"
+      ]
+    },
+    {
+      "category": "auth",
+      "resourceName": "pbbnt5cf00a19",
+      "attributes": [
+        "UserPoolId"
+      ]
+    },
+    {
+      "category": "auth",
+      "resourceName": "userPoolGroups",
+      "attributes": [
+        "adminGroupRole"
+      ]
+    }
+  ]
+}
