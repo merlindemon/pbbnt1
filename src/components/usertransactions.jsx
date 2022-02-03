@@ -3,10 +3,13 @@
 import React, {Component} from "react";
 import awsconfig from "../aws-exports";
 import Amplify, {API, Auth} from "aws-amplify";
+import { Type } from "../enums/transaction_types";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
 Auth.configure(awsconfig);
+
+
 
 class UserData extends Component {
   constructor(props) {
@@ -16,7 +19,8 @@ class UserData extends Component {
       transactions: [],
       deposit_transactions: [],
       withdrawal_transactions: [],
-      type: "Deposit"
+      game_transactions: [],
+      type: Type.SENT
     };
   }
 
@@ -34,9 +38,10 @@ class UserData extends Component {
           this.state.jwtKey,
           this.state.ids
         );
-        let deposit_transactions = filterTransactions(transactions, "Deposit");
-        let withdrawal_transactions = filterTransactions(transactions, "Withdrawal");
-        this.setState({ transactions, deposit_transactions, withdrawal_transactions});
+        let deposit_transactions = filterTransactions(transactions, Type.SENT);
+        let withdrawal_transactions = filterTransactions(transactions, Type.RECEIVED);
+        let game_transactions = filterTransactions(transactions, Type.GAME);
+        this.setState({ transactions, deposit_transactions, withdrawal_transactions, game_transactions});
       }
     }
   }
@@ -45,15 +50,25 @@ class UserData extends Component {
       this.setState({type: value});
   }
 
-  render() {
-    let transactions = this.state.type === "Deposit" ? this.state.deposit_transactions: this.state.withdrawal_transactions;
-    if (transactions === undefined) {
-      transactions = [];
+  getTransactionsByType(){
+    switch (this.state.type) {
+      case Type.SENT:
+        return this.state.deposit_transactions;
+      case Type.RECEIVED:
+        return this.state.withdrawal_transactions;
+      case Type.GAME:
+        return this.state.game_transactions;
     }
+  }
+
+  render() {
+    let transactions = this.getTransactionsByType();
+
     return (
       <div>
-        <button onClick={() => this.toggleType("Deposit")}>Sent</button>
-        <button onClick={() => this.toggleType("Withdrawal")}>Received</button>
+        <button onClick={() => this.toggleType(Type.SENT)}>Sent</button>
+        <button onClick={() => this.toggleType(Type.RECEIVED)}>Received</button>
+        <button onClick={() => this.toggleType(Type.GAME)}>Games</button>
         <table border="1" className="transactions">
           <th>Transaction Date</th>
           <th>Amount</th>

@@ -45,38 +45,30 @@ class UserData extends Component {
           <table className="entries">
             <tr>
               <td>
-                <table className="transactions">
-                  <tr>
-                    <td>
-                      <img src={identiferimage} alt="Player IDs"/>
-                    </td>
-                    <td>
-                      {ids.map((id) => (
-                          <p>{id}</p>
-                      ))}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src={hand} alt="Hands Played"/>
-                    </td>
-                    <td>{hands}</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <img src={bank} alt="Bank"/>
-                    </td>
-                    <td style={{ color: colorMoney(profit) }}>
-                      {formatMoney(profit)}
-                    </td>
-                  </tr>
-                </table>
+                <img src={identiferimage} alt="Player IDs"/>
               </td>
               <td>
-                <UserTransactions ids={ids} />
+                {ids.map((id) => (
+                    <p>{id}</p>
+                ))}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src={hand} alt="Hands Played"/>
+              </td>
+              <td>{hands}</td>
+            </tr>
+            <tr>
+              <td>
+                <img src={bank} alt="Bank"/>
+              </td>
+              <td style={{ color: colorMoney(profit) }}>
+                {formatMoney(profit)}
               </td>
             </tr>
           </table>
+          <UserTransactions ids={ids} />
         </div>
       </div>
     );
