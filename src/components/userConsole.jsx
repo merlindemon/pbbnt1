@@ -2,7 +2,7 @@ import React from "react";
 import UserData from "./userdata";
 import LoadingSpinner from "./loadingSpinner";
 import awsconfig from "../aws-exports";
-import Amplify, { API, Auth } from "aws-amplify";
+import Amplify, {API, Auth} from "aws-amplify";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -53,7 +53,7 @@ class UserConsole extends React.Component {
 
   render() {
     return (
-      <div class="center">
+      <div className="center">
         {this.state.loading ? (
           <LoadingSpinner />
         ) : (
@@ -70,24 +70,23 @@ async function getUserIds(jwtKey, email) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  let response = await API.get(
-    "pbbntuser",
-    "/ids?Search=" + encodeURIComponent(email),
-    myInit
+  return await API.get(
+      "pbbntuser",
+      "/ids?Search=" + encodeURIComponent(email),
+      myInit
   )
-    .then((result) => {
-      result = result.Items[0];
-      let id_objects = result.ids.L;
-      let ids = [];
-      id_objects.forEach((element) => {
-        ids.push(element.S);
+      .then((result) => {
+        result = result.Items[0];
+        let id_objects = result.ids.L;
+        let ids = [];
+        id_objects.forEach((element) => {
+          ids.push(element.S);
+        });
+        return ids;
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      return ids;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return response;
 }
 
 async function getUserData(jwtKey, ids) {
@@ -97,18 +96,17 @@ async function getUserData(jwtKey, ids) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  let response = await API.get(
-    "pbbntuser",
-    "/user?Search=" + encodeURIComponent(id_str),
-    myInit
+  return await API.get(
+      "pbbntuser",
+      "/user?Search=" + encodeURIComponent(id_str),
+      myInit
   )
-    .then((result) => {
-      return result;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return response;
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 
 export default UserConsole;

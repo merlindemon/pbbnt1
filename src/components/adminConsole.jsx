@@ -2,10 +2,11 @@ import React from "react";
 import Entries from "./entries";
 import LoadingSpinner from "./loadingSpinner";
 import awsconfig from "../aws-exports";
-import Amplify, { API, Auth } from "aws-amplify";
+import Amplify, {API, Auth} from "aws-amplify";
 import UserConsole from "./userConsole";
 import IdManager from "./idManager";
 import Divider from "./divider";
+
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -20,6 +21,7 @@ class AdminConsole extends React.Component {
       loading: false,
       email: "",
       toggleDisplay: true,
+      transaction_ids: []
     };
   }
 
@@ -42,37 +44,42 @@ class AdminConsole extends React.Component {
   async resetHands() {
     this.setState({ loading: true });
     await resetAllHands(this.state.jwtKey);
-    this.loadGameData();
+    await this.loadGameData();
+  }
+
+  async resetTips() {
+    this.setState({ loading: true });
+    await resetAllTips(this.state.jwtKey);
+    await this.loadGameData();
   }
 
   displayIdManager() {
-    let display = this.state.loading ? <LoadingSpinner /> : <IdManager />;
-    return display;
+    return this.state.loading ? <LoadingSpinner/> : <IdManager/>;
   }
 
   displayGameData() {
-    let display = this.state.loading ? (
-      <LoadingSpinner />
+    return this.state.loading ? (
+        <LoadingSpinner/>
     ) : (
-      <div>
-        <button onClick={() => this.loadGameData()}>Refresh</button>
-        <button onClick={() => this.resetHands()}>Reset Hands</button>
-        <Entries entries={this.state.entries} />
-      </div>
+        <div>
+          <button className="safebutton" onClick={() => this.loadGameData()}>Refresh</button>
+          <button className="dangerousbutton" onClick={() => this.resetHands()}>Reset Hands</button>
+          <button className="dangerousbutton" onClick={() => this.resetTips()}>Reset Tips</button>
+          <Entries entries={this.state.entries}/>
+        </div>
     );
-    return display;
   }
 
   toggleDisplay() {
-    this.setState({ toggleDisplay: this.state.toggleDisplay ? false : true });
+    this.setState({ toggleDisplay: !this.state.toggleDisplay });
   }
 
   render() {
     return (
-      <div class="center">
+      <div className="center">
         <div>
           {this.state.email === "" ? <LoadingSpinner /> : <UserConsole />}
-          <div class="black">
+          <div className="black">
             <Divider />
             <h1>Administrator Console</h1>
             <div>
@@ -101,14 +108,13 @@ async function getGameData(jwtKey) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  let response = await API.get("pbbntadmin", "/pbbntadmin", myInit)
-    .then((result) => {
-      return result.Items;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return response;
+  return await API.get("pbbntadmin", "/pbbntadmin", myInit)
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 
 async function resetAllHands(jwtKey) {
@@ -117,14 +123,28 @@ async function resetAllHands(jwtKey) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  let response = await API.del("pbbntadmin", "/hands", myInit)
-    .then((result) => {
-      return result;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return response;
+  return await API.del("pbbntadmin", "/hands", myInit)
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+}
+
+async function resetAllTips(jwtKey) {
+  const myInit = {
+    headers: {
+      Authorization: "Bearer " + jwtKey,
+    },
+  };
+  return await API.del("pbbntadmin", "/tips", myInit)
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 
 export default AdminConsole;

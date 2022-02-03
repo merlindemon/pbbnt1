@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "storage": {
+      "dynamo317d232a": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "pbbnttransactions": [
+        "create"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "dynamoDb",
+      "environmentVariableName": "dynamoDb"
+    },
+    {
+      "cloudFormationParameterName": "dynamoDb",
+      "environmentVariableName": "dynamoDb"
+    }
+  ]
+}

@@ -11,6 +11,21 @@
     "pbbnttransactions": {
       "service": "DynamoDB",
       "providerPlugin": "awscloudformation"
+    },
+    "EmailBucket": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "emailprocessing",
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ]
+        }
+      ]
     }
   },
   "auth": {
@@ -70,7 +85,7 @@
         },
         {
           "category": "storage",
-          "resourceName": "pbbnttransactions",
+          "resourceName": "pbbntids",
           "attributes": [
             "Name",
             "Arn",
@@ -127,7 +142,23 @@
         },
         {
           "category": "storage",
-          "resourceName": "pbbntids",
+          "resourceName": "pbbnttransactions",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ]
+    },
+    "emailprocessing": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "dynamo317d232a",
           "attributes": [
             "Name",
             "Arn",
@@ -141,6 +172,36 @@
             "Name",
             "Arn",
             "StreamArn"
+          ]
+        }
+      ]
+    },
+    "resetTips": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "dynamo317d232a",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ]
+    },
+    "AdminQueriese020bed2": {
+      "service": "Lambda",
+      "providerPlugin": "awscloudformation",
+      "build": true,
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19",
+          "attributes": [
+            "UserPoolId"
           ]
         }
       ]
@@ -224,6 +285,14 @@
             "Name",
             "Arn"
           ]
+        },
+        {
+          "category": "function",
+          "resourceName": "resetTips",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
         }
       ]
     },
@@ -251,6 +320,28 @@
           "resourceName": "userPoolGroups",
           "attributes": [
             "adminGroupRole"
+          ]
+        }
+      ]
+    },
+    "AdminQueries": {
+      "service": "API Gateway",
+      "providerPlugin": "awscloudformation",
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese020bed2",
+          "attributes": [
+            "Arn",
+            "Name"
           ]
         }
       ]

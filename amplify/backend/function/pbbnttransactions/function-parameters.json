@@ -7,9 +7,6 @@
         "update",
         "delete"
       ],
-      "pbbntids": [
-        "read"
-      ],
       "pbbnttransactions": [
         "create",
         "read",
@@ -18,5 +15,19 @@
       ]
     }
   },
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "tz",
+      "environmentVariableName": "TZ"
+    },
+    {
+      "cloudFormationParameterName": "tz",
+      "environmentVariableName": "TZ"
+    },
+    {
+      "cloudFormationParameterName": "tz",
+      "environmentVariableName": "TZ"
+    }
+  ]
 }

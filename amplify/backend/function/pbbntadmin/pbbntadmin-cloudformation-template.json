@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda Function resource stack creation using Amplify CLI",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.14\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -28,17 +28,21 @@
       "Type": "String",
       "Default": "storagedynamo317d232aStreamArn"
     },
-    "storagepbbnttransactionsName": {
+    "functionpbbnt1pandasArn": {
       "Type": "String",
-      "Default": "storagepbbnttransactionsName"
+      "Default": "functionpbbnt1pandasArn"
     },
-    "storagepbbnttransactionsArn": {
+    "storagepbbntidsName": {
       "Type": "String",
-      "Default": "storagepbbnttransactionsArn"
+      "Default": "storagepbbntidsName"
     },
-    "storagepbbnttransactionsStreamArn": {
+    "storagepbbntidsArn": {
       "Type": "String",
-      "Default": "storagepbbnttransactionsStreamArn"
+      "Default": "storagepbbntidsArn"
+    },
+    "storagepbbntidsStreamArn": {
+      "Type": "String",
+      "Default": "storagepbbntidsStreamArn"
     }
   },
   "Conditions": {
@@ -103,14 +107,14 @@
             "STORAGE_DYNAMO317D232A_STREAMARN": {
               "Ref": "storagedynamo317d232aStreamArn"
             },
-            "STORAGE_PBBNTTRANSACTIONS_NAME": {
-              "Ref": "storagepbbnttransactionsName"
+            "STORAGE_PBBNTIDS_NAME": {
+              "Ref": "storagepbbntidsName"
             },
-            "STORAGE_PBBNTTRANSACTIONS_ARN": {
-              "Ref": "storagepbbnttransactionsArn"
+            "STORAGE_PBBNTIDS_ARN": {
+              "Ref": "storagepbbntidsArn"
             },
-            "STORAGE_PBBNTTRANSACTIONS_STREAMARN": {
-              "Ref": "storagepbbnttransactionsStreamArn"
+            "STORAGE_PBBNTIDS_STREAMARN": {
+              "Ref": "storagepbbntidsStreamArn"
             }
           }
         },
@@ -121,9 +125,7 @@
           ]
         },
         "Runtime": "python3.8",
-        "Layers": [
-          "arn:aws:lambda:us-east-1:104005586102:layer:Pandas:1"
-        ],
+        "Layers": [],
         "Timeout": 25
       }
     },
@@ -227,18 +229,12 @@
             {
               "Effect": "Allow",
               "Action": [
-                "dynamodb:Put*",
-                "dynamodb:Create*",
-                "dynamodb:BatchWriteItem",
                 "dynamodb:Get*",
                 "dynamodb:BatchGetItem",
                 "dynamodb:List*",
                 "dynamodb:Describe*",
                 "dynamodb:Scan",
-                "dynamodb:Query",
-                "dynamodb:Update*",
-                "dynamodb:RestoreTable*",
-                "dynamodb:Delete*"
+                "dynamodb:Query"
               ],
               "Resource": [
                 {
@@ -260,9 +256,6 @@
             {
               "Effect": "Allow",
               "Action": [
-                "dynamodb:Put*",
-                "dynamodb:Create*",
-                "dynamodb:BatchWriteItem",
                 "dynamodb:Get*",
                 "dynamodb:BatchGetItem",
                 "dynamodb:List*",
@@ -272,14 +265,14 @@
               ],
               "Resource": [
                 {
-                  "Ref": "storagepbbnttransactionsArn"
+                  "Ref": "storagepbbntidsArn"
                 },
                 {
                   "Fn::Join": [
                     "/",
                     [
                       {
-                        "Ref": "storagepbbnttransactionsArn"
+                        "Ref": "storagepbbntidsArn"
                       },
                       "index/*"
                     ]

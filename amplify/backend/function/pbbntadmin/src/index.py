@@ -1,9 +1,10 @@
 import json
-import base64
-import io
-import pandas as pd
 import boto3
-
+import os
+import random
+import string
+DATA_TABLENAME = 'dynamo317d232a-' + os.environ["ENV"]
+IDS_TABLENAME = 'pbbntids-' + os.environ["ENV"]
 
 def handler(event, context):
     print('received event:')
@@ -12,98 +13,66 @@ def handler(event, context):
 
     client = boto3.client('dynamodb')
 
-    if(method == 'GET'):
-        data = client.scan(
-            TableName='dynamo317d232a-dev'
-        )
-        # data = response['Items']
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Access-Control-Allow-Headers': '*',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
-            },
-            'body': json.dumps(data)
-        }
-    else:
-        body = event['body']
-        body = json.loads(body)
-        data = base64.b64decode(body["data"])
-        toread = io.BytesIO()
-        toread.write(data)
-        toread.seek(0)
-        df = pd.read_csv(toread)
-        result = df.to_json(orient="split")
-        print(result)
-        data = json.loads(result)["data"]
+    if method == 'GET':
+        scan_kwargs = {'TableName': DATA_TABLENAME}
+        gamedata = client.scan(**scan_kwargs)
 
-        gamedate = ""
-        for player in data:
-            if(player[9] != None):
-                gamedate = player[9]
-            data = client.query(
-                TableName='dynamo317d232a-dev',
-                KeyConditionExpression='#id = :value',
-                ExpressionAttributeValues={
-                    ':value': {
-                        'S': player[2]
-                    }
-                },
-                ExpressionAttributeNames={
-                    '#id': 'ID'
-                }
-            )
-            # Create Transaction data
-            response = client.put_item(
-                TableName="pbbnttransactions-dev",
-                Item={
-                    'ID': {'S': str(player[2])},
-                    'Date': {'S': str(gamedate)},
-                    'Type': {'S': "Game"},
-                    'Amount': {'N': str(player[4])},
-                }
-            )
-            if(len(data['Items']) == 1):
-                # Do update as the userid already is present/has an bank
-                response = client.update_item(
-                    TableName="dynamo317d232a-dev",
-                    UpdateExpression="add Hands :h, Profit :p, BuyIn :b, Tips :t",
-                    Key={'ID': {'S': str(player[2])}, 'Player': {
-                        'S': str(player[1])}},
-                    ExpressionAttributeValues={
-                        ':h': {"N": str(player[3])},
-                        ':p': {"N": str(player[4])},
-                        ':b': {"N": str(player[5])},
-                        ':t': {"N": str(player[6])}
-                    }
-                )
-                response = client.update_item(
-                    TableName="dynamo317d232a-dev",
-                    UpdateExpression="set #r=:r",
-                    Key={'ID': {'S': str(player[2])}, 'Player': {
-                        'S': str(player[1])}},
-                    ExpressionAttributeValues={
-                        ':r': {"N": str(player[0])}
-                    },
-                    ExpressionAttributeNames={
-                        '#r': "Rank"
-                    }
-                )
+        #1: Get all the emails -> ids and map them to an array
+        scan_kwargs = {'TableName': IDS_TABLENAME}
+        identifierdata = client.scan(**scan_kwargs)
+        result_array = []
+        if len(identifierdata['Items']) > 0:
+            result_array = identifierdata['Items']
+        id_to_email = {}
+        for result in result_array:
+            email = result['email']['S']
+            ids_array = result['ids']['L']
+            for identifier in ids_array:
+                identifier = identifier['S']
+                id_to_email[identifier] = email
+
+        modified_gamedata = {}
+        print(id_to_email)
+        for item in gamedata['Items']:
+            identifier = item['ID']['S']
+            email = ''
+            if identifier in id_to_email:
+                #If we have a user email -> id defined
+                email = id_to_email[identifier]
             else:
-                # Create Game Data
-                response = client.put_item(
-                    TableName="dynamo317d232a-dev",
-                    Item={
-                        'ID': {'S': str(player[2])},
-                        'Rank': {'N': str(player[0])},
-                        'Player': {'S': str(player[1])},
-                        'Hands': {'N': str(player[3])},
-                        'Profit': {'N': str(player[4])},
-                        'BuyIn': {'N': str(player[5])},
-                        'Tips': {'N': str(player[6])},
-                    }
-                )
+                letters = string.ascii_uppercase
+                email = "NoEmailListed?" + ''.join(random.choice(letters) for i in range(10))
+            identifier = [identifier]#Go ahead and turn into array
+            player =    [item['Player']['S']]#Go ahead and turn into array
+            profit =    float(item['Profit']['N'])
+            buyin =     float(item['BuyIn']['N'])
+            rank =      int(item['Rank']['N'])
+            hands =     int(item['Hands']['N'])
+            tips =      float(item['Tips']['N'])
+
+            if email in modified_gamedata:
+                #This user has multiple accounts, merge the data
+                existing_hash = modified_gamedata[email]
+                identifier.append(existing_hash['ID'])
+                player.append(existing_hash['Player'])
+                profit += float(existing_hash['Profit'])
+                buyin += float(existing_hash['BuyIn'])
+                #We can average the rank, though it may be innaccurate if there are more than two accounts
+                rank = round((int(rank) + int(existing_hash['Rank'])) / 2)
+                hands += int(existing_hash['Hands'])
+                tips += float(existing_hash['Tips'])
+            modified_gamedata[email] = {
+                'ID': identifier,
+                'Player': player,
+                'Profit': profit,
+                'BuyIn': buyin,
+                'Rank': rank,
+                'Hands': hands,
+                'Tips': tips,
+                'Email': email
+            }
+        modified_gamedata = list(modified_gamedata.values())
+        print(modified_gamedata)
         return {
             'statusCode': 200,
             'headers': {
@@ -111,5 +80,5 @@ def handler(event, context):
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
             },
-            'body': json.dumps('POST Complete')
+            'body': json.dumps(modified_gamedata)
         }

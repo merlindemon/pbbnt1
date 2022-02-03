@@ -101,7 +101,7 @@ class Upload extends Component {
               onFilesAdded={this.onFilesAdded}
               disabled={this.state.uploading || this.state.successfullUploaded}
             />
-            <br></br>
+            <br/>
             <div className="Actions">{this.renderActions()}</div>
           </div>
           <div className="Files">

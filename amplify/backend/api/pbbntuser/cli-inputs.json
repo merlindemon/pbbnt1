@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "paths": {
+    "/user": {
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ]
+      },
+      "lambdaFunction": "pbbntuser"
+    },
+    "/ids": {
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ],
+        "groups": {
+          "admin": [
+            "create",
+            "read",
+            "update",
+            "delete"
+          ]
+        }
+      },
+      "lambdaFunction": "pbbntids"
+    },
+    "/transactions": {
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "read"
+        ],
+        "groups": {
+          "admin": [
+            "create",
+            "read",
+            "update",
+            "delete"
+          ]
+        }
+      },
+      "lambdaFunction": "pbbnttransactions"
+    }
+  }
+}

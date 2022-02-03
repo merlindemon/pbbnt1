@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import awsconfig from "../aws-exports";
-import Amplify, { API, Auth } from "aws-amplify";
+import Amplify, {API, Auth} from "aws-amplify";
 import IdDisplayer from "./idDisplayer";
 import LoadingSpinner from "./loadingSpinner";
 
@@ -44,7 +44,7 @@ class UserIds extends Component {
         this.state.id
       );
       this.setState({ id: "", email: "" });
-      this.reloadEntries();
+      await this.reloadEntries();
     }
   }
 
@@ -57,7 +57,7 @@ class UserIds extends Component {
         this.state.id
       );
       this.setState({ id: "", email: "" });
-      this.reloadEntries();
+      await this.reloadEntries();
     }
   }
 
@@ -71,22 +71,36 @@ class UserIds extends Component {
 
   render() {
     return (
-      <div class="center">
+      <div className="center">
         <h4>User Ids</h4>
-        <label>Email: </label>
-        <input onChange={this.handleEmail} value={this.state.email}></input>
-        <label>ID: </label>
-        <input
-          placeholder="#12345"
-          onChange={this.handleId}
-          value={this.state.id}
-        ></input>
-        <br></br>
-        <button onClick={() => this.addButtonAction()}>Associate ID</button>
-        <button onClick={() => this.removeButtonAction()}>Remove ID</button>
-        <br></br>
-        {/* <button onClick={() => this.reloadEntries()}>Reload User Table</button>
-        <br></br> */}
+        <table className="entries">
+          <tr>
+            <td>
+              <label>Email: </label>
+              <input onChange={this.handleEmail} value={this.state.email} className="input2" size="40"/>
+            </td>
+            <td>
+              <label>ID: </label>
+              <input
+                placeholder="#12345"
+                onChange={this.handleId}
+                value={this.state.id}
+                className="input3"
+                size="7"
+                />
+            </td>
+            <td/>
+          </tr>
+          <tr>
+            <td>
+              <button className="safebutton" onClick={() => this.addButtonAction()}>Associate ID</button>
+            </td>
+            <td/>
+            <td>
+            <button className="dangerousbutton" onClick={() => this.removeButtonAction()}>Remove ID</button>
+            </td>
+          </tr>
+        </table>
         {this.state.loading && this.state.entries.length === 0 ? (
           <LoadingSpinner />
         ) : (
@@ -103,14 +117,13 @@ async function getEntireEmailTable(jwtKey) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  let response = await API.get("pbbntuser", "/ids", myInit)
-    .then((result) => {
-      return result.Items;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return response;
+  return await API.get("pbbntuser", "/ids", myInit)
+      .then((result) => {
+        return result.Items;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 }
 
 async function associateEmailWithUserId(jwtKey, email, id) {

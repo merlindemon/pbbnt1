@@ -1,9 +1,8 @@
 import json
-import base64
-import io
 import boto3
 from urllib.parse import unquote_plus
-
+import os
+IDS_TABLENAME = 'pbbntids-' + os.environ["ENV"]
 
 def handler(event, context):
     print('received event:')
@@ -12,34 +11,39 @@ def handler(event, context):
 
     client = boto3.client('dynamodb')
 
-    if(method == 'OPTIONS'):
+    if method == 'OPTIONS':
         return {
             'statusCode': 200,
             'headers': {
                 'Access-Control-Allow-Headers': '*',
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'OPTIONS,PUT,GET,DELETE'
-            },
-            'body': json.dumps("")
+            }
         }
-    elif(method == 'GET'):
-        queryStringParameters = event['queryStringParameters']
-        key = 'Search'
-        if(key in queryStringParameters):
-            email = queryStringParameters['Search']
+    elif method == 'GET':
+        # key1 = 'queryStringParameters'
+        key2 = 'Search'
+        print(event['queryStringParameters'])
+        if event['queryStringParameters'] is not None and key2 in event['queryStringParameters']:
+            query_str_params = event['queryStringParameters']
+            email = query_str_params['Search']
+            print(email)
             email = unquote_plus(email)
-            data = client.query(
-                TableName='pbbntids-dev',
-                KeyConditionExpression='#name = :value',
-                ExpressionAttributeValues={
+            email = email.lower()
+            print(email)
+            query_kwargs = {
+                'TableName': IDS_TABLENAME,
+                'KeyConditionExpression': '#name = :value',
+                'ExpressionAttributeNames': {
+                    '#name': 'email'
+                },
+                'ExpressionAttributeValues': {
                     ':value': {
                         'S': email
                     }
-                },
-                ExpressionAttributeNames={
-                    '#name': 'email'
                 }
-            )
+            }
+            data = client.query(**query_kwargs)
             return {
                 'statusCode': 200,
                 'headers': {
@@ -50,9 +54,8 @@ def handler(event, context):
                 'body': json.dumps(data)
             }
         else:
-            data = client.scan(
-                TableName='pbbntids-dev'
-            )
+            scan_kwargs = {'TableName': IDS_TABLENAME}
+            data = client.scan(**scan_kwargs)
             return {
                 'statusCode': 200,
                 'headers': {
@@ -63,53 +66,56 @@ def handler(event, context):
                 'body': json.dumps(data)
             }
 
-    elif(method == 'PUT'):
+    elif method == 'PUT':
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
         email = body["email"]
-        id = body["id"]
-        data = client.query(
-            TableName='pbbntids-dev',
-            KeyConditionExpression='#name = :value',
-            ExpressionAttributeValues={
+        email = email.lower()
+        identifier = body["id"]
+        query_kwargs = {
+            'TableName': IDS_TABLENAME,
+            'KeyConditionExpression': '#name = :value',
+            'ExpressionAttributeNames': {
+                '#name': 'email'
+            },
+            'ExpressionAttributeValues': {
                 ':value': {
                     'S': email
                 }
-            },
-            ExpressionAttributeNames={
-                '#name': 'email'
             }
-        )
-        if(data['Count'] == 0):
+        }
+        data = client.query(**query_kwargs)
+        if data['Count'] == 0:
             # Doesn't yet exist,create it
-            response = client.put_item(
-                TableName="pbbntids-dev",
-                Item={
+            put_kwargs = {
+                'TableName': IDS_TABLENAME,
+                'Item': {
                     'email': {
                         'S': email
                     },
                     'ids': {
                         'L': [{
-                            'S': id
+                            'S': identifier
                         }]
                     }
                 }
-            )
-        elif(data['Count'] > 0):
+            }
+            client.put_item(**put_kwargs)
+        elif data['Count'] > 0:
             # Already has an ID, so append a new id
             previous_ids = data['Items'][0]['ids']['L']
-            unique_ids = {id}
-            for id in previous_ids:
-                unique_ids.add(id['S'])
+            unique_ids = {identifier}
+            for identifier in previous_ids:
+                unique_ids.add(identifier['S'])
             print(unique_ids)
             ids_array = []
-            for id in unique_ids:
-                ids_array.append({'S': id})
+            for identifier in unique_ids:
+                ids_array.append({'S': identifier})
             ids = json.loads(json.dumps(ids_array))
-            response = client.put_item(
-                TableName="pbbntids-dev",
-                Item={
+            put_kwargs = {
+                'TableName': IDS_TABLENAME,
+                'Item': {
                     'email': {
                         'S': email
                     },
@@ -117,7 +123,8 @@ def handler(event, context):
                         'L': ids
                     }
                 }
-            )
+            }
+            client.put_item(**put_kwargs)
 
         return {
             'statusCode': 200,
@@ -128,26 +135,28 @@ def handler(event, context):
             },
             'body': json.dumps('PUT Complete')
         }
-    elif(method == 'DELETE'):
+    elif method == 'DELETE':
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
         email = body["email"]
+        email = email.lower()
         request_id = body["id"]
         print(request_id)
-        data = client.query(
-            TableName='pbbntids-dev',
-            KeyConditionExpression='#name = :value',
-            ExpressionAttributeValues={
+        query_kwargs = {
+            'TableName': IDS_TABLENAME,
+            'KeyConditionExpression': '#name = :value',
+            'ExpressionAttributeValues': {
                 ':value': {
                     'S': email
                 }
             },
-            ExpressionAttributeNames={
+            'ExpressionAttributeNames': {
                 '#name': 'email'
             }
-        )
-        if(data['Count'] == 0):
+        }
+        data = client.query(**query_kwargs)
+        if data['Count'] == 0:
             # Doesn't exists, so ignore
             print('nothing to delete')
         else:
@@ -161,9 +170,9 @@ def handler(event, context):
             for id in unique_ids:
                 ids_array.append({'S': id})
             ids = json.loads(json.dumps(ids_array))
-            response = client.put_item(
-                TableName="pbbntids-dev",
-                Item={
+            put_kwargs = {
+                'TableName': IDS_TABLENAME,
+                'Item': {
                     'email': {
                         'S': email
                     },
@@ -171,7 +180,8 @@ def handler(event, context):
                         'L': ids
                     }
                 }
-            )
+            }
+            client.put_item(**put_kwargs)
         return {
             'statusCode': 200,
             'headers': {

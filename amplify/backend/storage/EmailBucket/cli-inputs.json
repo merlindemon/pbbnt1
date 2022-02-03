@@ -1,0 +1,11 @@
+{
+  "resourceName": "EmailBucket",
+  "policyUUID": "07082701",
+  "bucketName": "pbbnt15297e68f0a414b06a1219266e87c904f",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ"
+  ],
+  "triggerFunction": "emailprocessing"
+}

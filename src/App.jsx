@@ -1,13 +1,14 @@
 import "./css/App.css";
-import Amplify, { API, Auth } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import React from "react";
 import LoadingSpinner from "./components/loadingSpinner";
 import AdminConsole from "./components/adminConsole";
 import UserConsole from "./components/userConsole";
 import Header from "./components/header";
+import { v4 as uuid } from 'uuid';
+
 import {
   AmplifyAuthContainer,
   AmplifyAuthenticator,
@@ -15,7 +16,6 @@ import {
   AmplifySignIn,
 } from "@aws-amplify/ui-react";
 
-// Amplify.configure(awsconfig);
 Auth.configure(awsconfig);
 API.configure(awsconfig);
 
@@ -44,12 +44,6 @@ const AuthStateApp = () => {
           usernameAlias="username"
           formFields={[
             {
-              type: "username",
-              label: "Username",
-              placeholder: "Username",
-              inputProps: { required: true, autocomplete: "username" },
-            },
-            {
               type: "email",
               label: "Email login",
               placeholder: "email",
@@ -63,20 +57,29 @@ const AuthStateApp = () => {
             },
             {
               type: "preferred_username",
-              label: "Playername",
-              placeholder: "Custom Playername",
+              label: "Do not Edit field",
+              value: uuid(),
+              readonly: true,
               inputProps: {
                 required: true,
-                autocomplete: "preferred_username",
               },
             },
+            {
+              type: "username",
+              label: "Do not Edit field",
+              // placeholder: uuid(),
+              value: uuid(),
+              readonly: true,
+              inputProps: { required: false, }
+            }
           ]}
         />
-        <AmplifySignIn slot="sign-in" usernameAlias="email" />
-      </AmplifyAuthenticator>{" "}
+        <AmplifySignIn slot="sign-in" usernameAlias="email"/>
+      </AmplifyAuthenticator>
     </AmplifyAuthContainer>
   );
 };
+
 
 class App extends React.Component {
   constructor(props) {

@@ -1,33 +1,34 @@
 import json
 import boto3
 from urllib.parse import unquote_plus
-
+import os
+TABLENAME = 'dynamo317d232a-' + os.environ["ENV"]
 
 def handler(event, context):
     print('received event:')
     print(event)
-    queryStringParameters = event['queryStringParameters']
-    ids = queryStringParameters['Search']
+    query_string_parameters = event['queryStringParameters']
+    ids = query_string_parameters['Search']
     ids = unquote_plus(ids)
     ids_array = ids.split(",")
     result_array = []
 
     client = boto3.client('dynamodb')
     for identifier in ids_array:
-        data = client.query(
-            TableName='dynamo317d232a-dev',
-            # IndexName='playername',
-            KeyConditionExpression='#id = :value',
-            ExpressionAttributeValues={
+        query_kwargs = {
+            'TableName': TABLENAME,
+            'KeyConditionExpression': '#id = :value',
+            'ExpressionAttributeNames': {
+                '#id': 'ID'
+            },
+            'ExpressionAttributeValues': {
                 ':value': {
                     'S': identifier
                 }
-            },
-            ExpressionAttributeNames={
-                '#id': 'ID'
             }
-        )
-        if(len(data['Items']) > 0):
+        }
+        data = client.query(**query_kwargs)
+        if len(data['Items']) > 0:
             result_array.append(data['Items'][0])
 
     return {

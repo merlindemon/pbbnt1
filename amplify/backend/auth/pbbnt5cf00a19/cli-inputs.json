@@ -1,14 +1,16 @@
 {
-    "identityPoolName": "pbbnt5cf00a19_identitypool_5cf00a19",
+  "version": "1",
+  "cognitoConfig": {
+    "identityPoolName": "pbbnt5cf00a19_identitypool_8b007acb",
     "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "pbbnt5cf00a19",
     "userPoolName": "pbbnt5cf00a19_userpool_5cf00a19",
     "autoVerifiedAttributes": [
-        "email"
+      "email"
     ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
-        "SMS Text Message"
+      "SMS Text Message"
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
@@ -18,59 +20,60 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-        "email",
-        "preferred_username"
+      "email",
+      "preferred_username"
     ],
     "aliasAttributes": [
-        "email"
+      "email"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-        "preferred_username",
-        "email"
+      "email",
+      "preferred_username"
     ],
     "userpoolClientReadAttributes": [
-        "email",
-        "preferred_username"
+      "email"
     ],
     "userpoolClientLambdaRole": "pbbnt55cf00a19_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
-    "sharedId": "5cf00a19",
-    "resourceName": "pbbnt5cf00a19",
     "authSelections": "identityPoolAndUserPool",
-    "authRoleArn": {
-        "Fn::GetAtt": [
-            "AuthRole",
-            "Arn"
-        ]
-    },
-    "unauthRoleArn": {
-        "Fn::GetAtt": [
-            "UnauthRole",
-            "Arn"
-        ]
-    },
-    "useDefault": "manual",
-    "triggers": "{}",
-    "userPoolGroupList": [
-        "admin"
-    ],
+    "resourceName": "pbbnt5cf00a19",
     "serviceName": "Cognito",
-    "usernameCaseSensitive": false,
-    "parentStack": {
-        "Ref": "AWS::StackId"
-    },
-    "breakCircularDependency": true,
-    "permissions": [],
-    "dependsOn": [],
-    "thirdPartyAuth": false,
+    "useDefault": "manual",
+    "sharedId": "5cf00a19",
+    "userPoolGroupList": [
+      "admin"
+    ],
     "userPoolGroups": true,
+    "usernameCaseSensitive": false,
     "adminQueries": false,
     "hostedUI": true,
     "hostedUIDomainName": "pbbnt104b659cd-04b659cd",
-    "authProvidersUserPool": [],
     "hostedUIProviderMeta": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.pbbnt.com/\"],\"LogoutURLs\":[\"https://www.pbbnt.com/\"]}",
-    "authProviders": []
+    "authProvidersUserPool": [],
+    "triggers": {},
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "useEnabledMfas": false,
+    "dependsOn": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "permissions": [],
+    "authProviders": [],
+    "thirdPartyAuth": false,
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"],\"LogoutURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"]}"
+  }
 }

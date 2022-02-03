@@ -6,16 +6,13 @@ import Divider from "./divider";
 class Header extends Component {
   render() {
     return (
-      <div
-        class="header"
-        style={{ backgroundImage: "url(/pokerrrr2logo.webp)" }}
+      <div className="header"
+        style={{ backgroundImage: "url(/bingo_club.JPG)" }}
       >
-        {/* <h1>Welcome {this.props.username}!</h1> */}
-        <div class="signOut">
-          <AmplifySignOut button-text="SignOut"></AmplifySignOut>
+            <div className="signOut">
+              <AmplifySignOut button-text="SignOut"/>
+            </div>
         </div>
-        <Divider />
-      </div>
     );
   }
 }

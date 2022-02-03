@@ -1,8 +1,10 @@
 // src/components/Entry.js
 
-import React, { Component } from "react";
+import React from "react";
 import awsconfig from "../aws-exports";
-import Amplify, { API, Auth } from "aws-amplify";
+import Amplify, {API, Auth} from "aws-amplify";
+import LoadingSpinner from "./loadingSpinner";
+import UserTransactionsAdminView from "./usertransactionsadminview";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -13,9 +15,10 @@ class Entry extends React.Component {
     super(props);
     this.state = {
       rank: 0,
-      player: "",
+      playernames: [],
+      email: "",
       hands: 0,
-      id: "",
+      ids: [],
       profit: 0.0,
       tips: 0.0,
       adjust: "",
@@ -26,12 +29,13 @@ class Entry extends React.Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        rank: this.props.entry.Rank.N,
-        hands: this.props.entry.Hands.N,
-        player: this.props.entry.Player.S,
-        id: this.props.entry.ID.S,
-        profit: this.props.entry.Profit.N,
-        tips: this.props.entry.Tips.N,
+        rank: this.props.entry.Rank,
+        hands: this.props.entry.Hands,
+        email: this.props.entry.Email,
+        playernames: this.props.entry.Player,
+        ids: this.props.entry.ID,
+        profit: this.props.entry.Profit,
+        tips: this.props.entry.Tips,
       });
     });
   }
@@ -41,8 +45,7 @@ class Entry extends React.Component {
       let adjust = formatMoney(this.state.adjust);
       await adjustProfitBalance(
         this.state.jwtKey,
-        this.state.id,
-        this.state.player,
+        this.state.ids,
         this.state.adjust
       );
       let profit = this.state.profit;
@@ -56,20 +59,35 @@ class Entry extends React.Component {
     this.setState({ adjust: event.target.value });
   };
 
+  toggleTransactions() {
+    this.setState({ toggleTransactions: !this.state.toggleTransactions });
+  }
+
+  displayTransactions(ids) {
+    return this.state.loading ? <LoadingSpinner/> : <UserTransactionsAdminView ids={ids}/>;
+  }
+
+  displayAdjustButton() {
+    return <button onClick={() => this.adjustProfit()}>Add/Subtract</button>;
+  }
+
   render() {
-    let { rank, player, id, hands, profit, tips, adjust } = this.state;
+    let { rank, playernames, ids, hands, profit, tips, adjust } = this.state;
     return (
       <tr>
-        <td class="entry-rank" id={rank}>
+        <td className="entry-rank" id={rank}>
           {rank}
         </td>
-        <td class="entry-player">{player}</td>
-        <td class="entry-id">{id}</td>
-        <td class="entry-tips" style={{ color: colorMoney(tips) }}>
+        <td className="entry-player">{playernames.join(" ")}
+        </td>
+        <td className="entry-id">
+            <button className="ids-button" onClick={() => this.toggleTransactions()}>{ids.join(" ")}</button>
+        </td>
+        <td className="entry-tips" style={{ color: colorMoney(tips) }}>
           {formatMoney(tips)}
         </td>
-        <td class="entry-hands">{hands}</td>
-        <td class="entry-profit" style={{ color: colorMoney(profit) }}>
+        <td className="entry-hands">{hands}</td>
+        <td className="entry-profit" style={{ color: colorMoney(profit) }}>
           {formatMoney(profit)}
         </td>
         <td>
@@ -77,10 +95,13 @@ class Entry extends React.Component {
             placeholder=""
             onChange={this.handleAdjust}
             value={adjust}
-          ></input>
+            className="input1"
+            />
         </td>
         <td>
-          <button onClick={() => this.adjustProfit()}>Add/Subtract</button>
+          {this.state.toggleTransactions
+                        ? this.displayTransactions(ids)
+                        : this.displayAdjustButton()}
         </td>
       </tr>
     );
@@ -101,23 +122,23 @@ function formatMoney(string) {
 function colorMoney(string) {
   string = parseFloat(string);
   if (string > 0) {
-    return "#216C2A";
+    // return "#084f62";
+    return "#33cc33";
   }
   if (string < 0) {
-    return "#c05f5f";
+    return "#ff1a1a";
   }
-  return "black";
+  return "#ffffff";
 }
 
-async function adjustProfitBalance(jwtKey, id, playername, adjust) {
+async function adjustProfitBalance(jwtKey, ids, adjust) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
       amount: adjust,
-      id: id,
-      playername: playername,
+      ids: ids.join()
     },
   };
   let response;

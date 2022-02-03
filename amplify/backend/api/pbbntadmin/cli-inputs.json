@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "paths": {
+    "/pbbntadmin": {
+      "permissions": {
+        "setting": "protected",
+        "groups": {
+          "admin": [
+            "create",
+            "read",
+            "update",
+            "delete"
+          ]
+        }
+      },
+      "lambdaFunction": "pbbntadmin"
+    },
+    "/hands": {
+      "permissions": {
+        "setting": "protected",
+        "groups": {
+          "admin": [
+            "create",
+            "read",
+            "update",
+            "delete"
+          ]
+        }
+      },
+      "lambdaFunction": "resetHands"
+    },
+    "/tips": {
+      "name": "/tips",
+      "lambdaFunction": "resetTips",
+      "permissions": {
+        "groups": {
+          "admin": [
+            "delete"
+          ]
+        },
+        "setting": "private"
+      }
+    }
+  }
+}

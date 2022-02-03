@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "storage": {
+      "dynamo317d232a": [
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

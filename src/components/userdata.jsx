@@ -8,7 +8,7 @@ import UserTransactions from "./usertransactions";
 
 class UserData extends Component {
   constructor(props) {
-    super();
+    super(undefined);
     this.state = {
       profit: 0.0,
       hands: 0,
@@ -42,36 +42,41 @@ class UserData extends Component {
           <h1>{playernames.join()}</h1>
         </center>
         <div>
-          <table border="1" class="entries">
+          <table className="entries">
             <tr>
               <td>
-                IDs<br></br>
-                <img src={identiferimage} alt="Player IDs"></img>
+                <table className="transactions">
+                  <tr>
+                    <td>
+                      <img src={identiferimage} alt="Player IDs"/>
+                    </td>
+                    <td>
+                      {ids.map((id) => (
+                          <p>{id}</p>
+                      ))}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src={hand} alt="Hands Played"/>
+                    </td>
+                    <td>{hands}</td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src={bank} alt="Bank"/>
+                    </td>
+                    <td style={{ color: colorMoney(profit) }}>
+                      {formatMoney(profit)}
+                    </td>
+                  </tr>
+                </table>
               </td>
               <td>
-                {ids.map((id) => (
-                  <p>{id}</p>
-                ))}
-              </td>
-            </tr>
-            <tr>
-              <td>
-                Hands<br></br>
-                <img src={hand} alt="Hands Played"></img>
-              </td>
-              <td>{hands}</td>
-            </tr>
-            <tr>
-              <td>
-                Bank<br></br>
-                <img src={bank} alt="Bank"></img>
-              </td>
-              <td style={{ color: colorMoney(profit) }}>
-                {formatMoney(profit)}
+                <UserTransactions ids={ids} />
               </td>
             </tr>
           </table>
-          <UserTransactions ids={ids} />
         </div>
       </div>
     );
@@ -88,12 +93,12 @@ function formatMoney(string) {
 function colorMoney(string) {
   string = parseFloat(string);
   if (string > 0) {
-    return "green";
+    return "#33cc33";
   }
   if (string < 0) {
-    return "red";
+    return "#ff1a1a";
   }
-  return "white";
+  return "#ffffff";
 }
 
 export default UserData;

@@ -2,21 +2,12 @@
   "permissions": {
     "storage": {
       "dynamo317d232a": [
-        "create",
-        "read",
-        "update",
-        "delete"
+        "read"
       ],
-      "pbbnttransactions": [
-        "create",
+      "pbbntids": [
         "read"
       ]
     }
   },
-  "lambdaLayers": [
-    {
-      "type": "ExternalLayer",
-      "arn": "arn:aws:lambda:us-east-1:104005586102:layer:Pandas:1"
-    }
-  ]
+  "lambdaLayers": []
 }

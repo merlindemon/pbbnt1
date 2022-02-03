@@ -53,7 +53,7 @@ class Dropzone extends Component {
 
   fileListToArray(list) {
     const array = []
-    for (var i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
       array.push(list.item(i))
     }
     return array
@@ -73,7 +73,6 @@ class Dropzone extends Component {
           ref={this.fileInputRef}
           className="FileInput"
           type="file"
-          // multiple
           onChange={this.onFilesAdded}
         />
         <img

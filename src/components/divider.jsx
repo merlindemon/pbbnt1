@@ -9,9 +9,9 @@ class Divider extends Component {
     };
     return (
       <div>
-        <br></br>
+        <br/>
         <hr style={divStyle} />
-        <br></br>
+        <br/>
       </div>
     );
   }

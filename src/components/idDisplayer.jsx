@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class UserID extends Component {
   constructor(props) {
-    super();
+    super(undefined);
     this.state = {};
   }
   render() {
@@ -16,7 +16,7 @@ class UserID extends Component {
           <h1>Entries</h1>
         </center>
         <div>
-          <table border="1" class="entries">
+          <table border="1" className="entries">
             <th>Email</th>
             <th>IDs</th>
             {sorted_entries.map((entry) => (
