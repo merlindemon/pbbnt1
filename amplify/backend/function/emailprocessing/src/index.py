@@ -33,6 +33,7 @@ def handler(event, context):
                 client = boto3.client('dynamodb')
                 gamedate = ""
                 counter = 0
+                print(line_array)
                 for line in line_array:
                     counter += 1
                     if(counter == 1):
@@ -62,6 +63,21 @@ def handler(event, context):
                         }
                     }
                     data = client.query(**query_kwargs)
+                    rank = str(player_array[0])
+                    if not rank:
+                        rank = str(0)
+                    hands = str(player_array[3])
+                    if not hands:
+                        hands = str(0)
+                    profit = str(player_array[4])
+                    if not profit:
+                        profit = str(0)
+                    buyin = str(player_array[5])
+                    if not buyin:
+                        buyin = str(0)
+                    tips = str(player_array[6])
+                    if not tips:
+                        tips = str(0)
 
                     #Make sure the player names match, if not delete and re-add entry with the new player name
                     if len(data['Items']) > 0:
@@ -88,6 +104,7 @@ def handler(event, context):
                             }
                             client.put_item(**put_kwargs)
 
+                    #Add the Game transaction to the transaction table
                     put_kwargs = {
                         'TableName': TRANSACTIONS_TABLENAME,
                         'Item': {
@@ -98,30 +115,32 @@ def handler(event, context):
                         }
                     }
                     client.put_item(**put_kwargs)
+
+                    #Add the data to the Game Data table
                     print('Number of unique IDs found that match ' + str(player_array[2]) + ': ' + str(len(data['Items'])))
                     if len(data['Items']) == 1:
                         # Do update as the userid already is present/has an bank
                         print('Unique Player ID ' + str(player_array[2]) + ' exists, updating data.')
-                        print('Updating Data: add Hands :h, Profit :p, BuyIn :b, Tips :t = ' + ','.join([str(player_array[3]),str(player_array[4]),str(player_array[5]),str(player_array[6])]))
+                        print('Updating Data: add Hands :h, Profit :p, BuyIn :b, Tips :t = ' + ','.join([hands,profit,buyin,tips]))
                         update_kwargs = {
                             'TableName': DATA_TABLENAME,
                             'UpdateExpression': "add Hands :h, Profit :p, BuyIn :b, Tips :t",
                             'Key': {'ID':{'S':str(player_array[2])},'Player':{'S':str(player_array[1])}},
                             'ExpressionAttributeValues': {
-                                ':h': {"N": str(player_array[3])},
-                                ':p': {"N": str(player_array[4])},
-                                ':b': {"N": str(player_array[5])},
-                                ':t': {"N": str(player_array[6])}
+                                ':h': {"N": hands},
+                                ':p': {"N": profit},
+                                ':b': {"N": buyin},
+                                ':t': {"N": tips}
                             }
                         }
                         client.update_item(**update_kwargs)
-                        print('Setting Player Rank: set #r=:r = ' + str(player_array[0]))
+                        print('Setting Player Rank: set #r=:r = ' + rank)
                         update_kwargs = {
                             'TableName': DATA_TABLENAME,
                             'UpdateExpression': "set #r=:r",
                             'Key': {'ID':{'S':str(player_array[2])},'Player':{'S':str(player_array[1])}},
                             'ExpressionAttributeValues': {
-                                ':r': {"N": str(player_array[0])}
+                                ':r': {"N": rank}
                             },
                             'ExpressionAttributeNames': {
                                 '#r':"Rank"
@@ -132,17 +151,17 @@ def handler(event, context):
                         print('Multiple IDs exist for this player ' + str(player_array[2]) + ' , ERROR.')
                     else:
                         print('Player ID ' + str(player_array[2]) + ' did not previously exist, importing data.')
-                        print('Updating Data: ID,Rank,Player,Hands,Profit,BuyIn,Tips = ' + ','.join([str(player_array[2]),str(player_array[0]),str(player_array[1]),str(player_array[3]),str(player_array[4]),str(player_array[5]),str(player_array[6])]))
+                        print('Updating Data: ID,Rank,Player,Hands,Profit,BuyIn,Tips = ' + ','.join([str(player_array[2]),rank,str(player_array[1]),hands,profit,buyin,tips]))
                         put_kwargs = {
                             'TableName': DATA_TABLENAME,
                             'Item': {
                                 'ID': {'S': str(player_array[2])},
-                                'Rank': {'N': str(player_array[0])},
+                                'Rank': {'N': rank},
                                 'Player': {'S': str(player_array[1])},
-                                'Hands': {'N': str(player_array[3])},
-                                'Profit': {'N': str(player_array[4])},
-                                'BuyIn': {'N': str(player_array[5])},
-                                'Tips': {'N': str(player_array[6])},
+                                'Hands': {'N': hands},
+                                'Profit': {'N': profit},
+                                'BuyIn': {'N': buyin},
+                                'Tips': {'N': tips},
                             }
                         }
                         client.put_item(**put_kwargs)

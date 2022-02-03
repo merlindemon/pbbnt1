@@ -127,7 +127,7 @@
         },
         "emailprocessing": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/emailprocessing-627772677543695a6e2f-build.zip",
+          "s3Key": "amplify-builds/emailprocessing-50435369643154784e76-build.zip",
           "dynamoDb": "dynamo317d232a"
         },
         "resetTips": {
@@ -249,7 +249,7 @@
         },
         "emailprocessing": {
           "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
-          "s3Key": "amplify-builds/emailprocessing-627772677543695a6e2f-build.zip",
+          "s3Key": "amplify-builds/emailprocessing-50435369643154784e76-build.zip",
           "dynamoDb": "dynamo317d232a"
         },
         "resetTips": {

@@ -43,7 +43,8 @@
     "useDefault": "manual",
     "sharedId": "5cf00a19",
     "userPoolGroupList": [
-      "admin"
+      "admin",
+      "manager"
     ],
     "userPoolGroups": true,
     "usernameCaseSensitive": false,
@@ -74,6 +75,7 @@
     "permissions": [],
     "authProviders": [],
     "thirdPartyAuth": false,
+    "hostedUIProviderCreds": "[]",
     "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"],\"LogoutURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"]}"
   }
 }

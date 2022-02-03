@@ -5,6 +5,8 @@ import awsconfig from "../aws-exports";
 import Amplify, {API, Auth} from "aws-amplify";
 import LoadingSpinner from "./loadingSpinner";
 import UserTransactionsAdminView from "./usertransactionsadminview";
+import Header from "./header";
+import AdminConsole from "./adminConsole";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -22,6 +24,8 @@ class Entry extends React.Component {
       profit: 0.0,
       tips: 0.0,
       adjust: "",
+      groups: [],
+      toggleTransactions: false,
     };
   }
 
@@ -29,6 +33,7 @@ class Entry extends React.Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
+        groups: user.signInUserSession.idToken.payload["cognito:groups"],
         rank: this.props.entry.Rank,
         hands: this.props.entry.Hands,
         email: this.props.entry.Email,
@@ -73,6 +78,23 @@ class Entry extends React.Component {
 
   render() {
     let { rank, playernames, ids, hands, profit, tips, adjust } = this.state;
+    let isAdmin = false;
+    if (typeof this.state.groups !== "undefined") {
+      isAdmin = this.state.groups.includes("admin");
+    }
+    let adjustButtondisplay = '';
+    let inputdisplay = '';
+    if (isAdmin) {
+      adjustButtondisplay = (this.state.toggleTransactions
+          ? this.displayTransactions(ids)
+          : this.displayAdjustButton());
+      inputdisplay = <input
+          placeholder=""
+          onChange={this.handleAdjust}
+          value={adjust}
+          className="input1"
+      />;
+    }
     return (
       <tr>
         <td className="entry-rank" id={rank}>
@@ -91,17 +113,10 @@ class Entry extends React.Component {
           {formatMoney(profit)}
         </td>
         <td>
-          <input
-            placeholder=""
-            onChange={this.handleAdjust}
-            value={adjust}
-            className="input1"
-            />
+          {inputdisplay}
         </td>
         <td>
-          {this.state.toggleTransactions
-                        ? this.displayTransactions(ids)
-                        : this.displayAdjustButton()}
+          {adjustButtondisplay}
         </td>
       </tr>
     );

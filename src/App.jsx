@@ -5,6 +5,7 @@ import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import React from "react";
 import LoadingSpinner from "./components/loadingSpinner";
 import AdminConsole from "./components/adminConsole";
+import ManagerConsole from "./components/managerConsole";
 import UserConsole from "./components/userConsole";
 import Header from "./components/header";
 import { v4 as uuid } from 'uuid';
@@ -104,15 +105,22 @@ class App extends React.Component {
 
   render() {
     let isAdmin = false;
+    let isManager = false;
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
+      isManager = this.state.groups.includes("manager");
     }
     let display;
     if (isAdmin) {
       display = (
         <AdminConsole email={this.state.email} jwtKey={this.state.jwtKey} />
       );
-    } else {
+    } else if(isManager) {
+      display = (
+          <ManagerConsole email={this.state.email} jwtKey={this.state.jwtKey} />
+      );
+    }
+    else {
       display =
         this.state.email === "" ? (
           <LoadingSpinner />
