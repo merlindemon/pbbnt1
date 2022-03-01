@@ -22,7 +22,7 @@ class UserID extends Component {
             {sorted_entries.map((entry) => (
               <tr>
                 <td>{entry.email.S}</td>
-                <td>{joinIds(entry.ids.L)}</td>
+                <td>{joinIds(entry.ids)}</td>
               </tr>
             ))}
           </table>
@@ -34,9 +34,13 @@ class UserID extends Component {
 
 function joinIds(ids) {
   let array = [];
-  ids.forEach((id) => {
-    array.push(id.S);
-  });
+  if(ids !== undefined){
+    ids = ids.L;
+    ids.forEach((id) => {
+      array.push(id.S);
+    });
+  }
+
   return array.join();
 }
 

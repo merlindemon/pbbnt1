@@ -205,6 +205,22 @@
           ]
         }
       ]
+    },
+    "commentscrud": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "storage",
+          "resourceName": "pbbntids",
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ]
+        }
+      ]
     }
   },
   "api": {
@@ -320,6 +336,21 @@
           "resourceName": "userPoolGroups",
           "attributes": [
             "adminGroupRole"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "commentscrud",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "managerGroupRole"
           ]
         }
       ]

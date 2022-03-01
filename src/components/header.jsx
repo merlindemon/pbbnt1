@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
-import Divider from "./divider";
-// import background from "../../pubic/pokerrrr2logo.webp";
 
 class Header extends Component {
   render() {

@@ -5,8 +5,7 @@ import awsconfig from "../aws-exports";
 import Amplify, {API, Auth} from "aws-amplify";
 import LoadingSpinner from "./loadingSpinner";
 import UserTransactionsAdminView from "./usertransactionsadminview";
-import Header from "./header";
-import AdminConsole from "./adminConsole";
+import Comment from "./comment"
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -26,6 +25,8 @@ class Entry extends React.Component {
       adjust: "",
       groups: [],
       toggleTransactions: false,
+      loading: false,
+      displayComment: false
     };
   }
 
@@ -76,14 +77,25 @@ class Entry extends React.Component {
     return <button onClick={() => this.adjustProfit()}>Add/Subtract</button>;
   }
 
+  getComment(email){
+    return <Comment email={email}/>;
+  }
+
+  toggleComment(){
+    this.setState({ displayComment: !this.state.displayComment });
+  }
+
   render() {
-    let { rank, playernames, ids, hands, profit, tips, adjust } = this.state;
+    let { rank, playernames, ids, hands, profit, tips, adjust, email } = this.state;
     let isAdmin = false;
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
     }
     let adjustButtondisplay = '';
     let inputdisplay = '';
+    let commentDisplay = (this.state.displayComment
+        ? this.getComment(email)
+        : <div/>);
     if (isAdmin) {
       adjustButtondisplay = (this.state.toggleTransactions
           ? this.displayTransactions(ids)
@@ -100,7 +112,9 @@ class Entry extends React.Component {
         <td className="entry-rank" id={rank}>
           {rank}
         </td>
-        <td className="entry-player">{playernames.join(" ")}
+        <td className="entry-player">
+          <button onClick={() => this.toggleComment()}>{playernames.join(" ")}</button>
+          {commentDisplay}
         </td>
         <td className="entry-id">
             <button className="ids-button" onClick={() => this.toggleTransactions()}>{ids.join(" ")}</button>
@@ -166,5 +180,6 @@ async function adjustProfitBalance(jwtKey, ids, adjust) {
     });
   return response;
 }
+
 
 export default Entry;

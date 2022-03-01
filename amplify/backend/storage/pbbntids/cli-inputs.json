@@ -1,0 +1,10 @@
+{
+  "resourceName": "pbbntids",
+  "tableName": "pbbntids",
+  "partitionKey": {
+    "fieldName": "email",
+    "fieldType": "string"
+  },
+  "triggerFunctions": [],
+  "gsi": []
+}

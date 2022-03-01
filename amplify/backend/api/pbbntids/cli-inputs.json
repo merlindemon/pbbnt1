@@ -18,6 +18,22 @@
           ]
         }
       }
+    },
+    "/comment": {
+      "name": "/comment",
+      "lambdaFunction": "commentscrud",
+      "permissions": {
+        "groups": {
+          "admin": [
+            "read",
+            "update"
+          ],
+          "manager": [
+            "read"
+          ]
+        },
+        "setting": "private"
+      }
     }
   }
 }

@@ -26,7 +26,9 @@ def handler(event, context):
         id_to_email = {}
         for result in result_array:
             email = result['email']['S']
-            ids_array = result['ids']['L']
+            ids_array = []
+            if 'ids' in result:
+                ids_array = result['ids']['L']
             for identifier in ids_array:
                 identifier = identifier['S']
                 id_to_email[identifier] = email

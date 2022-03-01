@@ -110,7 +110,7 @@
         },
         "pbbntadmin": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/pbbntadmin-6f6a3271555565307377-build.zip"
+          "s3Key": "amplify-builds/pbbntadmin-345246512b5a35745a34-build.zip"
         },
         "pbbntids": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
@@ -137,6 +137,10 @@
         "AdminQueriese020bed2": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
           "s3Key": "amplify-builds/AdminQueriese020bed2-75686254743261634155-build.zip"
+        },
+        "commentscrud": {
+          "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
+          "s3Key": "amplify-builds/commentscrud-496e4f5547764d36507a-build.zip"
         }
       },
       "hosting": {
