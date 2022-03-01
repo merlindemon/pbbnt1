@@ -140,7 +140,7 @@
         },
         "commentscrud": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/commentscrud-496e4f5547764d36507a-build.zip"
+          "s3Key": "amplify-builds/commentscrud-7274326c57726470536a-build.zip"
         }
       },
       "hosting": {

@@ -111,6 +111,11 @@ button {
   padding-right: 1rem;
 }
 
+.comment_textarea{
+  background: transparent;
+  border: none;
+}
+
 .input1{
   margin-left: 1rem;
   margin-right: 1rem;

@@ -4,7 +4,6 @@ import React from "react";
 import awsconfig from "../aws-exports";
 import Amplify, {API, Auth} from "aws-amplify";
 import LoadingSpinner from "./loadingSpinner";
-import UserTransactionsAdminView from "./usertransactionsadminview";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -18,6 +17,7 @@ class Comment extends React.Component {
             comment: "",
             groups: [],
             loading: false,
+            backgroundColor: "#FF0000"
         };
     }
 
@@ -33,23 +33,23 @@ class Comment extends React.Component {
         });
         let comment = await retrieveComment(this.state.jwtKey, this.state.email);
         if (comment !== undefined){
-            this.setState({ comment });
+            this.setState({ comment, backgroundColor: "#03942a" });
         }
     }
 
     handleComment = (event) => {
-        this.setState({ comment: event.target.value });
+        this.setState({ comment: event.target.value, backgroundColor: "#FFFF00" });
     };
 
     async saveComments() {
         this.setState({ loading: true });
         let response = await setComment(this.state.jwtKey, this.state.email, this.state.comment);
-        this.setState({ loading: false });
+        this.setState({ loading: false, backgroundColor: "#03942a" });
         return '';
     }
 
     render() {
-        let { comment } = this.state;
+        let { comment, backgroundColor } = this.state;
         let commentBox = <p>{comment}</p>;
         let isAdmin = false;
         if (typeof this.state.groups !== "undefined") {
@@ -57,13 +57,20 @@ class Comment extends React.Component {
         }
         let saveBtn = this.state.loading ? <LoadingSpinner/> : <button onClick={() => this.saveComments()}>Save</button>;
         if (isAdmin) {
-            commentBox = <div>
-                <textarea
-                    id="comment_text"
-                    value={comment}
-                    onChange={this.handleComment}
-                    >
-                </textarea>
+            let styles = {
+                background: backgroundColor,
+            };
+
+            commentBox =
+                <div>
+                    <div style={styles}>
+                       <textarea
+                           className="comment_textarea"
+                           value={comment}
+                           onChange={this.handleComment}
+                       >
+                        </textarea>
+                    </div>
                 {saveBtn}
                 </div>;
         }
