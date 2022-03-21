@@ -1,0 +1,22 @@
+{
+  "resourceName": "dynamo317d232a",
+  "tableName": "dynamo317d232a",
+  "partitionKey": {
+    "fieldName": "ID",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "Player",
+    "fieldType": "string"
+  },
+  "triggerFunctions": [],
+  "gsi": [
+    {
+      "name": "playername",
+      "partitionKey": {
+        "fieldName": "Player",
+        "fieldType": "string"
+      }
+    }
+  ]
+}
