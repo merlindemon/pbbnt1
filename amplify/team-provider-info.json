@@ -1,62 +1,4 @@
 {
-  "dev": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-pbbnt1-dev-154147-authRole",
-      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-154147-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-154147-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-      "UnauthRoleName": "amplify-pbbnt1-dev-154147-unauthRole",
-      "StackName": "amplify-pbbnt1-dev-154147",
-      "StackId": "arn:aws:cloudformation:us-east-1:104005586102:stack/amplify-pbbnt1-dev-154147/adb86110-f3c9-11eb-8b9c-0e443e7db6f3",
-      "AmplifyAppId": "d354x4puf55ou7",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-dev-154147-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
-    },
-    "categories": {
-      "auth": {
-        "pbbnt5cf00a19": {},
-        "userPoolGroups": {}
-      },
-      "function": {
-        "pbbntuser": {
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/pbbntuser-486a543356696b2b422f-build.zip"
-        },
-        "pbbntadmin": {
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/pbbntadmin-7a2f473134506b4a484b-build.zip"
-        },
-        "pbbntids": {
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/pbbntids-2f5637332f6d35475231-build.zip"
-        },
-        "resetHands": {
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/resetHands-717064654f4e7a50304f-build.zip"
-        },
-        "pbbnttransactions": {
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/pbbnttransactions-525157376a79484c5374-build.zip",
-          "tz": "US/Eastern"
-        },
-        "emailprocessing": {
-          "dynamoDb": "dynamo317d232a",
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/emailprocessing-627772677543695a6e2f-build.zip"
-        },
-        "resetTips": {
-          "deploymentBucketName": "amplify-pbbnt1-dev-154147-deployment",
-          "s3Key": "amplify-builds/resetTips-2b6e4d78534b58715741-build.zip"
-        }
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d354x4puf55ou7",
-          "type": "manual"
-        }
-      }
-    }
-  },
   "test": {
     "awscloudformation": {
       "AuthRoleName": "amplify-pbbnt1-test-55859-authRole",
@@ -141,6 +83,9 @@
         "commentscrud": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
           "s3Key": "amplify-builds/commentscrud-7274326c57726470536a-build.zip"
+        },
+        "undoemailprocessing": {
+          "dynamoDb": "dynamo317d232a"
         }
       },
       "hosting": {
@@ -153,65 +98,6 @@
         "pbbnt5cf00a19": {},
         "userPoolGroups": {},
         "true": {}
-      }
-    }
-  },
-  "testthree": {
-    "awscloudformation": {
-      "AuthRoleName": "amplify-pbbnt1-testthree-222115-authRole",
-      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-testthree-222115-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-testthree-222115-authRole",
-      "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-      "UnauthRoleName": "amplify-pbbnt1-testthree-222115-unauthRole",
-      "StackName": "amplify-pbbnt1-testthree-222115",
-      "StackId": "arn:aws:cloudformation:us-east-1:104005586102:stack/amplify-pbbnt1-testthree-222115/d9b4e220-8244-11ec-96e2-0e15952a33a1",
-      "AmplifyAppId": "d354x4puf55ou7",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-testthree-222115-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
-    },
-    "categories": {
-      "function": {
-        "pbbntuser": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/pbbntuser-486a543356696b2b422f-build.zip"
-        },
-        "pbbntadmin": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/pbbntadmin-7a2f473134506b4a484b-build.zip"
-        },
-        "pbbntids": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/pbbntids-2f5637332f6d35475231-build.zip"
-        },
-        "resetHands": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/resetHands-717064654f4e7a50304f-build.zip"
-        },
-        "pbbnttransactions": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/pbbnttransactions-797658745a54386d3672-build.zip",
-          "tz": "US/Eastern"
-        },
-        "emailprocessing": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/emailprocessing-4944416a4e4e48343656-build.zip",
-          "dyanmoDb": "1234",
-          "dynamoDb": "3456"
-        },
-        "resetTips": {
-          "deploymentBucketName": "amplify-pbbnt1-testthree-222115-deployment",
-          "s3Key": "amplify-builds/resetTips-7170532b394263726f2b-build.zip"
-        }
-      },
-      "hosting": {
-        "amplifyhosting": {
-          "appId": "d354x4puf55ou7",
-          "type": "manual"
-        }
-      },
-      "auth": {
-        "pbbnt5cf00a19": {},
-        "userPoolGroups": {}
       }
     }
   },
@@ -236,7 +122,7 @@
         },
         "pbbntadmin": {
           "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
-          "s3Key": "amplify-builds/pbbntadmin-6f6a3271555565307377-build.zip"
+          "s3Key": "amplify-builds/pbbntadmin-345246512b5a35745a34-build.zip"
         },
         "pbbntids": {
           "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
@@ -263,6 +149,10 @@
         "AdminQueriese020bed2": {
           "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
           "s3Key": "amplify-builds/AdminQueriese020bed2-75686254743261634155-build.zip"
+        },
+        "commentscrud": {
+          "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
+          "s3Key": "amplify-builds/commentscrud-7274326c57726470536a-build.zip"
         }
       },
       "hosting": {
