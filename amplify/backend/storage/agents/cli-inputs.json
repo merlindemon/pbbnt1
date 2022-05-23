@@ -1,0 +1,10 @@
+{
+  "resourceName": "agents",
+  "tableName": "agents",
+  "partitionKey": {
+    "fieldName": "agent_email",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

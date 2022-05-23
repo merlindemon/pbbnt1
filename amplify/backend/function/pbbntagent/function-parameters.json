@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "storage": {
+      "agents": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "dyanmodb",
+      "environmentVariableName": "dyanmodb"
+    }
+  ]
+}
