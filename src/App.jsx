@@ -6,9 +6,10 @@ import React from "react";
 import LoadingSpinner from "./components/loadingSpinner";
 import AdminConsole from "./components/adminConsole";
 import ManagerConsole from "./components/managerConsole";
+import AgentConsole from "./components/agentConsole";
 import UserConsole from "./components/userConsole";
 import Header from "./components/header";
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
 import {
   AmplifyAuthContainer,
@@ -71,16 +72,15 @@ const AuthStateApp = () => {
               // placeholder: uuid(),
               value: uuid(),
               readonly: true,
-              inputProps: { required: false, }
-            }
+              inputProps: { required: false },
+            },
           ]}
         />
-        <AmplifySignIn slot="sign-in" usernameAlias="email"/>
+        <AmplifySignIn slot="sign-in" usernameAlias="email" />
       </AmplifyAuthenticator>
     </AmplifyAuthContainer>
   );
 };
-
 
 class App extends React.Component {
   constructor(props) {
@@ -106,21 +106,26 @@ class App extends React.Component {
   render() {
     let isAdmin = false;
     let isManager = false;
+    let isAgent = false;
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
       isManager = this.state.groups.includes("manager");
+      isAgent = this.state.groups.includes("agent");
     }
     let display;
     if (isAdmin) {
       display = (
         <AdminConsole email={this.state.email} jwtKey={this.state.jwtKey} />
       );
-    } else if(isManager) {
+    } else if (isManager) {
       display = (
-          <ManagerConsole email={this.state.email} jwtKey={this.state.jwtKey} />
+        <ManagerConsole email={this.state.email} jwtKey={this.state.jwtKey} />
       );
-    }
-    else {
+    } else if (isAgent) {
+      display = (
+        <AgentConsole email={this.state.email} jwtKey={this.state.jwtKey} />
+      );
+    } else {
       display =
         this.state.email === "" ? (
           <LoadingSpinner />

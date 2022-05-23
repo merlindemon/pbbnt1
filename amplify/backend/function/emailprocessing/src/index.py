@@ -5,6 +5,8 @@ import email
 import io
 from email.message import EmailMessage
 import os
+import re
+
 DATA_TABLENAME = 'dynamo317d232a-' + os.environ["ENV"]
 TRANSACTIONS_TABLENAME = 'pbbnttransactions-' + os.environ["ENV"]
 HEADER1 = "Rank,Player,ID,Hands,Profit,BuyIn,Tips,ClubID,GameCode,DateStarted,DateEnded,GameType,BigBlind,TotalTips"
@@ -23,6 +25,7 @@ def handler(event, context):
     FIELD_PROFIT = 4
     FIELD_BUYIN = 5
     field_tips = 6
+    field_clubcode = 7
     field_gamedate = 9
 
     print(json.dumps(event))
@@ -48,7 +51,7 @@ def handler(event, context):
                 print(line_array)
                 for line in line_array:
                     counter += 1
-                    if(counter == 1):
+                    if counter == 1:
                         #Is header line, skip
                         if line == HEADER1:
                             print('Header Format 1')
@@ -56,11 +59,21 @@ def handler(event, context):
                             print("Header Format 2")
                             field_gamedate = 11
                             field_tips = 8
-                        elif line == HEADER3:
+                            field_clubcode = 9
+                        elif re.match(HEADER3, line):
                             print("Header Format 3")
                         else:
                             print("Header format unrecognized")
                             print(line)
+                            return {
+                                'statusCode': 200,
+                                'headers': {
+                                    'Access-Control-Allow-Headers': '*',
+                                    'Access-Control-Allow-Origin': '*',
+                                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+                                },
+                                'body': json.dumps('Header format unrecognized')
+                            }
                         continue
                     if not line:
                         #If it's an empty line, skip it
@@ -70,6 +83,19 @@ def handler(event, context):
                     if player_array[field_gamedate] is not None and player_array[field_gamedate] != '':
                         gamedate = player_array[field_gamedate]
                         print('Gamedate is: [' + gamedate + ']')
+                    if counter == 2:
+                        if player_array[field_clubcode] is not None \
+                                and player_array[field_clubcode] != ''\
+                                and player_array[field_clubcode] != '#69hdd':
+                            return {
+                                'statusCode': 200,
+                                'headers': {
+                                    'Access-Control-Allow-Headers': '*',
+                                    'Access-Control-Allow-Origin': '*',
+                                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+                                },
+                                'body': json.dumps('Incorrect club code: [' + player_array[field_clubcode] + ']')
+                            }
                     print('Player is: ' + player_array[FIELD_PLAYERID] + ' ' + player_array[FIELD_PLAYERNAME])
 
                     # Check if there is just one entry in the DB for this player ID

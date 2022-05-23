@@ -52,7 +52,7 @@
         },
         "pbbntadmin": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/pbbntadmin-345246512b5a35745a34-build.zip"
+          "s3Key": "amplify-builds/pbbntadmin-6f2b6d786774586a6257-build.zip"
         },
         "pbbntids": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
@@ -69,7 +69,7 @@
         },
         "emailprocessing": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/emailprocessing-50435369643154784e76-build.zip",
+          "s3Key": "amplify-builds/emailprocessing-4b6164762b67494d4e42-build.zip",
           "dynamoDb": "dynamo317d232a"
         },
         "resetTips": {
@@ -85,7 +85,14 @@
           "s3Key": "amplify-builds/commentscrud-7274326c57726470536a-build.zip"
         },
         "undoemailprocessing": {
+          "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
+          "s3Key": "amplify-builds/undoemailprocessing-6d7961734b6c53737a47-build.zip",
           "dynamoDb": "dynamo317d232a"
+        },
+        "pbbntagent": {
+          "dyanmodb": "agents",
+          "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
+          "s3Key": "amplify-builds/pbbntagent-58707232504f2f47427a-build.zip"
         }
       },
       "hosting": {
@@ -139,7 +146,7 @@
         },
         "emailprocessing": {
           "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
-          "s3Key": "amplify-builds/emailprocessing-50435369643154784e76-build.zip",
+          "s3Key": "amplify-builds/emailprocessing-4b6164762b67494d4e42-build.zip",
           "dynamoDb": "dynamo317d232a"
         },
         "resetTips": {
@@ -153,6 +160,11 @@
         "commentscrud": {
           "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
           "s3Key": "amplify-builds/commentscrud-7274326c57726470536a-build.zip"
+        },
+        "undoemailprocessing": {
+          "deploymentBucketName": "amplify-pbbnt1-prod-114238-deployment",
+          "s3Key": "amplify-builds/undoemailprocessing-6d7961734b6c53737a47-build.zip",
+          "dynamoDb": "dynamo317d232a"
         }
       },
       "hosting": {

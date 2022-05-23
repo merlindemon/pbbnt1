@@ -43,6 +43,18 @@
     "storagepbbntidsStreamArn": {
       "Type": "String",
       "Default": "storagepbbntidsStreamArn"
+    },
+    "storageagentsName": {
+      "Type": "String",
+      "Default": "storageagentsName"
+    },
+    "storageagentsArn": {
+      "Type": "String",
+      "Default": "storageagentsArn"
+    },
+    "storageagentsStreamArn": {
+      "Type": "String",
+      "Default": "storageagentsStreamArn"
     }
   },
   "Conditions": {
@@ -115,6 +127,15 @@
             },
             "STORAGE_PBBNTIDS_STREAMARN": {
               "Ref": "storagepbbntidsStreamArn"
+            },
+            "STORAGE_AGENTS_NAME": {
+              "Ref": "storageagentsName"
+            },
+            "STORAGE_AGENTS_ARN": {
+              "Ref": "storageagentsArn"
+            },
+            "STORAGE_AGENTS_STREAMARN": {
+              "Ref": "storageagentsStreamArn"
             }
           }
         },
@@ -273,6 +294,33 @@
                     [
                       {
                         "Ref": "storagepbbntidsArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storageagentsArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storageagentsArn"
                       },
                       "index/*"
                     ]

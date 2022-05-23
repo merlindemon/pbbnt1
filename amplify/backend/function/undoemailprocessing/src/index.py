@@ -1,5 +1,4 @@
 import json
-import urllib.parse
 import boto3
 import email
 import io
@@ -27,8 +26,8 @@ def handler(event, context):
 
     print(json.dumps(event))
     # Get the object from the event and show its content type
-    bucket = event['Records'][0]['s3']['bucket']['name']
-    key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
+    bucket = event['bucket']
+    key = event['key']
     try:
         response = s3.get_object(Bucket=bucket, Key=key)
         email_message: EmailMessage = email.message_from_bytes(response['Body'].read(), _class=EmailMessage)
@@ -48,7 +47,7 @@ def handler(event, context):
                 print(line_array)
                 for line in line_array:
                     counter += 1
-                    if(counter == 1):
+                    if counter == 1:
                         #Is header line, skip
                         if line == HEADER1:
                             print('Header Format 1')
@@ -102,6 +101,11 @@ def handler(event, context):
                     if not tips:
                         tips = str(0)
 
+                    hands = str(int(hands) * (-1))
+                    profit = str(float(profit) * (-1))
+                    buyin = str(float(buyin) * (-1))
+                    tips = str(float(tips) * (-1))
+
                     #Make sure the player names match, if not delete and re-add entry with the new player name
                     if len(data['Items']) > 0:
                         print('DB Table PLayer Name' + str(data['Items'][0]['Player']['S']))
@@ -127,24 +131,19 @@ def handler(event, context):
                             }
                             client.put_item(**put_kwargs)
 
-                    #Add the Game transaction to the transaction table
-                    put_kwargs = {
+                    #Remove the Game transaction from the transaction table
+                    delete_kwargs = {
                         'TableName': TRANSACTIONS_TABLENAME,
-                        'Item': {
-                            'ID': {'S': str(player_array[FIELD_PLAYERID])},
-                            'Date': {'S': str(gamedate)},
-                            'Type': {'S': "Game"},
-                            'Amount': {'N': str(player_array[FIELD_PROFIT])},
-                        }
+                        'Key': {'ID':{'S':str(player_array[FIELD_PLAYERID])},'Date':{'S':str(gamedate)}}
                     }
-                    client.put_item(**put_kwargs)
+                    client.delete_item(**delete_kwargs)
 
-                    #Add the data to the Game Data table
+                    #Undo the data changes to the Game Data table
                     print('Number of unique IDs found that match ' + str(player_array[FIELD_PLAYERID]) + ': ' + str(len(data['Items'])))
                     if len(data['Items']) == 1:
                         # Do update as the userid already is present/has an bank
                         print('Unique Player ID ' + str(player_array[FIELD_PLAYERID]) + ' exists, updating data.')
-                        print('Updating Data: add Hands :h, Profit :p, BuyIn :b, Tips :t = ' + ','.join([hands,profit,buyin,tips]))
+                        print('Updating Data: subtract Hands :h, Profit :p, BuyIn :b, Tips :t = ' + ','.join([hands,profit,buyin,tips]))
                         update_kwargs = {
                             'TableName': DATA_TABLENAME,
                             'UpdateExpression': "add Hands :h, Profit :p, BuyIn :b, Tips :t",
@@ -157,37 +156,11 @@ def handler(event, context):
                             }
                         }
                         client.update_item(**update_kwargs)
-                        print('Setting Player Rank: set #r=:r = ' + rank)
-                        update_kwargs = {
-                            'TableName': DATA_TABLENAME,
-                            'UpdateExpression': "set #r=:r",
-                            'Key': {'ID':{'S':str(player_array[FIELD_PLAYERID])},'Player':{'S':str(player_array[FIELD_PLAYERNAME])}},
-                            'ExpressionAttributeValues': {
-                                ':r': {"N": rank}
-                            },
-                            'ExpressionAttributeNames': {
-                                '#r':"Rank"
-                            }
-                        }
-                        client.update_item(**update_kwargs)
                     elif len(data['Items']) > 1:
                         print('Multiple IDs exist for this player ' + str(player_array[FIELD_PLAYERID]) + ' , ERROR.')
                     else:
                         print('Player ID ' + str(player_array[FIELD_PLAYERNAME]) + ' did not previously exist, importing data.')
-                        print('Updating Data: ID,Rank,Player,Hands,Profit,BuyIn,Tips = ' + ','.join([str(player_array[FIELD_PLAYERID]),rank,str(player_array[FIELD_PLAYERID]),hands,profit,buyin,tips]))
-                        put_kwargs = {
-                            'TableName': DATA_TABLENAME,
-                            'Item': {
-                                'ID': {'S': str(player_array[FIELD_PLAYERID])},
-                                'Rank': {'N': rank},
-                                'Player': {'S': str(player_array[FIELD_PLAYERNAME])},
-                                'Hands': {'N': hands},
-                                'Profit': {'N': profit},
-                                'BuyIn': {'N': buyin},
-                                'Tips': {'N': tips},
-                            }
-                        }
-                        client.put_item(**put_kwargs)
+                        print('Not planning to update Data: ID,Rank,Player,Hands,Profit,BuyIn,Tips = ' + ','.join([str(player_array[FIELD_PLAYERID]),rank,str(player_array[FIELD_PLAYERID]),hands,profit,buyin,tips]))
 
                 return {
                     'statusCode': 200,

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class UserID extends Component {
+class IdDisplayer extends Component {
   constructor(props) {
     super(undefined);
     this.state = {};
@@ -34,7 +34,7 @@ class UserID extends Component {
 
 function joinIds(ids) {
   let array = [];
-  if(ids !== undefined){
+  if (ids !== undefined) {
     ids = ids.L;
     ids.forEach((id) => {
       array.push(id.S);
@@ -44,4 +44,4 @@ function joinIds(ids) {
   return array.join();
 }
 
-export default UserID;
+export default IdDisplayer;

@@ -6,6 +6,9 @@
       ],
       "pbbntids": [
         "read"
+      ],
+      "agents": [
+        "read"
       ]
     }
   },

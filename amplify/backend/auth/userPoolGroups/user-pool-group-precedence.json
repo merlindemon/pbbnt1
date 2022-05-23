@@ -6,5 +6,9 @@
   {
     "groupName": "manager",
     "precedence": 2
+  },
+  {
+    "groupName": "agent",
+    "precedence": 3
   }
 ]

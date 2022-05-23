@@ -31,6 +31,14 @@ export type AmplifyDependentResourcesAttributes = {
         "EmailBucket": {
             "BucketName": "string",
             "Region": "string"
+        },
+        "agents": {
+            "Name": "string",
+            "Arn": "string",
+            "StreamArn": "string",
+            "PartitionKeyName": "string",
+            "PartitionKeyType": "string",
+            "Region": "string"
         }
     },
     "auth": {
@@ -48,7 +56,8 @@ export type AmplifyDependentResourcesAttributes = {
         },
         "userPoolGroups": {
             "adminGroupRole": "string",
-            "managerGroupRole": "string"
+            "managerGroupRole": "string",
+            "agentGroupRole": "string"
         }
     },
     "function": {
@@ -105,6 +114,18 @@ export type AmplifyDependentResourcesAttributes = {
             "Arn": "string",
             "Region": "string",
             "LambdaExecutionRole": "string"
+        },
+        "undoemailprocessing": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "pbbntagent": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
         }
     },
     "api": {
@@ -124,6 +145,11 @@ export type AmplifyDependentResourcesAttributes = {
             "ApiId": "string"
         },
         "AdminQueries": {
+            "RootUrl": "string",
+            "ApiName": "string",
+            "ApiId": "string"
+        },
+        "pbbntagents": {
             "RootUrl": "string",
             "ApiName": "string",
             "ApiId": "string"

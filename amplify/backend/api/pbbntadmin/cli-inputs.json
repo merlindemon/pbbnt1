@@ -1,20 +1,6 @@
 {
   "version": 1,
   "paths": {
-    "/pbbntadmin": {
-      "permissions": {
-        "setting": "protected",
-        "groups": {
-          "admin": [
-            "create",
-            "read",
-            "update",
-            "delete"
-          ]
-        }
-      },
-      "lambdaFunction": "pbbntadmin"
-    },
     "/hands": {
       "permissions": {
         "setting": "protected",
@@ -36,6 +22,27 @@
         "groups": {
           "admin": [
             "delete"
+          ]
+        },
+        "setting": "private"
+      }
+    },
+    "/pbbntadmin": {
+      "name": "/pbbntadmin",
+      "lambdaFunction": "pbbntadmin",
+      "permissions": {
+        "groups": {
+          "admin": [
+            "create",
+            "read",
+            "update",
+            "delete"
+          ],
+          "manager": [
+            "read"
+          ],
+          "agent": [
+            "read"
           ]
         },
         "setting": "private"

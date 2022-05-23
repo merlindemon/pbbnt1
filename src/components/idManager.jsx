@@ -1,6 +1,6 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import awsconfig from "../aws-exports";
-import Amplify, {API, Auth} from "aws-amplify";
+import Amplify, { API, Auth } from "aws-amplify";
 import IdDisplayer from "./idDisplayer";
 import LoadingSpinner from "./loadingSpinner";
 
@@ -8,7 +8,7 @@ Amplify.configure(awsconfig);
 API.configure(awsconfig);
 Auth.configure(awsconfig);
 
-class UserIds extends Component {
+class IdManager extends Component {
   state = {
     loading: true,
     email: "",
@@ -77,7 +77,12 @@ class UserIds extends Component {
           <tr>
             <td>
               <label>Email: </label>
-              <input onChange={this.handleEmail} value={this.state.email} className="input2" size="40"/>
+              <input
+                onChange={this.handleEmail}
+                value={this.state.email}
+                className="input2"
+                size="40"
+              />
             </td>
             <td>
               <label>ID: </label>
@@ -87,17 +92,27 @@ class UserIds extends Component {
                 value={this.state.id}
                 className="input3"
                 size="7"
-                />
+              />
             </td>
-            <td/>
+            <td />
           </tr>
           <tr>
             <td>
-              <button className="safebutton" onClick={() => this.addButtonAction()}>Associate ID</button>
+              <button
+                className="safebutton"
+                onClick={() => this.addButtonAction()}
+              >
+                Associate ID
+              </button>
             </td>
-            <td/>
+            <td />
             <td>
-            <button className="dangerousbutton" onClick={() => this.removeButtonAction()}>Remove ID</button>
+              <button
+                className="dangerousbutton"
+                onClick={() => this.removeButtonAction()}
+              >
+                Remove ID
+              </button>
             </td>
           </tr>
         </table>
@@ -118,12 +133,12 @@ async function getEntireEmailTable(jwtKey) {
     },
   };
   return await API.get("pbbntuser", "/ids", myInit)
-      .then((result) => {
-        return result.Items;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then((result) => {
+      return result.Items;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 async function associateEmailWithUserId(jwtKey, email, id) {
@@ -168,4 +183,4 @@ async function deassociateEmailWithUserId(jwtKey, email, id) {
   return response;
 }
 
-export default UserIds;
+export default IdManager;

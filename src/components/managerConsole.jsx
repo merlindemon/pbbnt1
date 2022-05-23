@@ -2,11 +2,11 @@ import React from "react";
 import Entries from "./entries";
 import LoadingSpinner from "./loadingSpinner";
 import awsconfig from "../aws-exports";
-import Amplify, {API, Auth} from "aws-amplify";
+import Amplify, { API, Auth } from "aws-amplify";
 import UserConsole from "./userConsole";
-import IdManager from "./idManager";
 import Divider from "./divider";
 
+const ADMIN_API = "pbbntadmin";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -20,7 +20,7 @@ class ManagerConsole extends React.Component {
       jwtKey: "",
       loading: false,
       email: "",
-      transaction_ids: []
+      transaction_ids: [],
     };
   }
 
@@ -42,12 +42,14 @@ class ManagerConsole extends React.Component {
 
   displayGameData() {
     return this.state.loading ? (
-        <LoadingSpinner/>
+      <LoadingSpinner />
     ) : (
-        <div>
-          <button className="safebutton" onClick={() => this.loadGameData()}>Refresh</button>
-          <Entries entries={this.state.entries}/>
-        </div>
+      <div>
+        <button className="safebutton" onClick={() => this.loadGameData()}>
+          Refresh
+        </button>
+        <Entries entries={this.state.entries} />
+      </div>
     );
   }
 
@@ -75,13 +77,13 @@ async function getGameData(jwtKey) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  return await API.get("pbbntadmin", "/pbbntadmin", myInit)
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  return await API.get(ADMIN_API, "/pbbntadmin", myInit)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export default ManagerConsole;

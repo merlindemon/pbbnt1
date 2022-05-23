@@ -1,219 +1,368 @@
 {
-    "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "Lambda Function resource stack creation using Amplify CLI",
-    "Parameters": {
-        "CloudWatchRule": {
-            "Type": "String",
-            "Default" : "NONE",
-            "Description" : " Schedule Expression"
-        },
-        "deploymentBucketName": {
-            "Type": "String"
-        },
-        "env": {
-            "Type": "String"
-        },
-        "s3Key": {
-            "Type": "String"
-        }
-        
-        ,
-        "dynamoDb": {
-            "Type": "String"
-        }
-        
-        
-        ,
-    
-    
-    
-        "storagedynamo317d232aName": {
-            "Type": "String",
-            "Default": "storagedynamo317d232aName"
-            },
-        
-        "storagedynamo317d232aArn": {
-            "Type": "String",
-            "Default": "storagedynamo317d232aArn"
-            },
-        
-        "storagedynamo317d232aStreamArn": {
-            "Type": "String",
-            "Default": "storagedynamo317d232aStreamArn"
-            },
-        
-    
-        
-    
-        "storagepbbnttransactionsName": {
-            "Type": "String",
-            "Default": "storagepbbnttransactionsName"
-            },
-        
-        "storagepbbnttransactionsArn": {
-            "Type": "String",
-            "Default": "storagepbbnttransactionsArn"
-            },
-        
-        "storagepbbnttransactionsStreamArn": {
-            "Type": "String",
-            "Default": "storagepbbnttransactionsStreamArn"
-            }
-        
-    
-        
-    
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "{\"createdOn\":\"Mac\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.14\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Parameters": {
+    "CloudWatchRule": {
+      "Type": "String",
+      "Default": "NONE",
+      "Description": " Schedule Expression"
     },
-    "Conditions": {
-        "ShouldNotCreateEnvResources": {
-            "Fn::Equals": [
-                {
-                    "Ref": "env"
-                },
-                "NONE"
-            ]
-        }
+    "deploymentBucketName": {
+      "Type": "String"
     },
-    "Resources": {
-        "LambdaFunction": {
-          "Type": "AWS::Lambda::Function",
-          "Metadata": {
-            "aws:asset:path": "./src",
-            "aws:asset:property": "Code"
+    "env": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
+    },
+    "storagedynamo317d232aName": {
+      "Type": "String",
+      "Default": "storagedynamo317d232aName"
+    },
+    "storagedynamo317d232aArn": {
+      "Type": "String",
+      "Default": "storagedynamo317d232aArn"
+    },
+    "storagedynamo317d232aStreamArn": {
+      "Type": "String",
+      "Default": "storagedynamo317d232aStreamArn"
+    },
+    "storagepbbnttransactionsName": {
+      "Type": "String",
+      "Default": "storagepbbnttransactionsName"
+    },
+    "storagepbbnttransactionsArn": {
+      "Type": "String",
+      "Default": "storagepbbnttransactionsArn"
+    },
+    "storagepbbnttransactionsStreamArn": {
+      "Type": "String",
+      "Default": "storagepbbnttransactionsStreamArn"
+    },
+    "storageEmailBucketBucketName": {
+      "Type": "String",
+      "Default": "storageEmailBucketBucketName"
+    },
+    "dynamoDb": {
+      "Type": "String"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
           },
-          "Properties": {
-            "Code": {
-                "S3Bucket": {
-                    "Ref": "deploymentBucketName"
-                },
-                "S3Key": {
-                    "Ref": "s3Key"
-                }
-            },
-            "Handler": "index.handler",
-            "FunctionName": {
-                "Fn::If": [
-                    "ShouldNotCreateEnvResources",
-                    "undoemailprocessing",
-                    {
-
-                        "Fn::Join": [
-                            "",
-                            [
-                                "undoemailprocessing",
-                                "-",
-                                {
-                                    "Ref": "env"
-                                }
-                            ]
-                        ]
-                    }
-                ]
-            },
-            "Environment": {
-                "Variables" : {"ENV":{"Ref":"env"},"REGION":{"Ref":"AWS::Region"},"STORAGE_DYNAMO317D232A_NAME":{"Ref":"storagedynamo317d232aName"},"STORAGE_DYNAMO317D232A_ARN":{"Ref":"storagedynamo317d232aArn"},"STORAGE_DYNAMO317D232A_STREAMARN":{"Ref":"storagedynamo317d232aStreamArn"},"STORAGE_PBBNTTRANSACTIONS_NAME":{"Ref":"storagepbbnttransactionsName"},"STORAGE_PBBNTTRANSACTIONS_ARN":{"Ref":"storagepbbnttransactionsArn"},"STORAGE_PBBNTTRANSACTIONS_STREAMARN":{"Ref":"storagepbbnttransactionsStreamArn"},"dynamoDb":{"Ref":"dynamoDb"}}
-            },
-            "Role": { "Fn::GetAtt": ["LambdaExecutionRole", "Arn"] },
-            "Runtime": "python3.8",
-            "Layers": [],
-            "Timeout": 25
+          "S3Key": {
+            "Ref": "s3Key"
           }
         },
-        "LambdaExecutionRole": {
-            "Type": "AWS::IAM::Role",
-            "Properties": {
-                "RoleName": {
-                    "Fn::If": [
-                        "ShouldNotCreateEnvResources",
-                        "pbbnt1LambdaRole9afdd83b",
-                        {
-
-                            "Fn::Join": [
-                                "",
-                                [
-                                    "pbbnt1LambdaRole9afdd83b",
-                                    "-",
-                                    {
-                                        "Ref": "env"
-                                    }
-                                ]
-                            ]
-                        }
-                    ]
-                },
-                "AssumeRolePolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Principal": {
-                                "Service": [
-                                    "lambda.amazonaws.com"
-                                ]
-                            },
-                            "Action": [
-                                "sts:AssumeRole"
-                            ]
-                        }
-                    ]
-                }
+        "Handler": "index.handler",
+        "FunctionName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "undoemailprocessing",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "undoemailprocessing",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
             }
-        }
-        ,"lambdaexecutionpolicy": {
-            "DependsOn": ["LambdaExecutionRole"],
-            "Type": "AWS::IAM::Policy",
-            "Properties": {
-                "PolicyName": "lambda-execution-policy",
-                "Roles": [{ "Ref": "LambdaExecutionRole" }],
-                "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [
-                        {
-                            "Effect": "Allow",
-                            "Action": ["logs:CreateLogGroup",
-                            "logs:CreateLogStream",
-                            "logs:PutLogEvents"],
-                            "Resource": { "Fn::Sub": [ "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*", { "region": {"Ref": "AWS::Region"}, "account": {"Ref": "AWS::AccountId"}, "lambda": {"Ref": "LambdaFunction"}} ]}
-                        }
-                    ]
-                }
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "STORAGE_DYNAMO317D232A_NAME": {
+              "Ref": "storagedynamo317d232aName"
+            },
+            "STORAGE_DYNAMO317D232A_ARN": {
+              "Ref": "storagedynamo317d232aArn"
+            },
+            "STORAGE_DYNAMO317D232A_STREAMARN": {
+              "Ref": "storagedynamo317d232aStreamArn"
+            },
+            "STORAGE_PBBNTTRANSACTIONS_NAME": {
+              "Ref": "storagepbbnttransactionsName"
+            },
+            "STORAGE_PBBNTTRANSACTIONS_ARN": {
+              "Ref": "storagepbbnttransactionsArn"
+            },
+            "STORAGE_PBBNTTRANSACTIONS_STREAMARN": {
+              "Ref": "storagepbbnttransactionsStreamArn"
+            },
+            "STORAGE_EMAILBUCKET_BUCKETNAME": {
+              "Ref": "storageEmailBucketBucketName"
+            },
+            "dynamoDb": {
+              "Ref": "dynamoDb"
             }
-        }
-        ,"AmplifyResourcesPolicy": {
-            "DependsOn": ["LambdaExecutionRole"],
-            "Type": "AWS::IAM::Policy",
-            "Properties": {
-                "PolicyName": "amplify-lambda-execution-policy",
-                "Roles": [{ "Ref": "LambdaExecutionRole" }],
-                "PolicyDocument": {
-                    "Version": "2012-10-17",
-                    "Statement": [{"Effect":"Allow","Action":["dynamodb:Put*","dynamodb:Create*","dynamodb:BatchWriteItem","dynamodb:Get*","dynamodb:BatchGetItem","dynamodb:List*","dynamodb:Describe*","dynamodb:Scan","dynamodb:Query","dynamodb:Update*","dynamodb:RestoreTable*","dynamodb:Delete*"],"Resource":[{"Ref":"storagedynamo317d232aArn"},{"Fn::Join":["/",[{"Ref":"storagedynamo317d232aArn"},"index/*"]]}]},{"Effect":"Allow","Action":["dynamodb:Get*","dynamodb:BatchGetItem","dynamodb:List*","dynamodb:Describe*","dynamodb:Scan","dynamodb:Query","dynamodb:Update*","dynamodb:RestoreTable*","dynamodb:Delete*"],"Resource":[{"Ref":"storagepbbnttransactionsArn"},{"Fn::Join":["/",[{"Ref":"storagepbbnttransactionsArn"},"index/*"]]}]}]
-                }
-            }
-        }
-        
-        
-        
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "python3.8",
+        "Layers": [],
+        "Timeout": 25
+      }
     },
-    "Outputs": {
-        "Name": {
-            "Value": {
-                "Ref": "LambdaFunction"
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "pbbnt1LambdaRole9afdd83b",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "pbbnt1LambdaRole9afdd83b",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
             }
+          ]
         },
-        "Arn": {
-            "Value": {"Fn::GetAtt": ["LambdaFunction", "Arn"]}
-        },
-        "Region": {
-            "Value": {
-                "Ref": "AWS::Region"
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
             }
-        },
-        "LambdaExecutionRole": {
-            "Value": {
-                "Ref": "LambdaExecutionRole"
-            }
+          ]
         }
-        
+      }
+    },
+    "lambdaexecutionpolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storagedynamo317d232aArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storagedynamo317d232aArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Ref": "storagepbbnttransactionsArn"
+                },
+                {
+                  "Fn::Join": [
+                    "/",
+                    [
+                      {
+                        "Ref": "storagepbbnttransactionsArn"
+                      },
+                      "index/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "s3:ListBucket",
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storageEmailBucketBucketName"
+                      }
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:GetObject"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:s3:::",
+                      {
+                        "Ref": "storageEmailBucketBucketName"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
+  },
+  "Outputs": {
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    }
+  }
 }

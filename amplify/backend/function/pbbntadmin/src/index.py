@@ -3,15 +3,16 @@ import boto3
 import os
 import random
 import string
+from urllib.parse import unquote_plus
 DATA_TABLENAME = 'dynamo317d232a-' + os.environ["ENV"]
 IDS_TABLENAME = 'pbbntids-' + os.environ["ENV"]
+AGENTS_TABLENAME = 'agents-' + os.environ["ENV"]
+client = boto3.client('dynamodb')
 
 def handler(event, context):
     print('received event:')
     print(event)
     method = event['httpMethod']
-
-    client = boto3.client('dynamodb')
 
     if method == 'GET':
         scan_kwargs = {'TableName': DATA_TABLENAME}
@@ -73,6 +74,18 @@ def handler(event, context):
                 'Tips': tips,
                 'Email': email
             }
+        
+        print(modified_gamedata)
+        
+        #Logic for when it's an agent, to limit results to only their players
+        if event['queryStringParameters'] is not None and 'Search' in event['queryStringParameters']:
+            query_string_parameters = event['queryStringParameters']
+            agent_email = query_string_parameters['Search']
+            agent_email = unquote_plus(agent_email)
+            modified_gamedata = agentFilter(modified_gamedata, agent_email)
+            
+
+        #Final output
         modified_gamedata = list(modified_gamedata.values())
         print(modified_gamedata)
         return {
@@ -84,3 +97,28 @@ def handler(event, context):
             },
             'body': json.dumps(modified_gamedata)
         }
+
+def agentFilter(modified_gamedata, agent_email):
+    agents_player_email_array = []
+    query_kwargs = {
+                'TableName': AGENTS_TABLENAME,
+                'KeyConditionExpression': '#agent_email = :value',
+                'ExpressionAttributeNames': {
+                    '#agent_email': 'agent_email'
+                },
+                'ExpressionAttributeValues': {
+                    ':value': {
+                        'S': agent_email
+                    }
+                }
+            }
+    data = client.query(**query_kwargs)
+    print(data)
+    if len(data['Items']) > 0:
+        for email in data['Items'][0]['ids']['L']:
+            agents_player_email_array.append(email['S'])
+    print(agents_player_email_array)
+    for email in list(modified_gamedata):
+        if(email not in agents_player_email_array): #If the email isn't one of the agents players, remove it
+            del modified_gamedata[email]
+    return modified_gamedata

@@ -2,7 +2,9 @@ import React from "react";
 import UserData from "./userdata";
 import LoadingSpinner from "./loadingSpinner";
 import awsconfig from "../aws-exports";
-import Amplify, {API, Auth} from "aws-amplify";
+import Amplify, { API, Auth } from "aws-amplify";
+
+const USER_API = "pbbntuser";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -71,22 +73,22 @@ async function getUserIds(jwtKey, email) {
     },
   };
   return await API.get(
-      "pbbntuser",
-      "/ids?Search=" + encodeURIComponent(email),
-      myInit
+    USER_API,
+    "/ids?Search=" + encodeURIComponent(email),
+    myInit
   )
-      .then((result) => {
-        result = result.Items[0];
-        let id_objects = result.ids.L;
-        let ids = [];
-        id_objects.forEach((element) => {
-          ids.push(element.S);
-        });
-        return ids;
-      })
-      .catch((err) => {
-        console.log(err);
+    .then((result) => {
+      result = result.Items[0];
+      let id_objects = result.ids.L;
+      let ids = [];
+      id_objects.forEach((element) => {
+        ids.push(element.S);
       });
+      return ids;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 async function getUserData(jwtKey, ids) {
@@ -97,16 +99,16 @@ async function getUserData(jwtKey, ids) {
     },
   };
   return await API.get(
-      "pbbntuser",
-      "/user?Search=" + encodeURIComponent(id_str),
-      myInit
+    USER_API,
+    "/user?Search=" + encodeURIComponent(id_str),
+    myInit
   )
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export default UserConsole;

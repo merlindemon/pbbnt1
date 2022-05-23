@@ -11,11 +11,18 @@
         "read",
         "update",
         "delete"
+      ],
+      "EmailBucket": [
+        "read"
       ]
     }
   },
   "lambdaLayers": [],
   "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "dynamoDb",
+      "environmentVariableName": "dynamoDb"
+    },
     {
       "cloudFormationParameterName": "dynamoDb",
       "environmentVariableName": "dynamoDb"

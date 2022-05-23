@@ -19,6 +19,9 @@
     },
     "pbbntids": {
       "Type": "String"
+    },
+    "pbbntagents": {
+      "Type": "String"
     }
   },
   "Conditions": {
