@@ -64,8 +64,8 @@ class AgentDisplay extends Component {
       <div>
         <tr>
           <td>{this.state.agent_email}</td>
-          <td>{this.state.ids}</td>
-          <td>
+          <td width="66%">{this.state.ids}</td>
+          <td width="10%">
             <button
               className="safebutton"
               onClick={() => this.toggleGameData()}

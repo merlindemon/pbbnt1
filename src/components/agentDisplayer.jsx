@@ -19,8 +19,11 @@ class AgentDisplayer extends Component {
         </center>
         <div>
           <table border="1" className="entries">
-            <th>Agent Email</th>
-            <th>Player Emails</th>
+            <div>
+              <th>Agent Email</th>
+              <th width="66%">Player Emails</th>
+              <th width="10%"></th>
+            </div>
             {sorted_entries.map((entry) => (
               <AgentDisplay
                 agent_email={entry.agent_email.S}
@@ -43,7 +46,7 @@ function joinIds(ids) {
     });
   }
 
-  return array.join();
+  return array.join("\n");
 }
 
 export default AgentDisplayer;

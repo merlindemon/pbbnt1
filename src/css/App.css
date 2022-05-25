@@ -46,7 +46,7 @@ button {
   color: #ffffff;
 }
 
-.safebutton{
+.safebutton {
   background-color: #03942a;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
@@ -67,7 +67,7 @@ button {
   max-width: 15%;
 }
 
-.transactions{
+.transactions {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
@@ -81,52 +81,52 @@ button {
   margin-bottom: 50px;
 }
 
-.entry-email{
+.entry-email {
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.entry-player{
+.entry-player {
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.ids-button{
+.ids-button {
   white-space: normal;
 }
 
-.entry-id{
+.entry-id {
   /*background-color: #7a150d;*/
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.entry-profit{
+.entry-profit {
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.entry-tips{
+.entry-tips {
   padding-left: 1rem;
   padding-right: 1rem;
 }
 
-.comment_textarea{
+.comment_textarea {
   background: transparent;
   border: none;
 }
 
-.input1{
+.input1 {
   margin-left: 1rem;
   margin-right: 1rem;
 }
 
-.input2{
+.input2 {
   margin-right: 2rem;
   color: #7a150d;
 }
 
-.input3{
+.input3 {
   color: #7a150d;
 }
 
