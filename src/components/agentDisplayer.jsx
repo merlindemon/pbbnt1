@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import AgentDisplay from "./agentDisplay";
 
 class AgentDisplayer extends Component {
   constructor(props) {
     super(undefined);
     this.state = {};
   }
+
   render() {
     let local_entries = this.props.entries;
     let sorted_entries = local_entries.sort((a, b) =>
@@ -20,10 +22,10 @@ class AgentDisplayer extends Component {
             <th>Agent Email</th>
             <th>Player Emails</th>
             {sorted_entries.map((entry) => (
-              <tr>
-                <td>{entry.agent_email.S}</td>
-                <td>{joinIds(entry.ids)}</td>
-              </tr>
+              <AgentDisplay
+                agent_email={entry.agent_email.S}
+                ids={joinIds(entry.ids)}
+              />
             ))}
           </table>
         </div>
