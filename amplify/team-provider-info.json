@@ -64,7 +64,7 @@
         },
         "pbbnttransactions": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/pbbnttransactions-644a45524e586b466837-build.zip",
+          "s3Key": "amplify-builds/pbbnttransactions-7132365439586771502b-build.zip",
           "tz": "US/Eastern"
         },
         "emailprocessing": {

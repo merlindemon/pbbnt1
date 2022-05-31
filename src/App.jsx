@@ -3,12 +3,12 @@ import { API, Auth } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import React from "react";
-import LoadingSpinner from "./components/loadingSpinner";
-import AdminConsole from "./components/adminConsole";
-import ManagerConsole from "./components/managerConsole";
-import AgentConsole from "./components/agentConsole";
-import UserConsole from "./components/userConsole";
-import Header from "./components/header";
+import LoadingSpinner from "./components/helpers/loadingSpinner";
+import AdminConsole from "./components/console_views/adminConsole";
+import ManagerConsole from "./components/console_views/managerConsole";
+import AgentConsole from "./components/console_views/agentConsole";
+import UserConsole from "./components/console_views/userConsole";
+import Header from "./components/helpers/header";
 import { v4 as uuid } from "uuid";
 
 import {

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import awsconfig from "../aws-exports";
+import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
-import IdDisplayer from "./idDisplayer";
-import LoadingSpinner from "./loadingSpinner";
+import IdDisplayer from "../displays/idDisplayer";
+import LoadingSpinner from "../helpers/loadingSpinner";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);

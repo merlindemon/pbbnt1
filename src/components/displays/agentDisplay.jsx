@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Entries from "./entries";
-import LoadingSpinner from "./loadingSpinner";
-import awsconfig from "../aws-exports";
+import Entries from "../entries";
+import LoadingSpinner from "../helpers/loadingSpinner";
+import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
 
 const ADMIN_API = "pbbntadmin";
@@ -63,7 +63,7 @@ class AgentDisplay extends Component {
     return (
       <div>
         <tr>
-          <td>{this.state.agent_email}</td>
+          <td width="24%">{this.state.agent_email}</td>
           <td width="66%">{this.state.ids}</td>
           <td width="10%">
             <button

@@ -2,10 +2,10 @@
 
 import React from "react";
 import awsconfig from "../aws-exports";
-import Amplify, {API, Auth} from "aws-amplify";
-import LoadingSpinner from "./loadingSpinner";
+import Amplify, { API, Auth } from "aws-amplify";
+import LoadingSpinner from "./helpers/loadingSpinner";
 import UserTransactionsAdminView from "./usertransactionsadminview";
-import Comment from "./comment"
+import Comment from "./comment";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -26,7 +26,7 @@ class Entry extends React.Component {
       groups: [],
       toggleTransactions: false,
       loading: false,
-      displayComment: false
+      displayComment: false,
     };
   }
 
@@ -70,42 +70,51 @@ class Entry extends React.Component {
   }
 
   displayTransactions(ids) {
-    return this.state.loading ? <LoadingSpinner/> : <UserTransactionsAdminView ids={ids}/>;
+    return this.state.loading ? (
+      <LoadingSpinner />
+    ) : (
+      <UserTransactionsAdminView ids={ids} />
+    );
   }
 
   displayAdjustButton() {
     return <button onClick={() => this.adjustProfit()}>Add/Subtract</button>;
   }
 
-  getComment(email){
-    return <Comment email={email}/>;
+  getComment(email) {
+    return <Comment email={email} />;
   }
 
-  toggleComment(){
+  toggleComment() {
     this.setState({ displayComment: !this.state.displayComment });
   }
 
   render() {
-    let { rank, playernames, ids, hands, profit, tips, adjust, email } = this.state;
+    let { rank, playernames, ids, hands, profit, tips, adjust, email } =
+      this.state;
     let isAdmin = false;
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
     }
-    let adjustButtondisplay = '';
-    let inputdisplay = '';
-    let commentDisplay = (this.state.displayComment
-        ? this.getComment(email)
-        : <div/>);
+    let adjustButtondisplay = "";
+    let inputdisplay = "";
+    let commentDisplay = this.state.displayComment ? (
+      this.getComment(email)
+    ) : (
+      <div />
+    );
     if (isAdmin) {
-      adjustButtondisplay = (this.state.toggleTransactions
-          ? this.displayTransactions(ids)
-          : this.displayAdjustButton());
-      inputdisplay = <input
+      adjustButtondisplay = this.state.toggleTransactions
+        ? this.displayTransactions(ids)
+        : this.displayAdjustButton();
+      inputdisplay = (
+        <input
           placeholder=""
           onChange={this.handleAdjust}
           value={adjust}
           className="input1"
-      />;
+        />
+      );
     }
     return (
       <tr>
@@ -113,11 +122,18 @@ class Entry extends React.Component {
           {rank}
         </td>
         <td className="entry-player">
-          <button onClick={() => this.toggleComment()}>{playernames.join(" ")}</button>
+          <button onClick={() => this.toggleComment()}>
+            {playernames.join(" ")}
+          </button>
           {commentDisplay}
         </td>
         <td className="entry-id">
-            <button className="ids-button" onClick={() => this.toggleTransactions()}>{ids.join(" ")}</button>
+          <button
+            className="ids-button"
+            onClick={() => this.toggleTransactions()}
+          >
+            {ids.join(" ")}
+          </button>
         </td>
         <td className="entry-tips" style={{ color: colorMoney(tips) }}>
           {formatMoney(tips)}
@@ -126,12 +142,8 @@ class Entry extends React.Component {
         <td className="entry-profit" style={{ color: colorMoney(profit) }}>
           {formatMoney(profit)}
         </td>
-        <td>
-          {inputdisplay}
-        </td>
-        <td>
-          {adjustButtondisplay}
-        </td>
+        <td>{inputdisplay}</td>
+        <td>{adjustButtondisplay}</td>
       </tr>
     );
   }
@@ -167,7 +179,7 @@ async function adjustProfitBalance(jwtKey, ids, adjust) {
     },
     body: {
       amount: adjust,
-      ids: ids.join()
+      ids: ids.join(),
     },
   };
   let response;
@@ -180,6 +192,5 @@ async function adjustProfitBalance(jwtKey, ids, adjust) {
     });
   return response;
 }
-
 
 export default Entry;

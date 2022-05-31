@@ -99,7 +99,7 @@ function filterTransactions(transactions, type) {
   let deposit_transactions = [];
   transactions
     .sort((a, b) => (a.Date.S < b.Date.S ? 1 : -1))
-    .map((transaction) => {
+    .forEach((transaction) => {
       if (transaction.Type.S === type) {
         deposit_transactions.push(transaction);
       }

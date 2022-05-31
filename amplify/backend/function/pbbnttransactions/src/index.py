@@ -62,6 +62,16 @@ def handler(event, context):
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
+        if body["amount"] == "":
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'OPTIONS,PUT,GET,DELETE'
+                },
+                'body': json.dumps('POST Complete')
+            }
         amount = float(body["amount"])
         identifiers = body["ids"].split(",")
         now = datetime.now()

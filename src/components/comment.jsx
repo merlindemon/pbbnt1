@@ -3,7 +3,7 @@
 import React from "react";
 import awsconfig from "../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
-import LoadingSpinner from "./loadingSpinner";
+import LoadingSpinner from "./helpers/loadingSpinner";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);

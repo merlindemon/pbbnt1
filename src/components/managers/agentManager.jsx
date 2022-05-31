@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import awsconfig from "../aws-exports";
+import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
-import AgentDisplayer from "./agentDisplayer";
-import LoadingSpinner from "./loadingSpinner";
+import AgentDisplayer from "../displays/agentDisplayer";
+import LoadingSpinner from "../helpers/loadingSpinner";
 const AGENTS_API = "pbbntagents";
 
 Amplify.configure(awsconfig);

@@ -1,7 +1,7 @@
 import React from "react";
-import UserData from "./userdata";
-import LoadingSpinner from "./loadingSpinner";
-import awsconfig from "../aws-exports";
+import UserData from "../userdata";
+import LoadingSpinner from "../helpers/loadingSpinner";
+import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
 
 const USER_API = "pbbntuser";

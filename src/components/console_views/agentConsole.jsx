@@ -1,10 +1,10 @@
 import React from "react";
-import Entries from "./entries";
-import LoadingSpinner from "./loadingSpinner";
-import awsconfig from "../aws-exports";
+import Entries from "../entries";
+import LoadingSpinner from "../helpers/loadingSpinner";
+import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
 import UserConsole from "./userConsole";
-import Divider from "./divider";
+import Divider from "../helpers/divider";
 
 const ADMIN_API = "pbbntadmin";
 

@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import AgentDisplay from "./agentDisplay";
 
-class AgentDisplayer extends Component {
+class IdDisplayer extends Component {
   constructor(props) {
     super(undefined);
     this.state = {};
   }
-
   render() {
     let local_entries = this.props.entries;
     let sorted_entries = local_entries.sort((a, b) =>
-      a.agent_email.S.toUpperCase() > b.agent_email.S.toUpperCase() ? 1 : -1
+      a.email.S.toUpperCase() > b.email.S.toUpperCase() ? 1 : -1
     );
     return (
       <div>
@@ -19,16 +17,13 @@ class AgentDisplayer extends Component {
         </center>
         <div>
           <table border="1" className="entries">
-            <div>
-              <th>Agent Email</th>
-              <th width="66%">Player Emails</th>
-              <th width="10%"></th>
-            </div>
+            <th>Email</th>
+            <th>IDs</th>
             {sorted_entries.map((entry) => (
-              <AgentDisplay
-                agent_email={entry.agent_email.S}
-                ids={joinIds(entry.ids)}
-              />
+              <tr>
+                <td>[{entry.email.S}]</td>
+                <td>{joinIds(entry.ids)}</td>
+              </tr>
             ))}
           </table>
         </div>
@@ -42,11 +37,11 @@ function joinIds(ids) {
   if (ids !== undefined) {
     ids = ids.L;
     ids.forEach((id) => {
-      array.push(id.S);
+      array.push("[" + id.S + "]");
     });
   }
 
-  return array.join("\n");
+  return array.join();
 }
 
-export default AgentDisplayer;
+export default IdDisplayer;
