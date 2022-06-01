@@ -63,7 +63,7 @@ class AgentDisplay extends Component {
     return (
       <div>
         <tr>
-          <td width="24%">{this.state.agent_email}</td>
+          <td width="24%">[{this.state.agent_email}]</td>
           <td width="66%">{this.state.ids}</td>
           <td width="10%">
             <button

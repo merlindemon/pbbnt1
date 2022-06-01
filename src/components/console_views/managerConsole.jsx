@@ -1,56 +1,67 @@
 import React from "react";
-import Entries from "../entries";
 import LoadingSpinner from "../helpers/loadingSpinner";
 import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
+import AgentDisplayer from "../displays/agentDisplayer";
 import UserConsole from "./userConsole";
 import Divider from "../helpers/divider";
+import GameDataDisplayer from "../displays/gameDataDisplayer";
 
-const ADMIN_API = "pbbntadmin";
+const AGENTS_API = "pbbntagents";
 
 Amplify.configure(awsconfig);
-API.configure(awsconfig);
 Auth.configure(awsconfig);
+API.configure(awsconfig);
 
 class ManagerConsole extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       entries: [],
-      jwtKey: "",
       loading: false,
       email: "",
-      transaction_ids: [],
+      currentDisplay: <div></div>,
     };
   }
 
   async componentDidMount() {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
-        jwtKey: user.signInUserSession.idToken.jwtToken,
         email: user.signInUserSession.idToken.payload["email"],
+        jwtKey: user.signInUserSession.idToken.jwtToken,
       });
-      this.loadGameData();
+      this.reloadEntries();
     });
   }
 
-  async loadGameData() {
-    this.setState({ loading: true });
-    let data = await getGameData(this.state.jwtKey);
-    this.setState({ entries: data, loading: false });
+  async reloadEntries() {
+    if (this.state.loading === false) {
+      this.setState({ loading: true });
+    }
+    let data = await getEntireAgentsTable(this.state.jwtKey);
+    this.setState({ loading: false, entries: data });
   }
 
-  displayGameData() {
+  displayAgentDisplayer() {
     return this.state.loading ? (
       <LoadingSpinner />
     ) : (
-      <div>
-        <button className="safebutton" onClick={() => this.loadGameData()}>
-          Refresh
-        </button>
-        <Entries entries={this.state.entries} />
-      </div>
+      <AgentDisplayer entries={this.state.entries} />
     );
+  }
+
+  displayGameData() {
+    return this.state.loading ? <LoadingSpinner /> : <GameDataDisplayer />;
+  }
+
+  toggleDisplay(display) {
+    if (display === "agentManager") {
+      this.setState({ currentDisplay: this.displayAgentDisplayer() });
+    }
+    if (display === "gameData") {
+      this.setState({ currentDisplay: this.displayGameData() });
+    }
+    return this.state.currentDisplay;
   }
 
   render() {
@@ -61,8 +72,20 @@ class ManagerConsole extends React.Component {
           <div className="black">
             <Divider />
             <h1>Manager Console</h1>
+            <div>
+              <button onClick={() => this.toggleDisplay("agentManager")}>
+                Show Agents
+              </button>
+              <button onClick={() => this.toggleDisplay("gameData")}>
+                Show Game Data
+              </button>
+            </div>
             <Divider />
-            {this.displayGameData()}
+            {this.state.loading ? (
+              <LoadingSpinner />
+            ) : (
+              this.toggleDisplay(this.state.currentDisplay)
+            )}
             <Divider />
           </div>
         </div>
@@ -71,15 +94,15 @@ class ManagerConsole extends React.Component {
   }
 }
 
-async function getGameData(jwtKey) {
+async function getEntireAgentsTable(jwtKey) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  return await API.get(ADMIN_API, "/pbbntadmin", myInit)
+  return await API.get(AGENTS_API, "/agent", myInit)
     .then((result) => {
-      return result;
+      return result.Items;
     })
     .catch((err) => {
       console.log(err);

@@ -42,7 +42,7 @@ function joinIds(ids) {
   if (ids !== undefined) {
     ids = ids.L;
     ids.forEach((id) => {
-      array.push(id.S);
+      array.push("[" + id.S + "]");
     });
   }
 
