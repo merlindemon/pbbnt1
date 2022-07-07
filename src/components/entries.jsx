@@ -33,6 +33,14 @@ class Entries extends Component {
                   .map((entry) => (
                     <Entry entry={entry} />
                   ))}
+                <tr>
+                  <td>Totals</td>
+                  <td></td>
+                  <td></td>
+                  <td>{getTotals(this.props.entries, "Tips")}</td>
+                  <td></td>
+                  <td>{getTotals(this.props.entries, "Profit")}</td>
+                </tr>
               </table>
             </div>
           </div>
@@ -63,6 +71,14 @@ class Entries extends Component {
       );
     }
   }
+}
+
+function getTotals(entries, field) {
+  let sum = 0;
+  entries.forEach((entry) => {
+    sum += entry[field];
+  });
+  return parseFloat(sum).toFixed(2);
 }
 
 export default Entries;

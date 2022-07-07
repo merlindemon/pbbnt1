@@ -81,7 +81,7 @@ class UserData extends Component {
           <th>Amount</th>
           {transactions
             .sort((a, b) => (a.Date.S < b.Date.S ? 1 : -1))
-            .forEach((transaction) => (
+            .map((transaction) => (
               <tr>
                 <td>{transaction.Date.S}</td>
                 <td style={{ color: colorMoney(transaction.Amount.N) }}>
