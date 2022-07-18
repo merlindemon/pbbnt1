@@ -3,6 +3,8 @@ import boto3
 from urllib.parse import unquote_plus
 import os
 IDS_TABLENAME = 'pbbntids-' + os.environ["ENV"]
+USERPOOLID = os.environ["AUTH_PBBNT5CF00A19_USERPOOLID"]
+
 
 def handler(event, context):
     print('received event:')
@@ -56,6 +58,45 @@ def handler(event, context):
         else:
             scan_kwargs = {'TableName': IDS_TABLENAME}
             data = client.scan(**scan_kwargs)
+
+            cognito_client = boto3.client('cognito-idp')
+            response = cognito_client.list_users_in_group(
+                UserPoolId=USERPOOLID,
+                GroupName="manager"
+            )
+            listUsers = response['Users']
+            manager_array = [];
+            for user in listUsers:
+                attributes = user["Attributes"]
+                for attribute in attributes:
+                    if attribute["Name"] == "email":
+                        email = attribute["Value"]
+                        manager_array.append(email)
+                        
+            response = cognito_client.list_users_in_group(
+                UserPoolId=USERPOOLID,
+                GroupName="agent"
+            )
+            listUsers = response['Users']
+            print(listUsers)
+            agent_array = [];
+            for user in listUsers:
+                attributes = user["Attributes"]
+                for attribute in attributes:
+                    if attribute["Name"] == "email":
+                        email = attribute["Value"]
+                        agent_array.append(email)
+            
+            for user in data['Items']:
+                if user["email"]["S"] in manager_array:
+                    user["manager"] = True
+                else:
+                    user["manager"] = False
+                if user["email"]["S"] in agent_array:
+                    user["agent"] = True
+                else:
+                    user["agent"] = False
+                    
             return {
                 'statusCode': 200,
                 'headers': {
@@ -65,6 +106,46 @@ def handler(event, context):
                 },
                 'body': json.dumps(data)
             }
+    elif method == 'PATCH':
+        # Get item to see if it exists, gather list of ids
+        body = event['body']
+        body = json.loads(body)
+        email = body["email"]
+        email = email.lower()
+        group = body["group"]
+        group = group.lower()
+        addToGroup = body["boolean"]
+        cognito_client = boto3.client('cognito-idp')
+        response = cognito_client.list_users(
+                UserPoolId=USERPOOLID,
+                Filter=f"email = \"{email}\"",
+            )
+        username = response["Users"][0]["Username"]
+        if addToGroup: 
+            #Get user id from email
+            #add user to group
+            response = cognito_client.admin_add_user_to_group(
+                UserPoolId=USERPOOLID,
+                Username=username,
+                GroupName=group
+            )
+        else: #Remove from group
+            #Get user id from email
+            #add user to group
+            response = cognito_client.admin_remove_user_from_group(
+                UserPoolId=USERPOOLID,
+                Username=username,
+                GroupName=group
+            )
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Access-Control-Allow-Headers': '*',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,PUT,GET,DELETE'
+            },
+            'body': json.dumps('PATCH Complete')
+        }
 
     elif method == 'PUT':
         # Get item to see if it exists, gather list of ids

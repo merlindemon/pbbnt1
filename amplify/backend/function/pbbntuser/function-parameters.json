@@ -4,6 +4,12 @@
       "dynamo317d232a": [
         "read"
       ]
+    },
+    "auth": {
+      "pbbnt5cf00a19": [
+        "read",
+        "update"
+      ]
     }
   },
   "lambdaLayers": []

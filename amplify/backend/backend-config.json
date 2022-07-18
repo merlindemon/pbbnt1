@@ -89,6 +89,13 @@
             "Arn",
             "StreamArn"
           ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19",
+          "attributes": [
+            "UserPoolId"
+          ]
         }
       ]
     },
@@ -138,6 +145,13 @@
             "Name",
             "Arn",
             "StreamArn"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19",
+          "attributes": [
+            "UserPoolId"
           ]
         }
       ]

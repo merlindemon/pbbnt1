@@ -36,15 +36,19 @@ class GameDataDisplayer extends React.Component {
   }
 
   async resetHands() {
-    this.setState({ loading: true });
-    await resetAllHands(this.state.jwtKey);
-    await this.loadGameData();
+    if (window.confirm("Are you sure you wish to reset the Hands?")) {
+      this.setState({ loading: true });
+      await resetAllHands(this.state.jwtKey);
+      await this.loadGameData();
+    }
   }
 
   async resetTips() {
-    this.setState({ loading: true });
-    await resetAllTips(this.state.jwtKey);
-    await this.loadGameData();
+    if (window.confirm("Are you sure you wish to reset all of the Tips?")) {
+      this.setState({ loading: true });
+      await resetAllTips(this.state.jwtKey);
+      await this.loadGameData();
+    }
   }
 
   async refresh() {
@@ -57,6 +61,7 @@ class GameDataDisplayer extends React.Component {
       <LoadingSpinner />
     ) : (
       <div>
+        <Entries entries={this.state.entries} />
         <button className="safebutton" onClick={() => this.refresh()}>
           Refresh
         </button>
@@ -66,7 +71,6 @@ class GameDataDisplayer extends React.Component {
         <button className="dangerousbutton" onClick={() => this.resetTips()}>
           Reset Tips
         </button>
-        <Entries entries={this.state.entries} />
       </div>
     );
   }

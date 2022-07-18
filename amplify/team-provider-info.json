@@ -48,7 +48,7 @@
       "function": {
         "pbbntuser": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/pbbntuser-795941495a715a474e6d-build.zip"
+          "s3Key": "amplify-builds/pbbntuser-6a6d52716e3135715570-build.zip"
         },
         "pbbntadmin": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
@@ -56,7 +56,7 @@
         },
         "pbbntids": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/pbbntids-4a354147696959434664-build.zip"
+          "s3Key": "amplify-builds/pbbntids-693378676e792b6d384d-build.zip"
         },
         "resetHands": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",

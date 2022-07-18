@@ -13,7 +13,7 @@ def handler(event, context):
     ids_array = ids.split(",")
     result_array = []
 
-    client = boto3.client('dynamodb')
+    dynamodb_client = boto3.client('dynamodb')
     for identifier in ids_array:
         query_kwargs = {
             'TableName': TABLENAME,
@@ -27,7 +27,7 @@ def handler(event, context):
                 }
             }
         }
-        data = client.query(**query_kwargs)
+        data = dynamodb_client.query(**query_kwargs)
         if len(data['Items']) > 0:
             result_array.append(data['Items'][0])
 

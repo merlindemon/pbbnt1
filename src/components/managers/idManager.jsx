@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import awsconfig from "../../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
-import IdDisplayer from "../displays/idDisplayer";
+import IdsDisplayer from "../displays/idsDisplayer";
 import LoadingSpinner from "../helpers/loadingSpinner";
 
 Amplify.configure(awsconfig);
@@ -119,7 +119,7 @@ class IdManager extends Component {
         {this.state.loading && this.state.entries.length === 0 ? (
           <LoadingSpinner />
         ) : (
-          <IdDisplayer entries={this.state.entries} />
+          <IdsDisplayer entries={this.state.entries} />
         )}
       </div>
     );

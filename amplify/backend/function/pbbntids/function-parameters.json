@@ -7,6 +7,12 @@
         "update",
         "delete"
       ]
+    },
+    "auth": {
+      "pbbnt5cf00a19": [
+        "read",
+        "update"
+      ]
     }
   },
   "lambdaLayers": []
