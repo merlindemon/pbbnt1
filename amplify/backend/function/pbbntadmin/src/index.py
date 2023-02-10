@@ -25,11 +25,16 @@ def handler(event, context):
         if len(identifierdata['Items']) > 0:
             result_array = identifierdata['Items']
         id_to_email = {}
+        email_to_credit_limit = {}
         for result in result_array:
+            credit_limit = 0
             email = result['email']['S']
             ids_array = []
             if 'ids' in result:
                 ids_array = result['ids']['L']
+            if 'creditLimit' in result:
+                credit_limit = int(result['creditLimit']['N'])
+                email_to_credit_limit[email] = credit_limit
             for identifier in ids_array:
                 identifier = identifier['S']
                 id_to_email[identifier] = email
@@ -52,7 +57,7 @@ def handler(event, context):
             rank =      int(item['Rank']['N'])
             hands =     int(item['Hands']['N'])
             tips =      float(item['Tips']['N'])
-
+            
             if email in modified_gamedata:
                 #This user has multiple accounts, merge the data
                 existing_hash = modified_gamedata[email]
@@ -72,6 +77,7 @@ def handler(event, context):
                 'Rank': rank,
                 'Hands': hands,
                 'Tips': tips,
+                'CreditLimit': email_to_credit_limit[email],
                 'Email': email
             }
         
