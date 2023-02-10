@@ -60,6 +60,14 @@ def handler(event, context):
             }
     elif method == 'POST':
         # Get item to see if it exists, gather list of ids
+
+        from datetime import datetime, timedelta
+        import time
+        dt = datetime.now()
+        td = timedelta(days=42)
+        my_date = dt + td
+        ttl = int(time.mktime(my_date.timetuple()))
+
         body = event['body']
         body = json.loads(body)
         if body["amount"] == "":
@@ -121,6 +129,7 @@ def handler(event, context):
                 'Date': {'S': str(depositdate)},
                 'Type': {'S': str(transactiontype)},
                 'Amount': {'N': str(amount)},
+                'TTL': {'N':str(ttl)}
             }
         }
         client.put_item(**put_kwargs)

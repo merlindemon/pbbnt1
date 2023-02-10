@@ -315,6 +315,11 @@
           ]
         }
       ]
+    },
+    "pbbntidsCreditLimit": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "api": {
@@ -459,6 +464,21 @@
           "resourceName": "userPoolGroups",
           "attributes": [
             "managerGroupRole"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "pbbntidsCreditLimit",
+          "attributes": [
+            "Name",
+            "Arn"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "agentGroupRole"
           ]
         }
       ]

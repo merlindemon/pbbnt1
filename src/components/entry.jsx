@@ -22,11 +22,13 @@ class Entry extends React.Component {
       ids: [],
       profit: 0.0,
       tips: 0.0,
+      creditLimit: 0,
       adjust: "",
       groups: [],
       toggleTransactions: false,
       loading: false,
       displayComment: false,
+      updateCreditLimit: false,
     };
   }
 
@@ -42,6 +44,7 @@ class Entry extends React.Component {
         ids: this.props.entry.ID,
         profit: this.props.entry.Profit,
         tips: this.props.entry.Tips,
+        creditLimit: this.props.entry.CreditLimit,
       });
     });
   }
@@ -85,13 +88,30 @@ class Entry extends React.Component {
     return <Comment email={email} />;
   }
 
+  getCreditLimit(email) {
+    return <CreditLimit email={email} />;
+  }
+
   toggleComment() {
     this.setState({ displayComment: !this.state.displayComment });
   }
 
+  toggleCreditLimit() {
+    this.setState({ updateCreditLimit: !this.state.updateCreditLimit });
+  }
+
   render() {
-    let { rank, playernames, ids, hands, profit, tips, adjust, email } =
-      this.state;
+    let {
+      rank,
+      playernames,
+      ids,
+      hands,
+      profit,
+      tips,
+      creditLimit,
+      adjust,
+      email,
+    } = this.state;
     let isAdmin = false;
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
@@ -99,6 +119,11 @@ class Entry extends React.Component {
     let adjustButtondisplay = "";
     let inputdisplay = "";
     let commentDisplay = this.state.displayComment ? (
+      this.getComment(email)
+    ) : (
+      <div />
+    );
+    let updateCreditLimitDisplay = this.state.updateCreditLimit ? (
       this.getComment(email)
     ) : (
       <div />
@@ -137,6 +162,15 @@ class Entry extends React.Component {
         </td>
         <td className="entry-tips" style={{ color: colorMoney(tips) }}>
           {formatMoney(tips)}
+        </td>
+        <td
+          className="entry-credit-limit"
+          style={{ color: colorMoney(creditLimit) }}
+        >
+          <button onClick={() => this.toggleComment()}>
+            {formatMoney(creditLimit)}
+          </button>
+          {updateCreditLimitDisplay}
         </td>
         <td className="entry-hands">{hands}</td>
         <td className="entry-profit" style={{ color: colorMoney(profit) }}>

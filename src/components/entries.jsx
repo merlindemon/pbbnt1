@@ -19,6 +19,7 @@ class Entries extends Component {
                   <th>Player</th>
                   <th>ID</th>
                   <th>Tips</th>
+                  <th>Credit Limit</th>
                   <th>Hands</th>
                   <th>Profit</th>
                   <th />

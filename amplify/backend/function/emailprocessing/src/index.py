@@ -33,6 +33,13 @@ def handler(event, context):
     bucket = event['Records'][0]['s3']['bucket']['name']
     key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'], encoding='utf-8')
     try:
+        from datetime import datetime, timedelta
+        import time
+        dt = datetime.now()
+        td = timedelta(days=42)
+        my_date = dt + td
+        ttl = int(time.mktime(my_date.timetuple()))
+
         response = s3.get_object(Bucket=bucket, Key=key)
         email_message: EmailMessage = email.message_from_bytes(response['Body'].read(), _class=EmailMessage)
         for email_message_attachment in email_message.iter_attachments():
@@ -161,6 +168,7 @@ def handler(event, context):
                             'Date': {'S': str(gamedate)},
                             'Type': {'S': "Game"},
                             'Amount': {'N': str(player_array[FIELD_PROFIT])},
+                            'TTL': {'N':str(ttl)}
                         }
                     }
                     client.put_item(**put_kwargs)
