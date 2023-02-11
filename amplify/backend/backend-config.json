@@ -392,6 +392,17 @@
     },
     "pbbntidsCreditLimit": {
       "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "pbbntids"
+        }
+      ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
@@ -513,6 +524,248 @@
       "providerPlugin": "awscloudformation",
       "service": "amplifyhosting",
       "type": "manual"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_AdminQueriese020bed2_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese020bed2"
+        }
+      ]
+    },
+    "AMPLIFY_function_AdminQueriese020bed2_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "AdminQueriese020bed2"
+        }
+      ]
+    },
+    "AMPLIFY_function_commentscrud_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "commentscrud"
+        }
+      ]
+    },
+    "AMPLIFY_function_commentscrud_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "commentscrud"
+        }
+      ]
+    },
+    "AMPLIFY_function_emailprocessing_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emailprocessing"
+        }
+      ]
+    },
+    "AMPLIFY_function_emailprocessing_dynamoDb": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emailprocessing"
+        }
+      ]
+    },
+    "AMPLIFY_function_emailprocessing_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "emailprocessing"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntadmin_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntadmin"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntadmin_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntadmin"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntagent_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntagent"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntagent_dyanmodb": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntagent"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntagent_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntagent"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntidsCreditLimit_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntidsCreditLimit"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntidsCreditLimit_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntidsCreditLimit"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntids_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntids"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntids_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntids"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbnttransactions_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbnttransactions"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbnttransactions_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbnttransactions"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbnttransactions_tz": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbnttransactions"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntuser_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntuser"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbntuser_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbntuser"
+        }
+      ]
+    },
+    "AMPLIFY_function_resetHands_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "resetHands"
+        }
+      ]
+    },
+    "AMPLIFY_function_resetHands_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "resetHands"
+        }
+      ]
+    },
+    "AMPLIFY_function_resetTips_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "resetTips"
+        }
+      ]
+    },
+    "AMPLIFY_function_resetTips_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "resetTips"
+        }
+      ]
+    },
+    "AMPLIFY_function_undoemailprocessing_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "undoemailprocessing"
+        }
+      ]
+    },
+    "AMPLIFY_function_undoemailprocessing_dynamoDb": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "undoemailprocessing"
+        }
+      ]
+    },
+    "AMPLIFY_function_undoemailprocessing_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "undoemailprocessing"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
+    },
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
     }
   },
   "storage": {

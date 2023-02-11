@@ -79,4 +79,4 @@
     "hostedUIProviderCreds": "[]",
     "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"],\"LogoutURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"]}"
   }
-}    
+}           

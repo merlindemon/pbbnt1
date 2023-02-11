@@ -4,6 +4,7 @@ import React from "react";
 import awsconfig from "../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
 import LoadingSpinner from "./helpers/loadingSpinner";
+import { WellArchitected } from "aws-sdk";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -13,11 +14,12 @@ class CreditLimit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      creditLimit: "",
+      // email: props.email,
+      // creditLimit: props.creditLimit,
+      update: false,
       groups: [],
       loading: false,
-      backgroundColor: "#FF0000",
+      backgroundColor: "#000000",
     };
   }
 
@@ -26,13 +28,20 @@ class CreditLimit extends React.Component {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
         groups: user.signInUserSession.idToken.payload["cognito:groups"],
-        email: this.props.email,
       });
     });
-    let creditLimit = await retrieveCreditLimit(
-      this.state.jwtKey,
-      this.state.email
-    );
+    this.setState({
+      email: this.props.email,
+      creditLimit: this.props.creditLimit,
+    });
+    let creditLimit;
+    if (this.state.update) {
+      creditLimit = await retrieveCreditLimit(
+        this.state.jwtKey,
+        this.state.email
+      );
+    }
+
     if (creditLimit !== undefined) {
       this.setState({ creditLimit, backgroundColor: "#03942a" });
     }
@@ -41,7 +50,7 @@ class CreditLimit extends React.Component {
   handleCreditLimit = (event) => {
     this.setState({
       creditLimit: event.target.value,
-      backgroundColor: "#FFFF00",
+      backgroundColor: "#c7491f",
     });
   };
 
@@ -71,16 +80,26 @@ class CreditLimit extends React.Component {
     if (isAdmin) {
       let styles = {
         background: backgroundColor,
+        fontSize: "14px",
+      };
+
+      let stylesB = {
+        color: "#FFFFFF",
+        marginLeft: "20px",
+        maxWidth: "35px",
+        width: "100%",
+        display: "block",
       };
 
       creditLimitBox = (
         <div>
           <div style={styles}>
-            <textarea
+            <input
               className="creditLimit_textarea"
               value={creditLimit}
               onChange={this.handleCreditLimit}
-            ></textarea>
+              style={stylesB}
+            ></input>
           </div>
           {saveBtn}
         </div>

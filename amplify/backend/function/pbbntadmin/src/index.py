@@ -69,6 +69,11 @@ def handler(event, context):
                 rank = round((int(rank) + int(existing_hash['Rank'])) / 2)
                 hands += int(existing_hash['Hands'])
                 tips += float(existing_hash['Tips'])
+                
+            credit_limit = int(0)
+            if email in email_to_credit_limit:
+                credit_limit = int(email_to_credit_limit[email])
+                
             modified_gamedata[email] = {
                 'ID': identifier,
                 'Player': player,
@@ -77,7 +82,7 @@ def handler(event, context):
                 'Rank': rank,
                 'Hands': hands,
                 'Tips': tips,
-                'CreditLimit': email_to_credit_limit[email],
+                'CreditLimit': credit_limit,
                 'Email': email
             }
         

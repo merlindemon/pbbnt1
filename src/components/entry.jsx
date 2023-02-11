@@ -6,6 +6,7 @@ import Amplify, { API, Auth } from "aws-amplify";
 import LoadingSpinner from "./helpers/loadingSpinner";
 import UserTransactionsAdminView from "./usertransactionsadminview";
 import Comment from "./comment";
+import CreditLimit from "./creditLimit";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -88,8 +89,8 @@ class Entry extends React.Component {
     return <Comment email={email} />;
   }
 
-  getCreditLimit(email) {
-    return <CreditLimit email={email} />;
+  getCreditLimit(email, creditLimit) {
+    return <CreditLimit email={email} creditLimit={creditLimit} />;
   }
 
   toggleComment() {
@@ -123,10 +124,11 @@ class Entry extends React.Component {
     ) : (
       <div />
     );
-    let updateCreditLimitDisplay = this.state.updateCreditLimit ? (
-      this.getComment(email)
-    ) : (
-      <div />
+    let updateCreditLimitDisplay = this.getCreditLimit(email, creditLimit);
+    let creditLimitDisplay = (
+      <button onClick={() => this.toggleCreditLimit()}>
+        {formatMoney(creditLimit)}
+      </button>
     );
     if (isAdmin) {
       adjustButtondisplay = this.state.toggleTransactions
@@ -167,9 +169,7 @@ class Entry extends React.Component {
           className="entry-credit-limit"
           style={{ color: colorMoney(creditLimit) }}
         >
-          <button onClick={() => this.toggleComment()}>
-            {formatMoney(creditLimit)}
-          </button>
+          {/* {creditLimitDisplay} */}
           {updateCreditLimitDisplay}
         </td>
         <td className="entry-hands">{hands}</td>
