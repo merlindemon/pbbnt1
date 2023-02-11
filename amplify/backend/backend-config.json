@@ -1,551 +1,551 @@
 {
-  "storage": {
-    "dynamo317d232a": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    },
-    "pbbntids": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    },
-    "pbbnttransactions": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
-    },
-    "EmailBucket": {
-      "service": "S3",
-      "providerPlugin": "awscloudformation",
+  "api": {
+    "AdminQueries": {
+      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
       "dependsOn": [
         {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
+        },
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
           "category": "function",
-          "resourceName": "emailprocessing",
+          "resourceName": "AdminQueriese020bed2"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "pbbntadmin": {
+      "dependsOn": [
+        {
           "attributes": [
             "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ]
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "resetHands"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
+        },
+        {
+          "attributes": [
+            "adminGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "resetTips"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbntadmin"
+        },
+        {
+          "attributes": [
+            "managerGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "agentGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     },
-    "agents": {
-      "service": "DynamoDB",
-      "providerPlugin": "awscloudformation"
+    "pbbntagents": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbntagent"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
+        },
+        {
+          "attributes": [
+            "adminGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "agentGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "pbbntids": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbntids"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
+        },
+        {
+          "attributes": [
+            "adminGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "commentscrud"
+        },
+        {
+          "attributes": [
+            "managerGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbntidsCreditLimit"
+        },
+        {
+          "attributes": [
+            "agentGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
+    "pbbntuser": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbntuser"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbntids"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
+        },
+        {
+          "attributes": [
+            "adminGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbnttransactions"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "auth": {
     "pbbnt5cf00a19": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
       "customAuth": false,
+      "dependsOn": [],
       "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [],
-        "signupAttributes": [
-          "EMAIL",
-          "PREFERRED_USERNAME"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": []
-        },
         "mfaConfiguration": "OFF",
         "mfaTypes": [
           "SMS"
         ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "PREFERRED_USERNAME"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
         "verificationMechanisms": [
           "EMAIL"
         ]
-      }
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
     },
     "userPoolGroups": {
-      "service": "Cognito-UserPool-Groups",
-      "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
           "attributes": [
             "UserPoolId",
             "AppClientIDWeb",
             "AppClientID",
             "IdentityPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
     }
   },
   "function": {
-    "pbbntuser": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "pbbntadmin": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "pbbntids",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "agents",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        }
-      ]
-    },
-    "pbbntids": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "pbbntids",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "resetHands": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        }
-      ]
-    },
-    "pbbnttransactions": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "pbbnttransactions",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        }
-      ]
-    },
-    "emailprocessing": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        },
-        {
-          "category": "storage",
-          "resourceName": "pbbnttransactions",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        }
-      ]
-    },
-    "resetTips": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
-          "attributes": [
-            "Name",
-            "Arn",
-            "StreamArn"
-          ]
-        }
-      ]
-    },
     "AdminQueriese020bed2": {
-      "service": "Lambda",
-      "providerPlugin": "awscloudformation",
       "build": true,
       "dependsOn": [
         {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
           "attributes": [
             "UserPoolId"
-          ]
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
     "commentscrud": {
       "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "pbbntids",
           "attributes": [
             "Name",
             "Arn",
             "StreamArn"
-          ]
+          ],
+          "category": "storage",
+          "resourceName": "pbbntids"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
-    "undoemailprocessing": {
+    "emailprocessing": {
       "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "dynamo317d232a",
           "attributes": [
             "Name",
             "Arn",
             "StreamArn"
-          ]
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
         },
         {
-          "category": "storage",
-          "resourceName": "pbbnttransactions",
           "attributes": [
             "Name",
             "Arn",
             "StreamArn"
-          ]
-        },
-        {
+          ],
           "category": "storage",
-          "resourceName": "EmailBucket",
-          "attributes": [
-            "BucketName"
-          ]
+          "resourceName": "pbbnttransactions"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "pbbntadmin": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "pbbntids"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "agents"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
     "pbbntagent": {
       "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
       "dependsOn": [
         {
-          "category": "storage",
-          "resourceName": "agents",
           "attributes": [
             "Name",
             "Arn",
             "StreamArn"
-          ]
+          ],
+          "category": "storage",
+          "resourceName": "agents"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "pbbntids": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "pbbntids"
+        },
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "pbbnt5cf00a19"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     },
     "pbbntidsCreditLimit": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
-    }
-  },
-  "api": {
-    "pbbntuser": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "pbbntuser",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "pbbntids",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "adminGroupRole"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "pbbnttransactions",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        }
-      ]
     },
-    "pbbntadmin": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
+    "pbbnttransactions": {
+      "build": true,
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "resetHands",
           "attributes": [
             "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "adminGroupRole"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "resetTips",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "pbbntadmin",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "managerGroupRole"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "agentGroupRole"
-          ]
-        }
-      ]
-    },
-    "pbbntids": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "pbbntids",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "adminGroupRole"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "commentscrud",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "managerGroupRole"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "pbbntidsCreditLimit",
-          "attributes": [
-            "Name",
-            "Arn"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "agentGroupRole"
-          ]
-        }
-      ]
-    },
-    "AdminQueries": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "authorizationType": "AMAZON_COGNITO_USER_POOLS",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
-          "attributes": [
-            "UserPoolId"
-          ]
-        },
-        {
-          "category": "function",
-          "resourceName": "AdminQueriese020bed2",
-          "attributes": [
             "Arn",
-            "Name"
-          ]
-        }
-      ]
-    },
-    "pbbntagents": {
-      "service": "API Gateway",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
+        },
         {
-          "category": "function",
-          "resourceName": "pbbntagent",
           "attributes": [
             "Name",
-            "Arn"
-          ]
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "pbbnttransactions"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "pbbntuser": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
         },
         {
-          "category": "auth",
-          "resourceName": "pbbnt5cf00a19",
           "attributes": [
             "UserPoolId"
-          ]
-        },
-        {
+          ],
           "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "adminGroupRole"
-          ]
-        },
-        {
-          "category": "auth",
-          "resourceName": "userPoolGroups",
-          "attributes": [
-            "agentGroupRole"
-          ]
+          "resourceName": "pbbnt5cf00a19"
         }
-      ]
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "resetHands": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "resetTips": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "undoemailprocessing": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "dynamo317d232a"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "pbbnttransactions"
+        },
+        {
+          "attributes": [
+            "BucketName"
+          ],
+          "category": "storage",
+          "resourceName": "EmailBucket"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "hosting": {
     "amplifyhosting": {
-      "service": "amplifyhosting",
       "providerPlugin": "awscloudformation",
+      "service": "amplifyhosting",
       "type": "manual"
+    }
+  },
+  "storage": {
+    "EmailBucket": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "LambdaExecutionRole"
+          ],
+          "category": "function",
+          "resourceName": "emailprocessing"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    },
+    "agents": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "dynamo317d232a": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "pbbntids": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "pbbnttransactions": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     }
   }
 }

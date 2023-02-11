@@ -1,164 +1,176 @@
 export type AmplifyDependentResourcesAttributes = {
-    "storage": {
-        "dynamo317d232a": {
-            "Name": "string",
-            "Arn": "string",
-            "StreamArn": "string",
-            "PartitionKeyName": "string",
-            "PartitionKeyType": "string",
-            "SortKeyName": "string",
-            "SortKeyType": "string",
-            "Region": "string"
-        },
-        "pbbntids": {
-            "Name": "string",
-            "Arn": "string",
-            "StreamArn": "string",
-            "PartitionKeyName": "string",
-            "PartitionKeyType": "string",
-            "Region": "string"
-        },
-        "pbbnttransactions": {
-            "Name": "string",
-            "Arn": "string",
-            "StreamArn": "string",
-            "PartitionKeyName": "string",
-            "PartitionKeyType": "string",
-            "SortKeyName": "string",
-            "SortKeyType": "string",
-            "Region": "string"
-        },
-        "EmailBucket": {
-            "BucketName": "string",
-            "Region": "string"
-        },
-        "agents": {
-            "Name": "string",
-            "Arn": "string",
-            "StreamArn": "string",
-            "PartitionKeyName": "string",
-            "PartitionKeyType": "string",
-            "Region": "string"
-        }
+  "api": {
+    "AdminQueries": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
     },
-    "auth": {
-        "pbbnt5cf00a19": {
-            "IdentityPoolId": "string",
-            "IdentityPoolName": "string",
-            "HostedUIDomain": "string",
-            "OAuthMetadata": "string",
-            "UserPoolId": "string",
-            "UserPoolArn": "string",
-            "UserPoolName": "string",
-            "AppClientIDWeb": "string",
-            "AppClientID": "string",
-            "CreatedSNSRole": "string"
-        },
-        "userPoolGroups": {
-            "adminGroupRole": "string",
-            "managerGroupRole": "string",
-            "agentGroupRole": "string"
-        }
+    "pbbntadmin": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
     },
-    "function": {
-        "pbbntuser": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "pbbntadmin": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "pbbntids": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "resetHands": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "pbbnttransactions": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "emailprocessing": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "resetTips": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "AdminQueriese020bed2": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "commentscrud": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "undoemailprocessing": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "pbbntagent": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
-        "pbbntidsCreditLimit": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        }
+    "pbbntagents": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
     },
-    "api": {
-        "pbbntuser": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
-        "pbbntadmin": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
-        "pbbntids": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
-        "AdminQueries": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        },
-        "pbbntagents": {
-            "RootUrl": "string",
-            "ApiName": "string",
-            "ApiId": "string"
-        }
+    "pbbntids": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
+    },
+    "pbbntuser": {
+      "ApiId": "string",
+      "ApiName": "string",
+      "RootUrl": "string"
     }
+  },
+  "auth": {
+    "pbbnt5cf00a19": {
+      "AppClientID": "string",
+      "AppClientIDWeb": "string",
+      "CreatedSNSRole": "string",
+      "HostedUIDomain": "string",
+      "IdentityPoolId": "string",
+      "IdentityPoolName": "string",
+      "OAuthMetadata": "string",
+      "UserPoolArn": "string",
+      "UserPoolId": "string",
+      "UserPoolName": "string"
+    },
+    "userPoolGroups": {
+      "adminGroupRole": "string",
+      "agentGroupRole": "string",
+      "managerGroupRole": "string"
+    }
+  },
+  "function": {
+    "AdminQueriese020bed2": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "commentscrud": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "emailprocessing": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "pbbntadmin": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "pbbntagent": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "pbbntids": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "pbbntidsCreditLimit": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "pbbnttransactions": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "pbbntuser": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "resetHands": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "resetTips": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    },
+    "undoemailprocessing": {
+      "Arn": "string",
+      "LambdaExecutionRole": "string",
+      "LambdaExecutionRoleArn": "string",
+      "Name": "string",
+      "Region": "string"
+    }
+  },
+  "storage": {
+    "EmailBucket": {
+      "BucketName": "string",
+      "Region": "string"
+    },
+    "agents": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "StreamArn": "string"
+    },
+    "dynamo317d232a": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "SortKeyName": "string",
+      "SortKeyType": "string",
+      "StreamArn": "string"
+    },
+    "pbbntids": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "StreamArn": "string"
+    },
+    "pbbnttransactions": {
+      "Arn": "string",
+      "Name": "string",
+      "PartitionKeyName": "string",
+      "PartitionKeyType": "string",
+      "Region": "string",
+      "SortKeyName": "string",
+      "SortKeyType": "string",
+      "StreamArn": "string"
+    }
+  }
 }

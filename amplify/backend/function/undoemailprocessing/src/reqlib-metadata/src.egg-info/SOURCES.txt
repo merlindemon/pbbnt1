@@ -1,0 +1,6 @@
+pyproject.toml
+setup.py
+/Users/ryandouglasgriffin/pbbnt1/amplify/backend/function/undoemailprocessing/src/reqlib-metadata/src.egg-info/PKG-INFO
+/Users/ryandouglasgriffin/pbbnt1/amplify/backend/function/undoemailprocessing/src/reqlib-metadata/src.egg-info/SOURCES.txt
+/Users/ryandouglasgriffin/pbbnt1/amplify/backend/function/undoemailprocessing/src/reqlib-metadata/src.egg-info/dependency_links.txt
+/Users/ryandouglasgriffin/pbbnt1/amplify/backend/function/undoemailprocessing/src/reqlib-metadata/src.egg-info/top_level.txt
