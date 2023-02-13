@@ -97,7 +97,8 @@
         "pbbntidsCreditLimit": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
           "s3Key": "amplify-builds/pbbntidsCreditLimit-56694f7545354443736d-build.zip"
-        }
+        },
+        "pbbnttipsPercentage": {}
       },
       "hosting": {
         "amplifyhosting": {

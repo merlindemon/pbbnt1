@@ -89,9 +89,9 @@ class Entry extends React.Component {
     return <Comment email={email} />;
   }
 
-  getCreditLimit(email, creditLimit) {
-    return <CreditLimit email={email} creditLimit={creditLimit} />;
-  }
+  // getCreditLimit(email, creditLimit) {
+  //   return <CreditLimit email={email} creditLimit={creditLimit} />;
+  // }
 
   toggleComment() {
     this.setState({ displayComment: !this.state.displayComment });
@@ -124,12 +124,7 @@ class Entry extends React.Component {
     ) : (
       <div />
     );
-    let updateCreditLimitDisplay = this.getCreditLimit(email, creditLimit);
-    let creditLimitDisplay = (
-      <button onClick={() => this.toggleCreditLimit()}>
-        {formatMoney(creditLimit)}
-      </button>
-    );
+    // let creditLimitDisplay = this.getCreditLimit(email, creditLimit);
     if (isAdmin) {
       adjustButtondisplay = this.state.toggleTransactions
         ? this.displayTransactions(ids)
@@ -169,8 +164,8 @@ class Entry extends React.Component {
           className="entry-credit-limit"
           style={{ color: colorMoney(creditLimit) }}
         >
+          <CreditLimit email={email} creditLimit={creditLimit} />
           {/* {creditLimitDisplay} */}
-          {updateCreditLimitDisplay}
         </td>
         <td className="entry-hands">{hands}</td>
         <td className="entry-profit" style={{ color: colorMoney(profit) }}>

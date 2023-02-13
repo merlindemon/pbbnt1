@@ -168,6 +168,14 @@
           ],
           "category": "auth",
           "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "pbbnttipsPercentage"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -391,6 +399,22 @@
       "service": "Lambda"
     },
     "pbbntidsCreditLimit": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "pbbntids"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "pbbnttipsPercentage": {
       "build": true,
       "dependsOn": [
         {

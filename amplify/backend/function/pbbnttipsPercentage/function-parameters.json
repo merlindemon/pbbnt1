@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "storage": {
+      "pbbntids": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

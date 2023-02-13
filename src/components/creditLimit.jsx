@@ -4,7 +4,6 @@ import React from "react";
 import awsconfig from "../aws-exports";
 import Amplify, { API, Auth } from "aws-amplify";
 import LoadingSpinner from "./helpers/loadingSpinner";
-import { WellArchitected } from "aws-sdk";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -14,11 +13,10 @@ class CreditLimit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // email: props.email,
-      // creditLimit: props.creditLimit,
       update: false,
       groups: [],
       loading: false,
+      dislaySaveBtn: false,
       backgroundColor: "#000000",
     };
   }
@@ -50,6 +48,7 @@ class CreditLimit extends React.Component {
   handleCreditLimit = (event) => {
     this.setState({
       creditLimit: event.target.value,
+      dislaySaveBtn: true,
       backgroundColor: "#c7491f",
     });
   };
@@ -61,7 +60,11 @@ class CreditLimit extends React.Component {
       this.state.email,
       this.state.creditLimit
     );
-    this.setState({ loading: false, backgroundColor: "#03942a" });
+    this.setState({
+      loading: false,
+      dislaySaveBtn: false,
+      backgroundColor: "#03942a",
+    });
     return "";
   }
 

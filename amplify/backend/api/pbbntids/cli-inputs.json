@@ -59,6 +59,25 @@
         },
         "setting": "private"
       }
+    },
+    "/tipsPercentage": {
+      "name": "/tipsPercentage",
+      "lambdaFunction": "pbbnttipsPercentage",
+      "permissions": {
+        "groups": {
+          "admin": [
+            "create",
+            "read",
+            "update"
+          ],
+          "manager": [
+            "create",
+            "read",
+            "update"
+          ]
+        },
+        "setting": "private"
+      }
     }
   }
 }
