@@ -46,11 +46,13 @@ class TipsPercentage extends React.Component {
   }
 
   handleTipsPercentage = (event) => {
-    this.setState({
-      tipsPercentage: event.target.value,
-      dislaySaveBtn: true,
-      backgroundColor: "#c7491f",
-    });
+    if (validation(event.target.value)) {
+      this.setState({
+        tipsPercentage: event.target.value,
+        dislaySaveBtn: true,
+        backgroundColor: "#c7491f",
+      });
+    }
   };
 
   async saveTipsPercentages() {
@@ -75,21 +77,22 @@ class TipsPercentage extends React.Component {
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
     }
-    let saveBtn = this.state.loading ? (
-      <LoadingSpinner />
-    ) : (
+    let loading = this.state.loading ? <LoadingSpinner /> : <div />;
+    let saveBtn = this.state.dislaySaveBtn ? (
       <button onClick={() => this.saveTipsPercentages()}>Save</button>
+    ) : (
+      <div />
     );
     if (isAdmin) {
       let styles = {
-        background: backgroundColor,
+        // background: backgroundColor,
         fontSize: "14px",
       };
 
       let stylesB = {
         color: "#FFFFFF",
         marginLeft: "20px",
-        maxWidth: "35px",
+        maxWidth: "85px",
         width: "100%",
         display: "block",
       };
@@ -100,16 +103,25 @@ class TipsPercentage extends React.Component {
             <input
               className="tipsPercentage_textarea"
               value={tipsPercentage}
+              type="number"
               onChange={this.handleTipsPercentage}
               style={stylesB}
             ></input>
           </div>
           {saveBtn}
+          {loading}
         </div>
       );
     }
     return <div>{tipsPercentageBox}</div>;
   }
+}
+
+function validation(tipsPercentage) {
+  if (tipsPercentage === undefined) {
+    return false;
+  }
+  return tipsPercentage >= 0 && tipsPercentage <= 100;
 }
 
 async function retrieveTipsPercentage(jwtKey, email) {
@@ -127,7 +139,7 @@ async function retrieveTipsPercentage(jwtKey, email) {
       let tipsPercentage = "";
       result = result.Items[0];
       if (result !== undefined) {
-        tipsPercentage = result.tipsPercentage.S;
+        tipsPercentage = result.tipsPercentage.N;
       }
       return tipsPercentage;
     })

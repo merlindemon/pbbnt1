@@ -46,11 +46,13 @@ class CreditLimit extends React.Component {
   }
 
   handleCreditLimit = (event) => {
-    this.setState({
-      creditLimit: event.target.value,
-      dislaySaveBtn: true,
-      backgroundColor: "#c7491f",
-    });
+    if (validation(event.target.value)) {
+      this.setState({
+        creditLimit: event.target.value,
+        dislaySaveBtn: true,
+        backgroundColor: "#c7491f",
+      });
+    }
   };
 
   async saveCreditLimits() {
@@ -75,21 +77,23 @@ class CreditLimit extends React.Component {
     if (typeof this.state.groups !== "undefined") {
       isAdmin = this.state.groups.includes("admin");
     }
-    let saveBtn = this.state.loading ? (
-      <LoadingSpinner />
-    ) : (
+    let loading = this.state.loading ? <LoadingSpinner /> : <div />;
+    let saveBtn = this.state.dislaySaveBtn ? (
       <button onClick={() => this.saveCreditLimits()}>Save</button>
+    ) : (
+      <div />
     );
     if (isAdmin) {
       let styles = {
-        background: backgroundColor,
+        // background: backgroundColor,
         fontSize: "14px",
       };
 
       let stylesB = {
         color: "#FFFFFF",
         marginLeft: "20px",
-        maxWidth: "35px",
+        minWidth: "35px",
+        maxWidth: "85px",
         width: "100%",
         display: "block",
       };
@@ -100,16 +104,25 @@ class CreditLimit extends React.Component {
             <input
               className="creditLimit_textarea"
               value={creditLimit}
+              type="number"
               onChange={this.handleCreditLimit}
               style={stylesB}
             ></input>
           </div>
           {saveBtn}
+          {loading}
         </div>
       );
     }
     return <div>{creditLimitBox}</div>;
   }
+}
+
+function validation(creditLimit) {
+  if (creditLimit === undefined) {
+    return false;
+  }
+  return creditLimit >= 0 && creditLimit <= 1_000_000;
 }
 
 async function retrieveCreditLimit(jwtKey, email) {
@@ -127,7 +140,7 @@ async function retrieveCreditLimit(jwtKey, email) {
       let creditLimit = "";
       result = result.Items[0];
       if (result !== undefined) {
-        creditLimit = result.creditLimit.S;
+        creditLimit = result.creditLimit.N;
       }
       return creditLimit;
     })

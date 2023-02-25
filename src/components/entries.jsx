@@ -19,6 +19,7 @@ class Entries extends Component {
                   <th>Player</th>
                   <th>ID</th>
                   <th>Tips</th>
+                  <th>Tips Percentage</th>
                   <th>Credit Limit</th>
                   <th>Hands</th>
                   <th>Profit</th>
@@ -39,6 +40,8 @@ class Entries extends Component {
                   <td></td>
                   <td></td>
                   <td>{getTotals(this.props.entries, "Tips")}</td>
+                  <td></td>
+                  <td></td>
                   <td></td>
                   <td>{getTotals(this.props.entries, "Profit")}</td>
                 </tr>
@@ -61,6 +64,7 @@ class Entries extends Component {
                   <th>Player</th>
                   <th>ID</th>
                   <th>Tips</th>
+                  <th>Tips Percentage</th>
                   <th>Credit Limit</th>
                   <th>Hands</th>
                   <th>Profit</th>

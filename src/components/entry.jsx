@@ -7,6 +7,7 @@ import LoadingSpinner from "./helpers/loadingSpinner";
 import UserTransactionsAdminView from "./usertransactionsadminview";
 import Comment from "./comment";
 import CreditLimit from "./creditLimit";
+import TipsPercentage from "./tipsPercentage";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -23,6 +24,7 @@ class Entry extends React.Component {
       ids: [],
       profit: 0.0,
       tips: 0.0,
+      tipsPercentage: 0,
       creditLimit: 0,
       adjust: "",
       groups: [],
@@ -46,6 +48,7 @@ class Entry extends React.Component {
         profit: this.props.entry.Profit,
         tips: this.props.entry.Tips,
         creditLimit: this.props.entry.CreditLimit,
+        tipsPercentage: this.props.entry.TipsPercentage,
       });
     });
   }
@@ -89,16 +92,8 @@ class Entry extends React.Component {
     return <Comment email={email} />;
   }
 
-  // getCreditLimit(email, creditLimit) {
-  //   return <CreditLimit email={email} creditLimit={creditLimit} />;
-  // }
-
   toggleComment() {
     this.setState({ displayComment: !this.state.displayComment });
-  }
-
-  toggleCreditLimit() {
-    this.setState({ updateCreditLimit: !this.state.updateCreditLimit });
   }
 
   render() {
@@ -109,6 +104,7 @@ class Entry extends React.Component {
       hands,
       profit,
       tips,
+      tipsPercentage,
       creditLimit,
       adjust,
       email,
@@ -124,7 +120,6 @@ class Entry extends React.Component {
     ) : (
       <div />
     );
-    // let creditLimitDisplay = this.getCreditLimit(email, creditLimit);
     if (isAdmin) {
       adjustButtondisplay = this.state.toggleTransactions
         ? this.displayTransactions(ids)
@@ -157,12 +152,21 @@ class Entry extends React.Component {
             {ids.join(" ")}
           </button>
         </td>
-        <td className="entry-tips" style={{ color: colorMoney(tips) }}>
+        <td
+          className="entry-tips"
+          style={{ color: colorMoney(tips), minWidth: "85px" }}
+        >
           {formatMoney(tips)}
         </td>
         <td
+          className="entry-tips-percentage"
+          style={{ color: colorMoney(tipsPercentage), minWidth: "135px" }}
+        >
+          <TipsPercentage email={email} tipsPercentage={tipsPercentage} />
+        </td>
+        <td
           className="entry-credit-limit"
-          style={{ color: colorMoney(creditLimit) }}
+          style={{ color: colorMoney(creditLimit), minWidth: "135px" }}
         >
           <CreditLimit email={email} creditLimit={creditLimit} />
           {/* {creditLimitDisplay} */}

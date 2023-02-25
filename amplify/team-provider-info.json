@@ -52,7 +52,7 @@
         },
         "pbbntadmin": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/pbbntadmin-7539632f4c6362787466-build.zip"
+          "s3Key": "amplify-builds/pbbntadmin-5452516f386d45682b46-build.zip"
         },
         "pbbntids": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
@@ -98,7 +98,10 @@
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
           "s3Key": "amplify-builds/pbbntidsCreditLimit-56694f7545354443736d-build.zip"
         },
-        "pbbnttipsPercentage": {}
+        "pbbnttipsPercentage": {
+          "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
+          "s3Key": "amplify-builds/pbbnttipsPercentage-2b4d443970664a727552-build.zip"
+        }
       },
       "hosting": {
         "amplifyhosting": {

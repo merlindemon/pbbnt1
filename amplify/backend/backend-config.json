@@ -679,6 +679,22 @@
         }
       ]
     },
+    "AMPLIFY_function_pbbnttipsPercentage_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbnttipsPercentage"
+        }
+      ]
+    },
+    "AMPLIFY_function_pbbnttipsPercentage_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "pbbnttipsPercentage"
+        }
+      ]
+    },
     "AMPLIFY_function_pbbnttransactions_deploymentBucketName": {
       "usedBy": [
         {

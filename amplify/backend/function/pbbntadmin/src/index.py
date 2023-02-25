@@ -26,6 +26,7 @@ def handler(event, context):
             result_array = identifierdata['Items']
         id_to_email = {}
         email_to_credit_limit = {}
+        email_to_tips_percentage = {}
         for result in result_array:
             credit_limit = 0
             email = result['email']['S']
@@ -35,6 +36,9 @@ def handler(event, context):
             if 'creditLimit' in result:
                 credit_limit = int(result['creditLimit']['N'])
                 email_to_credit_limit[email] = credit_limit
+            if 'tipsPercentage' in result:
+                tips_percentage = int(result['tipsPercentage']['N'])
+                email_to_tips_percentage[email] = tips_percentage
             for identifier in ids_array:
                 identifier = identifier['S']
                 id_to_email[identifier] = email
@@ -71,9 +75,12 @@ def handler(event, context):
                 tips += float(existing_hash['Tips'])
                 
             credit_limit = int(0)
+            tips_percentage = int(0)
             if email in email_to_credit_limit:
                 credit_limit = int(email_to_credit_limit[email])
-                
+            if email in email_to_tips_percentage:
+                tips_percentage = int(email_to_tips_percentage[email])
+
             modified_gamedata[email] = {
                 'ID': identifier,
                 'Player': player,
@@ -82,6 +89,7 @@ def handler(event, context):
                 'Rank': rank,
                 'Hands': hands,
                 'Tips': tips,
+                'TipsPercentage': tips_percentage,
                 'CreditLimit': credit_limit,
                 'Email': email
             }
