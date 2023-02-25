@@ -169,7 +169,6 @@ class Entry extends React.Component {
           style={{ color: colorMoney(creditLimit), minWidth: "135px" }}
         >
           <CreditLimit email={email} creditLimit={creditLimit} />
-          {/* {creditLimitDisplay} */}
         </td>
         <td className="entry-hands">{hands}</td>
         <td className="entry-profit" style={{ color: colorMoney(profit) }}>

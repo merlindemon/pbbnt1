@@ -43,6 +43,14 @@ class GameDataDisplayer extends React.Component {
     }
   }
 
+  async tipPlayers() {
+    if (window.confirm("Are you sure you wish to tip the Players?")) {
+      this.setState({ loading: true });
+      await tipAllPlayers(this.state.jwtKey);
+      await this.loadGameData();
+    }
+  }
+
   async resetTips() {
     if (window.confirm("Are you sure you wish to reset all of the Tips?")) {
       this.setState({ loading: true });
@@ -67,6 +75,9 @@ class GameDataDisplayer extends React.Component {
         </button>
         <button className="dangerousbutton" onClick={() => this.resetHands()}>
           Reset Hands
+        </button>
+        <button className="warningButton" onClick={() => this.tipPlayers()}>
+          Tip Players
         </button>
         <button className="dangerousbutton" onClick={() => this.resetTips()}>
           Reset Tips
@@ -98,6 +109,21 @@ async function resetAllHands(jwtKey) {
     },
   };
   return await API.del(ADMIN_API, "/hands", myInit)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+async function tipAllPlayers(jwtKey) {
+  const myInit = {
+    headers: {
+      Authorization: "Bearer " + jwtKey,
+    },
+  };
+  return await API.del(ADMIN_API, "/tipPlayers", myInit)
     .then((result) => {
       return result;
     })

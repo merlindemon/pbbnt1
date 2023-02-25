@@ -101,7 +101,8 @@
         "pbbnttipsPercentage": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
           "s3Key": "amplify-builds/pbbnttipsPercentage-2b4d443970664a727552-build.zip"
-        }
+        },
+        "tipPlayers": {}
       },
       "hosting": {
         "amplifyhosting": {
