@@ -123,7 +123,7 @@ async function tipAllPlayers(jwtKey) {
       Authorization: "Bearer " + jwtKey,
     },
   };
-  return await API.del(ADMIN_API, "/tipPlayers", myInit)
+  return await API.post(ADMIN_API, "/tipPlayers", myInit)
     .then((result) => {
       return result;
     })

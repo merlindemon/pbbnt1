@@ -22,8 +22,8 @@ class IdsDisplayer extends Component {
             <th>Email</th>
             <th>IDs</th>
             <div>
-              <th>Manager?</th>
-              <th>Agent?</th>
+              <th style={{ minWidth: "85px" }}>Manager?</th>
+              <th style={{ minWidth: "85px" }}>Agent?</th>
             </div>
             {sorted_entries.map((entry) => (
               <IdDisplayer entry={entry} />

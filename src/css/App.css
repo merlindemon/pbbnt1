@@ -88,6 +88,12 @@ button {
   margin-bottom: 50px;
 }
 
+.agentsTable {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+}
+
 .entry-email {
   padding-left: 1rem;
   padding-right: 1rem;
@@ -100,6 +106,7 @@ button {
 
 .ids-button {
   white-space: normal;
+  width: 100px;
 }
 
 .entry-id {

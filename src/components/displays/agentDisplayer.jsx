@@ -18,12 +18,10 @@ class AgentDisplayer extends Component {
           <h1>Entries</h1>
         </center>
         <div>
-          <table border="1" className="entries">
-            <div>
-              <th width="24%">Agent Email</th>
-              <th width="66%">Player Emails</th>
-              <th width="10%"></th>
-            </div>
+          <table border="1" className="agentsTable">
+            <th>Agent Email</th>
+            <th>Player Emails</th>
+            <th></th>
             {sorted_entries.map((entry) => (
               <AgentDisplay
                 agent_email={entry.agent_email.S}

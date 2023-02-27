@@ -35,7 +35,7 @@ class IdDisplayer extends Component {
 
   async handleManagerChange(event, email) {
     this.setState({ loading: true });
-    let newValue = !this.state.manager
+    let newValue = !this.state.manager;
     this.setState({ manager: newValue });
     await editUserGroup(
       this.state.jwtKey,
@@ -48,14 +48,9 @@ class IdDisplayer extends Component {
 
   async handleAgentChange(event, email) {
     this.setState({ loading: true });
-    let newValue = !this.state.agent
+    let newValue = !this.state.agent;
     this.setState({ agent: newValue });
-    await editUserGroup(
-      this.state.jwtKey,
-      this.state.email,
-      "agent",
-      newValue
-    );
+    await editUserGroup(this.state.jwtKey, this.state.email, "agent", newValue);
     this.setState({ loading: false });
   }
 
@@ -72,6 +67,7 @@ class IdDisplayer extends Component {
               <input
                 type="checkbox"
                 checked={this.state.manager}
+                style={{ minWidth: "85px" }}
                 onChange={(event) =>
                   this.handleManagerChange(event, this.state.email)
                 }
@@ -81,6 +77,7 @@ class IdDisplayer extends Component {
               <input
                 type="checkbox"
                 checked={this.state.agent}
+                style={{ minWidth: "85px" }}
                 onChange={(event) =>
                   this.handleAgentChange(event, this.state.email)
                 }
@@ -110,9 +107,9 @@ async function editUserGroup(jwtKey, email, group, boolean) {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      "email": email.toLowerCase(),
-      "group": group,
-      "boolean": boolean,
+      email: email.toLowerCase(),
+      group: group,
+      boolean: boolean,
     },
   };
   let response;

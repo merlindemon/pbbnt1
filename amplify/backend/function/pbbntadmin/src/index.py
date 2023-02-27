@@ -47,6 +47,7 @@ def handler(event, context):
         print(id_to_email)
         for item in gamedata['Items']:
             identifier = item['ID']['S']
+            player =    item['Player']['S']
             email = ''
             if identifier in id_to_email:
                 #If we have a user email -> id defined
@@ -54,8 +55,7 @@ def handler(event, context):
             else:
                 letters = string.ascii_uppercase
                 email = "NoEmailListed?" + ''.join(random.choice(letters) for i in range(10))
-            identifier = [identifier]#Go ahead and turn into array
-            player =    [item['Player']['S']]#Go ahead and turn into array
+            #Go ahead and turn into array
             profit =    float(item['Profit']['N'])
             buyin =     float(item['BuyIn']['N'])
             rank =      int(item['Rank']['N'])
@@ -65,15 +65,20 @@ def handler(event, context):
             if email in modified_gamedata:
                 #This user has multiple accounts, merge the data
                 existing_hash = modified_gamedata[email]
-                identifier.append(existing_hash['ID'])
-                player.append(existing_hash['Player'])
+                existing_hash['ID'].append(identifier)
+                identifier = existing_hash['ID']
+                existing_hash['Player'].append(player)
+                player = existing_hash['Player']
                 profit += float(existing_hash['Profit'])
                 buyin += float(existing_hash['BuyIn'])
                 #We can average the rank, though it may be innaccurate if there are more than two accounts
                 rank = round((int(rank) + int(existing_hash['Rank'])) / 2)
                 hands += int(existing_hash['Hands'])
                 tips += float(existing_hash['Tips'])
-                
+            else:
+                identifier = [identifier]
+                player = [player]
+
             credit_limit = int(0)
             tips_percentage = int(0)
             if email in email_to_credit_limit:

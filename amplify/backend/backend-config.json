@@ -75,6 +75,14 @@
           ],
           "category": "auth",
           "resourceName": "userPoolGroups"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "tipPlayers"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -539,6 +547,15 @@
           ],
           "category": "storage",
           "resourceName": "pbbnttransactions"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "agents"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -798,6 +815,22 @@
         {
           "category": "function",
           "resourceName": "resetTips"
+        }
+      ]
+    },
+    "AMPLIFY_function_tipPlayers_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "tipPlayers"
+        }
+      ]
+    },
+    "AMPLIFY_function_tipPlayers_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "tipPlayers"
         }
       ]
     },

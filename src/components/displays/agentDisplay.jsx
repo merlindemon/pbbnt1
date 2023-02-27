@@ -15,7 +15,7 @@ class AgentDisplay extends Component {
     super(undefined);
     this.state = {
       agent_email: "",
-      ids: "",
+      player_emails: "",
       displayAgentData: false,
       loading: true,
       jwtKey: "",
@@ -28,7 +28,7 @@ class AgentDisplay extends Component {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
         agent_email: this.props.agent_email,
-        ids: this.props.ids,
+        player_emails: this.props.ids,
       });
     });
   }
@@ -53,35 +53,27 @@ class AgentDisplay extends Component {
     return this.state.loading ? (
       <LoadingSpinner />
     ) : (
-      <div>
+      <td>
         <Entries entries={this.state.entries} />
-      </div>
+      </td>
     );
   }
 
   render() {
     return (
-      <div>
-        <tr>
-          <td width="24%">[{this.state.agent_email}]</td>
-          <td width="66%">{this.state.ids}</td>
-          <td width="10%">
-            <button
-              className="safebutton"
-              onClick={() => this.toggleGameData()}
-            >
-              Display Game Data
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>
-            {this.state.displayAgentData ? this.displayGameData() : <div></div>}
-          </td>
-          <td></td>
-        </tr>
-      </div>
+      <tr>
+        <td>[{this.state.agent_email}]</td>
+        {this.state.displayAgentData ? (
+          this.displayGameData()
+        ) : (
+          <td className="ids-button">{this.state.player_emails}</td>
+        )}
+        <td>
+          <button className="safebutton" onClick={() => this.toggleGameData()}>
+            Display Game Data
+          </button>
+        </td>
+      </tr>
     );
   }
 }
