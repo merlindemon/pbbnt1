@@ -104,7 +104,7 @@
         },
         "tipPlayers": {
           "deploymentBucketName": "amplify-pbbnt1-testtwo-61428-deployment",
-          "s3Key": "amplify-builds/tipPlayers-514c4e4d67344a74726b-build.zip"
+          "s3Key": "amplify-builds/tipPlayers-734d5943456863426b4b-build.zip"
         }
       },
       "hosting": {

@@ -3,7 +3,7 @@ import boto3
 import os
 
 GAMEDATA_TABLE = 'dynamo317d232a-' + os.environ["ENV"]
-IDS_TABLE = 'pbbnttids-' + os.environ["ENV"]
+IDS_TABLE = 'pbbntids-' + os.environ["ENV"]
 TRANSACTIONS_TABLE = 'pbbnttransactions-' + os.environ["ENV"]
 AGENTS_TABLE = 'agents-' + os.environ["ENV"]
 client = boto3.client('dynamodb')
@@ -33,15 +33,20 @@ def handler(event, context):
             tips, playername, profit_balance = getGameDataForSpecificId(
                 player_id)
             print(f"tips: { tips}, playername: {playername}, profit_balance: {profit_balance}")
-            if tips <= 0:
+            if float(tips) <= 0:
                 #If the tips are zero, nothing to calculate as the result is automatically zero as well
+                continue
+            if player_id not in player_id_to_tip_percentage:
                 continue
             tips_percentage = player_id_to_tip_percentage[player_id]
             print(f"tips_percentage: {tips_percentage}")
-            if tips_percentage <= 0:
+            if float(tips_percentage) <= 0:
                 #If the tips_percentage is zero, nothing to calculate as the result is automatically zero as well
                 continue
-            rakeback = (tips * tips_percentage)
+            print(f"Tips: {tips}")
+            print(f"Tips Percentage: {tips_percentage}")
+            rakeback = (float(tips) * float(tips_percentage))
+            round(rakeback, 2)
             print(f"rakeback: {rakeback}")
             player_email = player_id_to_player_email[player_id]
             print(f"player_email: {player_email}")
@@ -73,7 +78,7 @@ def handler(event, context):
 
 def tipAffiliatedAgent(rakeback, player_id, playername, agent_id, ttl, dt):
     tips, agentname, profit_balance = getGameDataForSpecificId(agent_id)
-    profit = profit_balance + rakeback
+    profit = float(profit_balance) + float(rakeback)
     update_kwargs = {
         'TableName': GAMEDATA_TABLE,
         'UpdateExpression': "set Profit=:p",
@@ -119,7 +124,7 @@ def tipAffiliatedAgent(rakeback, player_id, playername, agent_id, ttl, dt):
 
 def tipUnaffiliatedPlayer(rakeback, profit_balance, player_id, playername, ttl,
                           dt):
-    profit = profit_balance + rakeback
+    profit = float(profit_balance) + float(rakeback)
     update_kwargs = {
         'TableName': GAMEDATA_TABLE,
         'UpdateExpression': "set Profit=:p",
@@ -164,7 +169,7 @@ def tipUnaffiliatedPlayer(rakeback, profit_balance, player_id, playername, ttl,
 
 
 def getGameDataForSpecificId(identifier):
-    get_item_kwargs = {
+    query_kwargs = {
         'TableName': GAMEDATA_TABLE,
         'KeyConditionExpression': '#id = :value',
         'ExpressionAttributeNames': {
@@ -175,16 +180,20 @@ def getGameDataForSpecificId(identifier):
                 'S': identifier
             }
         },
-        'ConsistentRead': str(True)
+        'ConsistentRead': bool(True)
     }
-    data = client.get_item(**get_item_kwargs)
-    data = data['Item'][0]
-    tips = 0
-    if 'Tips' in data:
-        tips = data['Tips']['N']
-    playername = data['Player']['S']
-    profit_balance = data['Profit']['N']
-    return tips, playername, profit_balance
+    data = client.query(**query_kwargs)
+    print(data)
+    if len(data['Items']) > 0:#Ensure the ID has an entry in the Game Data table
+        data = data['Items'][0]
+        tips = 0
+        if 'Tips' in data:
+            tips = data['Tips']['N']
+        playername = data['Player']['S']
+        profit_balance = data['Profit']['N']
+        return tips, playername, profit_balance
+    else:
+        return 0,0,0
 
 
 def getAgentsInformation():
@@ -193,7 +202,7 @@ def getAgentsInformation():
     agent_data = response['Items']
     player_email_to_agent_email = {}
     for agent_email in agent_data:
-        for player_data in agent_email['ids']:
+        for player_data in agent_email['ids']['L']:
             player_email = player_data['S']
             player_email_to_agent_email[player_email] = agent_email
     return player_email_to_agent_email
@@ -209,9 +218,9 @@ def getIdsData():
 def flipIdsData(ids_data):
     player_id_to_player_email = {}
     for player_email in ids_data:
-        for identifier in player_email['ids']:
+        for identifier in player_email['ids']['L']:
             identifier = identifier['S']
-            player_id_to_player_email[identifier] = player_email
+            player_id_to_player_email[identifier] = player_email['email']['S']
     return player_id_to_player_email
 
 
@@ -219,19 +228,23 @@ def getEmailMapping(ids_data):
     #This just grabs the first ID and ignores the rest, and is for the purpose of adding profit/transactions
     #Since the app gathers all the player's(email) ids and combines them, adding it to "the wrong one" can't happen
     player_email_to_player_id = {}
-    for player_email in ids_data:
-        player_email_to_player_id[player_email] = player_email['ids'][0]['S']
+    for player_data in ids_data:
+        player_email = player_data['email']['S']
+        for identifier in player_data['ids']['L']:
+            identifier = identifier['S']
+            player_email_to_player_id[player_email] = identifier
+            continue
     return player_email_to_player_id
 
 
 def getTipsPercentage(ids_data):
     player_id_to_tip_percentage = {}
     for player_data in ids_data:
-        for identifier in player_data['ids']:
+        for identifier in player_data['ids']['L']:
             identifier = identifier['S']
             tips_percentage = 0
             if 'tipsPercentage' in player_data:
-                tips_percentage = float(player_data['tipsPercentage'] / 100)
+                tips_percentage = float(float(player_data['tipsPercentage']['N']) / 100)
             player_id_to_tip_percentage[identifier] = tips_percentage
     return player_id_to_tip_percentage
 
