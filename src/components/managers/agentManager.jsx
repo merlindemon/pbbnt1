@@ -153,8 +153,8 @@ async function associateAgentEmailWithPlayer(
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      agent_email: agent_email.toLowerCase(),
-      player_email: player_email,
+      agent_email: agent_email.toLowerCase().trim(),
+      player_email: player_email.toLowerCase().trim(),
     },
   };
   let response;
@@ -178,8 +178,8 @@ async function deassociateAgentEmailWithPlayer(
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      agent_email: agent_email.toLowerCase(),
-      player_email: player_email,
+      agent_email: agent_email.toLowerCase().trim(),
+      player_email: player_email.toLowerCase().trim(),
     },
   };
   let response;

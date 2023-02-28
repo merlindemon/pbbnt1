@@ -1,6 +1,7 @@
 import json
 import boto3
 import os
+from datetime import datetime
 
 GAMEDATA_TABLE = 'dynamo317d232a-' + os.environ["ENV"]
 IDS_TABLE = 'pbbntids-' + os.environ["ENV"]
@@ -154,7 +155,7 @@ def tipUnaffiliatedPlayer(rakeback, profit_balance, player_id, playername, ttl,
                 'S': str(dt)
             },
             'Type': {
-                'S': "Rakeback"
+                'S': f"Rakeback: {player_id} - {playername}"
             },
             'Amount': {
                 'N': str(rakeback)
@@ -201,8 +202,9 @@ def getAgentsInformation():
     response = client.scan(**scan_kwargs)
     agent_data = response['Items']
     player_email_to_agent_email = {}
-    for agent_email in agent_data:
-        for player_data in agent_email['ids']['L']:
+    for agent_entry in agent_data:
+        agent_email = agent_entry['agent_email']['S']
+        for player_data in agent_entry['ids']['L']:
             player_email = player_data['S']
             player_email_to_agent_email[player_email] = agent_email
     return player_email_to_agent_email
@@ -217,10 +219,10 @@ def getIdsData():
 
 def flipIdsData(ids_data):
     player_id_to_player_email = {}
-    for player_email in ids_data:
-        for identifier in player_email['ids']['L']:
+    for player_entry in ids_data:
+        for identifier in player_entry['ids']['L']:
             identifier = identifier['S']
-            player_id_to_player_email[identifier] = player_email['email']['S']
+            player_id_to_player_email[identifier] = player_entry['email']['S']
     return player_id_to_player_email
 
 
@@ -256,4 +258,6 @@ def getTTL():
     td = timedelta(days=42)
     my_date = dt + td
     ttl = int(time.mktime(my_date.timetuple()))
-    return ttl, dt
+    now = datetime.now()
+    date = now.strftime("%Y-%m-%d %H:%M:%S")
+    return ttl, date

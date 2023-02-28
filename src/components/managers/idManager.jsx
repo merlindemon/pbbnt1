@@ -147,8 +147,8 @@ async function associateEmailWithUserId(jwtKey, email, id) {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email.toLowerCase(),
-      id: id,
+      email: email.toLowerCase().trim(),
+      id: id.trim(),
     },
   };
   let response;
@@ -168,8 +168,8 @@ async function deassociateEmailWithUserId(jwtKey, email, id) {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email.toLowerCase(),
-      id: id,
+      email: email.toLowerCase().trim(),
+      id: id.trim(),
     },
   };
   let response;

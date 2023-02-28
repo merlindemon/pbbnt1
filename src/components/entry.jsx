@@ -162,7 +162,11 @@ class Entry extends React.Component {
           className="entry-tips-percentage"
           style={{ color: colorMoney(tipsPercentage), minWidth: "135px" }}
         >
-          <TipsPercentage email={email} tipsPercentage={tipsPercentage} />
+          <TipsPercentage
+            email={email}
+            tipsPercentage={tipsPercentage}
+            tips={formatMoney(tips)}
+          />
         </td>
         <td
           className="entry-credit-limit"

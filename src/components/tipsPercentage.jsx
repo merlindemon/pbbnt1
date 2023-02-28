@@ -17,6 +17,7 @@ class TipsPercentage extends React.Component {
       groups: [],
       loading: false,
       dislaySaveBtn: false,
+      rakeback: 0.0,
       backgroundColor: "#000000",
     };
   }
@@ -31,6 +32,7 @@ class TipsPercentage extends React.Component {
     this.setState({
       email: this.props.email,
       tipsPercentage: this.props.tipsPercentage,
+      tips: this.props.tips,
     });
     let tipsPercentage;
     if (this.state.update) {
@@ -43,6 +45,7 @@ class TipsPercentage extends React.Component {
     if (tipsPercentage !== undefined) {
       this.setState({ tipsPercentage, backgroundColor: "#03942a" });
     }
+    this.calculateRakeback();
   }
 
   handleTipsPercentage = (event) => {
@@ -70,8 +73,18 @@ class TipsPercentage extends React.Component {
     return "";
   }
 
+  async calculateRakeback() {
+    let rakeback = (
+      (parseFloat(this.state.tipsPercentage) / 100) *
+      parseFloat(this.state.tips)
+    ).toFixed(2);
+    this.setState({
+      rakeback: rakeback,
+    });
+  }
+
   render() {
-    let { tipsPercentage, backgroundColor } = this.state;
+    let { tipsPercentage } = this.state;
     let tipsPercentageBox = <p>{tipsPercentage}</p>;
     let isAdmin = false;
     if (typeof this.state.groups !== "undefined") {
@@ -83,9 +96,9 @@ class TipsPercentage extends React.Component {
     ) : (
       <div />
     );
+    let rakeback = this.state.rakeback;
     if (isAdmin) {
       let styles = {
-        // background: backgroundColor,
         fontSize: "14px",
       };
 
@@ -107,6 +120,9 @@ class TipsPercentage extends React.Component {
               onChange={this.handleTipsPercentage}
               style={stylesB}
             ></input>
+          </div>
+          <div>
+            <p>"{rakeback}"</p>
           </div>
           {saveBtn}
           {loading}
