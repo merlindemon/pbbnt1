@@ -47,13 +47,16 @@ class UserData extends Component {
     return (
       <div>
         <div>
-          <h1>{playernames.join()}</h1>
-          {/* <div className="signOut">
-            <AmplifySignOut button-text="SignOut" />
-          </div> */}
+          <h1 style={{ display: "inline-block", marginRight: "100px" }}>
+            {playernames.join()}
+          </h1>
           <button
+            id="close-CSS"
             onClick={this.onSignOutClick}
-            style="background: url(logout_image.png)"
+            // style={{
+            //   background: "url(logout_image.png)",
+            //   backgroundSize: "cover",
+            // }}
           ></button>
         </div>
         <div>
@@ -99,15 +102,15 @@ function formatMoney(string) {
   return parseFloat(string).toFixed(2);
 }
 
-function colorMoney(string) {
-  string = parseFloat(string);
-  if (string > 0) {
-    return "#33cc33";
-  }
-  if (string < 0) {
-    return "#ff1a1a";
-  }
-  return "#ffffff";
-}
+// function colorMoney(string) {
+//   string = parseFloat(string);
+//   if (string > 0) {
+//     return "#33cc33";
+//   }
+//   if (string < 0) {
+//     return "#ff1a1a";
+//   }
+//   return "#ffffff";
+// }
 
 export default UserData;

@@ -34,27 +34,29 @@
 
 .header {
   text-align: center;
+  background-image: url( '../images/jungle_cover.png' );
   background-size: contain;
   background-repeat: no-repeat;
-  height: 40%;
+  height: 600px;
   background-position: center;
 }
 
 button {
   margin: 0.5rem 1rem 0.5rem 0.5rem;
-  background-color: #084f62;
-  color: #ffffff;
+  background-color: #FDF482;
+  color: #154015;
 }
 
 .safebutton {
-  background-color: #03942a;
+  background-color: #154015;
+  color: #FDF482;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
 }
 
 .warningButton {
-  background-color: #154015;
+  background-color: #FDF482;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
@@ -62,6 +64,7 @@ button {
 
 .dangerousbutton {
   background-color: #f44336;
+  color: #FDF482;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
   margin-top: 0.5rem;
@@ -79,6 +82,9 @@ button {
   margin-right: auto;
   width: 50%;
   border-color: #154015;
+  border-width: 2px;
+  background-color: #FDF482;
+  color: #154015;
 }
 
 .entries {
@@ -167,7 +173,7 @@ img {
 }
 
 .black {
-  background-color: #000000;
+  background-color: #154015;
 }
 
 :root {
@@ -185,4 +191,13 @@ img {
   to {
     transform: rotate(360deg);
   }
+}
+
+#close-CSS {
+  background-image: url( '../images/logout_image.png' );
+  background-size: 75px 75px;
+  height: 75px;  
+  width: 75px;
+  background-color: #154015;
+  border-color: #FDF482;
 }

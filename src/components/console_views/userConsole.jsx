@@ -55,10 +55,7 @@ class UserConsole extends React.Component {
 
   render() {
     return (
-      <div
-        className="center"
-        style={{ backgroundImage: "url(/jungle_cover.jpeg)" }}
-      >
+      <div>
         {this.state.loading ? (
           <LoadingSpinner />
         ) : (

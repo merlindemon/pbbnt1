@@ -84,7 +84,9 @@ class UserData extends Component {
             .map((transaction) => (
               <tr>
                 <td>{transaction.Date.S}</td>
-                <td style={{ color: colorMoney(transaction.Amount.N) }}>
+                <td
+                // style={{ color: colorMoney(transaction.Amount.N) }}
+                >
                   {formatMoney(transaction.Amount.N)}
                 </td>
               </tr>
@@ -114,16 +116,16 @@ function formatMoney(string) {
   return parseFloat(string).toFixed(2);
 }
 
-function colorMoney(string) {
-  string = parseFloat(string);
-  if (string > 0) {
-    return "#33cc33";
-  }
-  if (string < 0) {
-    return "#ff1a1a";
-  }
-  return "#ffffff";
-}
+// function colorMoney(string) {
+//   string = parseFloat(string);
+//   if (string > 0) {
+//     return "#33cc33";
+//   }
+//   if (string < 0) {
+//     return "#ff1a1a";
+//   }
+//   return "#ffffff";
+// }
 
 async function getTransactions(jwtKey, ids) {
   let id_str = ids.join();

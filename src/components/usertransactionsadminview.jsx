@@ -1,8 +1,8 @@
 // src/components/UserData.js
 
-import React, {Component} from "react";
+import React, { Component } from "react";
 import awsconfig from "../aws-exports";
-import Amplify, {API, Auth} from "aws-amplify";
+import Amplify, { API, Auth } from "aws-amplify";
 
 Amplify.configure(awsconfig);
 API.configure(awsconfig);
@@ -89,16 +89,16 @@ async function getTransactions(jwtKey, ids) {
     },
   };
   return await API.get(
-      "pbbntuser",
-      "/transactions?Search=" + encodeURIComponent(ids.join()),
-      myInit
+    "pbbntuser",
+    "/transactions?Search=" + encodeURIComponent(ids.join()),
+    myInit
   )
-      .then((result) => {
-        return result;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 export default UserData;
