@@ -65,6 +65,7 @@ class TipsPercentage extends React.Component {
       this.state.email,
       this.state.tipsPercentage
     );
+    this.calculateRakeback();
     this.setState({
       loading: false,
       dislaySaveBtn: false,
