@@ -13,7 +13,7 @@ class LoadingSpinner extends React.Component {
           alignItems: "center",
         }}
       >
-        <Loader type="ThreeDots" color="#ffffff" height="100" width="100" />
+        <Loader type="ThreeDots" color="#FDF482" height="100" width="100" />
       </div>
     );
   }

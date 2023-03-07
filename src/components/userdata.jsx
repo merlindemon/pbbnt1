@@ -6,7 +6,7 @@ import hand from "../images/hands_image.png";
 import identiferimage from "../images/thumbprint_image.png";
 import UserTransactions from "./usertransactions";
 import { AmplifySignOut } from "@aws-amplify/ui-react";
-import Auth from "aws-amplify";
+import { Auth } from "aws-amplify";
 
 class UserData extends Component {
   constructor(props) {
@@ -50,14 +50,7 @@ class UserData extends Component {
           <h1 style={{ display: "inline-block", marginRight: "100px" }}>
             {playernames.join()}
           </h1>
-          <button
-            id="close-CSS"
-            onClick={this.onSignOutClick}
-            // style={{
-            //   background: "url(logout_image.png)",
-            //   backgroundSize: "cover",
-            // }}
-          ></button>
+          <button id="close-CSS" onClick={this.onSignOutClick}></button>
         </div>
         <div>
           <table className="entries">
