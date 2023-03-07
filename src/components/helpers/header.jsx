@@ -6,11 +6,11 @@ class Header extends Component {
     return (
       <div
         className="header"
-        // style={{ backgroundImage: "url(/the_jungle.jpeg)" }}
+        style={{ backgroundImage: "url(/jungle_cover.png)" }}
       >
-        <div className="signOut">
+        {/* <div className="signOut">
           <AmplifySignOut button-text="SignOut" />
-        </div>
+        </div> */}
       </div>
     );
   }

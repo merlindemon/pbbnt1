@@ -3,8 +3,10 @@
 import React, { Component } from "react";
 import bank from "../images/bank_image.png";
 import hand from "../images/hands_image.png";
-import identiferimage from "../images/identifiers.png";
+import identiferimage from "../images/thumbprint_image.png";
 import UserTransactions from "./usertransactions";
+import { AmplifySignOut } from "@aws-amplify/ui-react";
+import Auth from "aws-amplify";
 
 class UserData extends Component {
   constructor(props) {
@@ -34,13 +36,26 @@ class UserData extends Component {
     }
   }
 
+  async onSignOutClick() {
+    await Auth.signOut()
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  }
+
   render() {
     const { hands, profit, ids, playernames } = this.state;
     return (
       <div>
-        <center>
+        <div>
           <h1>{playernames.join()}</h1>
-        </center>
+          {/* <div className="signOut">
+            <AmplifySignOut button-text="SignOut" />
+          </div> */}
+          <button
+            onClick={this.onSignOutClick}
+            style="background: url(logout_image.png)"
+          ></button>
+        </div>
         <div>
           <table className="entries">
             <tr>
@@ -63,7 +78,9 @@ class UserData extends Component {
               <td>
                 <img src={bank} alt="Bank" />
               </td>
-              <td style={{ color: colorMoney(profit) }}>
+              <td
+              // style={{ color: colorMoney(profit) }}
+              >
                 {formatMoney(profit)}
               </td>
             </tr>
