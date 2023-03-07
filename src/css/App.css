@@ -177,9 +177,8 @@ img {
 }
 
 :root {
-  --amplify-primary-color: #FDF482;
+  --amplify-primary-color: #154015;
   background-color: #154015;
-  /*color: #620d08;*/
   color: #FDF482;
   margin-top: 5px;
 }

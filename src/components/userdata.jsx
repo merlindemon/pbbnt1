@@ -5,8 +5,7 @@ import bank from "../images/bank_image.png";
 import hand from "../images/hands_image.png";
 import identiferimage from "../images/thumbprint_image.png";
 import UserTransactions from "./usertransactions";
-import { AmplifySignOut } from "@aws-amplify/ui-react";
-import { Auth } from "aws-amplify";
+import { Auth, Hub } from "aws-amplify";
 
 class UserData extends Component {
   constructor(props) {
@@ -40,6 +39,11 @@ class UserData extends Component {
     await Auth.signOut()
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
+    Hub.dispatch("UI Auth", {
+      // channel must be 'UI Auth'
+      event: "AuthStateChange", // event must be 'AuthStateChange'
+      message: "signedout", // message must be 'signedout'
+    });
   }
 
   render() {
