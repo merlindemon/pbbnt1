@@ -10,7 +10,10 @@ class IdsDisplayer extends Component {
   render() {
     let local_entries = this.props.entries;
     let sorted_entries = local_entries.sort((a, b) =>
-      a.email.S.toUpperCase() > b.email.S.toUpperCase() ? 1 : -1
+      a.preferred_username.S.toUpperCase() >
+      b.preferred_username.S.toUpperCase()
+        ? 1
+        : -1
     );
     return (
       <div>
@@ -19,7 +22,7 @@ class IdsDisplayer extends Component {
         </center>
         <div>
           <table border="1" className="entries">
-            <th>Email</th>
+            <th>Username</th>
             <th>IDs</th>
             <div>
               <th style={{ minWidth: "85px" }}>Manager?</th>

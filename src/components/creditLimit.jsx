@@ -29,14 +29,14 @@ class CreditLimit extends React.Component {
       });
     });
     this.setState({
-      email: this.props.email,
+      preferred_username: this.props.preferred_username,
       creditLimit: this.props.creditLimit,
     });
     let creditLimit;
     if (this.state.update) {
       creditLimit = await retrieveCreditLimit(
         this.state.jwtKey,
-        this.state.email
+        this.state.preferred_username
       );
     }
 
@@ -59,7 +59,7 @@ class CreditLimit extends React.Component {
     this.setState({ loading: true });
     await setCreditLimit(
       this.state.jwtKey,
-      this.state.email,
+      this.state.preferred_username,
       this.state.creditLimit
     );
     this.setState({
@@ -125,7 +125,7 @@ function validation(creditLimit) {
   return creditLimit >= 0 && creditLimit <= 1_000_000;
 }
 
-async function retrieveCreditLimit(jwtKey, email) {
+async function retrieveCreditLimit(jwtKey, preferred_username) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -133,7 +133,7 @@ async function retrieveCreditLimit(jwtKey, email) {
   };
   return await API.get(
     "pbbntids",
-    "/creditLimit?Search=" + encodeURIComponent(email),
+    "/creditLimit?Search=" + encodeURIComponent(preferred_username),
     myInit
   )
     .then((result) => {
@@ -149,13 +149,13 @@ async function retrieveCreditLimit(jwtKey, email) {
     });
 }
 
-async function setCreditLimit(jwtKey, email, creditLimit) {
+async function setCreditLimit(jwtKey, preferred_username, creditLimit) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email,
+      preferred_username: preferred_username,
       creditLimit: creditLimit,
     },
   };

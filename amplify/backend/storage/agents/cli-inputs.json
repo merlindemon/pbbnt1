@@ -2,7 +2,7 @@
   "resourceName": "agents",
   "tableName": "agents",
   "partitionKey": {
-    "fieldName": "agent_email",
+    "fieldName": "agent_preferred_username",
     "fieldType": "string"
   },
   "gsi": [],

@@ -10,7 +10,10 @@ class AgentDisplayer extends Component {
   render() {
     let local_entries = this.props.entries;
     let sorted_entries = local_entries.sort((a, b) =>
-      a.agent_email.S.toUpperCase() > b.agent_email.S.toUpperCase() ? 1 : -1
+      a.agent_preferred_username.S.toUpperCase() >
+      b.agent_preferred_username.S.toUpperCase()
+        ? 1
+        : -1
     );
     return (
       <div>
@@ -19,12 +22,12 @@ class AgentDisplayer extends Component {
         </center>
         <div>
           <table border="1" className="agentsTable">
-            <th>Agent Email</th>
-            <th>Player Emails</th>
+            <th>Agent Username</th>
+            <th>Player Username</th>
             <th></th>
             {sorted_entries.map((entry) => (
               <AgentDisplay
-                agent_email={entry.agent_email.S}
+                agent_preferred_username={entry.agent_preferred_username.S}
                 ids={joinIds(entry.ids)}
               />
             ))}

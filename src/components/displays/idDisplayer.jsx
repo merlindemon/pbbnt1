@@ -11,7 +11,7 @@ class IdDisplayer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      preferred_username: "",
       ids: [],
       manager: false,
       agent: false,
@@ -23,7 +23,7 @@ class IdDisplayer extends Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        email: this.props.entry.email.S,
+        preferred_username: this.props.entry.preferred_username.S,
         manager: this.props.entry.manager,
         agent: this.props.entry.agent,
       });
@@ -33,31 +33,36 @@ class IdDisplayer extends Component {
     });
   }
 
-  async handleManagerChange(event, email) {
+  async handleManagerChange(event, preferred_username) {
     this.setState({ loading: true });
     let newValue = !this.state.manager;
     this.setState({ manager: newValue });
     await editUserGroup(
       this.state.jwtKey,
-      this.state.email,
+      this.state.preferred_username,
       "manager",
       newValue
     );
     this.setState({ loading: false });
   }
 
-  async handleAgentChange(event, email) {
+  async handleAgentChange(event, preferred_username) {
     this.setState({ loading: true });
     let newValue = !this.state.agent;
     this.setState({ agent: newValue });
-    await editUserGroup(this.state.jwtKey, this.state.email, "agent", newValue);
+    await editUserGroup(
+      this.state.jwtKey,
+      this.state.preferred_username,
+      "agent",
+      newValue
+    );
     this.setState({ loading: false });
   }
 
   render() {
     return (
       <tr>
-        <td>[{this.state.email}]</td>
+        <td>[{this.state.preferred_username}]</td>
         <td>{joinIds(this.state.ids)}</td>
         {this.state.loading ? (
           <LoadingSpinner />
@@ -69,7 +74,7 @@ class IdDisplayer extends Component {
                 checked={this.state.manager}
                 style={{ minWidth: "85px" }}
                 onChange={(event) =>
-                  this.handleManagerChange(event, this.state.email)
+                  this.handleManagerChange(event, this.state.preferred_username)
                 }
               />
             </td>
@@ -79,7 +84,7 @@ class IdDisplayer extends Component {
                 checked={this.state.agent}
                 style={{ minWidth: "85px" }}
                 onChange={(event) =>
-                  this.handleAgentChange(event, this.state.email)
+                  this.handleAgentChange(event, this.state.preferred_username)
                 }
               />
             </td>
@@ -101,13 +106,13 @@ function joinIds(ids) {
   return array.join();
 }
 
-async function editUserGroup(jwtKey, email, group, boolean) {
+async function editUserGroup(jwtKey, preferred_username, group, boolean) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email.toLowerCase(),
+      preferred_username: preferred_username.toLowerCase(),
       group: group,
       boolean: boolean,
     },

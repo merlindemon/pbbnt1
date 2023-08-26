@@ -19,7 +19,7 @@ class AgentConsole extends React.Component {
       entries: [],
       jwtKey: "",
       loading: false,
-      email: "",
+      preferred_username: "",
       transaction_ids: [],
     };
   }
@@ -28,7 +28,8 @@ class AgentConsole extends React.Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        email: user.signInUserSession.idToken.payload["email"],
+        preferred_username:
+          user.signInUserSession.idToken.payload["preferred_username"],
       });
       this.loadGameData();
     });
@@ -36,7 +37,10 @@ class AgentConsole extends React.Component {
 
   async loadGameData() {
     this.setState({ loading: true });
-    let data = await getGameData(this.state.jwtKey, this.state.email);
+    let data = await getGameData(
+      this.state.jwtKey,
+      this.state.preferred_username
+    );
     this.setState({ entries: data, loading: false });
   }
 
@@ -57,7 +61,11 @@ class AgentConsole extends React.Component {
     return (
       <div className="center">
         <div>
-          {this.state.email === "" ? <LoadingSpinner /> : <UserConsole />}
+          {this.state.preferred_username === "" ? (
+            <LoadingSpinner />
+          ) : (
+            <UserConsole />
+          )}
           <div className="black">
             <Divider />
             <h1>Agent Console</h1>
@@ -71,7 +79,7 @@ class AgentConsole extends React.Component {
   }
 }
 
-async function getGameData(jwtKey, agent_email) {
+async function getGameData(jwtKey, agent_preferred_username) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -79,7 +87,7 @@ async function getGameData(jwtKey, agent_email) {
   };
   return await API.get(
     ADMIN_API,
-    "/pbbntadmin?Search=" + encodeURIComponent(agent_email),
+    "/pbbntadmin?Search=" + encodeURIComponent(agent_preferred_username),
     myInit
   )
     .then((result) => {

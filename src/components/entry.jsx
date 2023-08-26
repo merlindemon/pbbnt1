@@ -19,7 +19,7 @@ class Entry extends React.Component {
     this.state = {
       rank: 0,
       playernames: [],
-      email: "",
+      preferred_username: "",
       hands: 0,
       ids: [],
       profit: 0.0,
@@ -42,7 +42,7 @@ class Entry extends React.Component {
         groups: user.signInUserSession.idToken.payload["cognito:groups"],
         rank: this.props.entry.Rank,
         hands: this.props.entry.Hands,
-        email: this.props.entry.Email,
+        preferred_username: this.props.entry.Username,
         playernames: this.props.entry.Player,
         ids: this.props.entry.ID,
         profit: this.props.entry.Profit,
@@ -88,8 +88,8 @@ class Entry extends React.Component {
     return <button onClick={() => this.adjustProfit()}>Add/Subtract</button>;
   }
 
-  getComment(email) {
-    return <Comment email={email} />;
+  getComment(preferred_username) {
+    return <Comment preferred_username={preferred_username} />;
   }
 
   toggleComment() {
@@ -107,7 +107,7 @@ class Entry extends React.Component {
       tipsPercentage,
       creditLimit,
       adjust,
-      email,
+      preferred_username,
     } = this.state;
     let isAdmin = false;
     if (typeof this.state.groups !== "undefined") {
@@ -116,7 +116,7 @@ class Entry extends React.Component {
     let adjustButtondisplay = "";
     let inputdisplay = "";
     let commentDisplay = this.state.displayComment ? (
-      this.getComment(email)
+      this.getComment(preferred_username)
     ) : (
       <div />
     );
@@ -163,7 +163,7 @@ class Entry extends React.Component {
           style={{ color: colorMoney(tipsPercentage), minWidth: "135px" }}
         >
           <TipsPercentage
-            email={email}
+            preferred_username={preferred_username}
             tipsPercentage={tipsPercentage}
             tips={formatMoney(tips)}
           />
@@ -172,7 +172,10 @@ class Entry extends React.Component {
           className="entry-credit-limit"
           style={{ color: colorMoney(creditLimit), minWidth: "135px" }}
         >
-          <CreditLimit email={email} creditLimit={creditLimit} />
+          <CreditLimit
+            preferred_username={preferred_username}
+            creditLimit={creditLimit}
+          />
         </td>
         <td className="entry-hands">{hands}</td>
         <td className="entry-profit" style={{ color: colorMoney(profit) }}>

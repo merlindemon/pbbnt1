@@ -30,7 +30,7 @@ class TipsPercentage extends React.Component {
       });
     });
     this.setState({
-      email: this.props.email,
+      preferred_username: this.props.preferred_username,
       tipsPercentage: this.props.tipsPercentage,
       tips: this.props.tips,
     });
@@ -38,7 +38,7 @@ class TipsPercentage extends React.Component {
     if (this.state.update) {
       tipsPercentage = await retrieveTipsPercentage(
         this.state.jwtKey,
-        this.state.email
+        this.state.preferred_username
       );
     }
 
@@ -62,7 +62,7 @@ class TipsPercentage extends React.Component {
     this.setState({ loading: true });
     await setTipsPercentage(
       this.state.jwtKey,
-      this.state.email,
+      this.state.preferred_username,
       this.state.tipsPercentage
     );
     this.calculateRakeback();
@@ -141,7 +141,7 @@ function validation(tipsPercentage) {
   return tipsPercentage >= 0 && tipsPercentage <= 100;
 }
 
-async function retrieveTipsPercentage(jwtKey, email) {
+async function retrieveTipsPercentage(jwtKey, preferred_username) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -149,7 +149,7 @@ async function retrieveTipsPercentage(jwtKey, email) {
   };
   return await API.get(
     "pbbntids",
-    "/tipsPercentage?Search=" + encodeURIComponent(email),
+    "/tipsPercentage?Search=" + encodeURIComponent(preferred_username),
     myInit
   )
     .then((result) => {
@@ -165,13 +165,13 @@ async function retrieveTipsPercentage(jwtKey, email) {
     });
 }
 
-async function setTipsPercentage(jwtKey, email, tipsPercentage) {
+async function setTipsPercentage(jwtKey, preferred_username, tipsPercentage) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email,
+      preferred_username: preferred_username,
       tipsPercentage: tipsPercentage,
     },
   };

@@ -19,7 +19,7 @@ class ManagerConsole extends React.Component {
     this.state = {
       entries: [],
       loading: false,
-      email: "",
+      preferred_username: "",
       currentDisplay: <div></div>,
     };
   }
@@ -27,7 +27,8 @@ class ManagerConsole extends React.Component {
   async componentDidMount() {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
-        email: user.signInUserSession.idToken.payload["email"],
+        preferred_username:
+          user.signInUserSession.idToken.payload["preferred_username"],
         jwtKey: user.signInUserSession.idToken.jwtToken,
       });
       this.reloadEntries();
@@ -68,7 +69,11 @@ class ManagerConsole extends React.Component {
     return (
       <div className="center">
         <div>
-          {this.state.email === "" ? <LoadingSpinner /> : <UserConsole />}
+          {this.state.preferred_username === "" ? (
+            <LoadingSpinner />
+          ) : (
+            <UserConsole />
+          )}
           <div className="black">
             <Divider />
             <h1>Manager Console</h1>

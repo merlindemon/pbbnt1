@@ -5,35 +5,26 @@
     "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "pbbnt5cf00a19",
     "userPoolName": "pbbnt5cf00a19_userpool_5cf00a19",
-    "autoVerifiedAttributes": [
-      "email"
-    ],
     "mfaConfiguration": "OFF",
     "mfaTypes": [
       "SMS Text Message"
     ],
-    "smsAuthenticationMessage": "Your authentication code is {####}",
-    "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email",
       "preferred_username"
     ],
     "aliasAttributes": [
-      "email"
+      "preferred_username"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-      "email",
       "preferred_username"
     ],
     "userpoolClientReadAttributes": [
-      "email"
+      "preferred_username"
     ],
     "userpoolClientLambdaRole": "pbbnt55cf00a19_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
@@ -76,7 +67,6 @@
     "permissions": [],
     "authProviders": [],
     "thirdPartyAuth": false,
-    "hostedUIProviderCreds": "[]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"],\"LogoutURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"implicit\"],\"AllowedOAuthScopes\":[\"phone\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"],\"LogoutURLs\":[\"https://www.cm4vf.com/\",\"https://www.cm4vf.com/\"]}"
   }
-}            
+}

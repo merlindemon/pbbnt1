@@ -15,7 +15,7 @@ class UserConsole extends React.Component {
     super(props);
     this.state = {
       entries: [],
-      email: "",
+      preferred_username: "",
       jwtKey: "",
       loading: true,
       firstLoad: true,
@@ -27,7 +27,8 @@ class UserConsole extends React.Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        email: user.signInUserSession.idToken.payload["email"],
+        preferred_username:
+          user.signInUserSession.idToken.payload["preferred_username"],
       });
       this.reloadEntries();
     });
@@ -37,8 +38,11 @@ class UserConsole extends React.Component {
     if (this.state.loading === false) {
       this.setState({ loading: true });
     }
-    if (this.state.email !== "") {
-      let ids = await getUserIds(this.state.jwtKey, this.state.email);
+    if (this.state.preferred_username !== "") {
+      let ids = await getUserIds(
+        this.state.jwtKey,
+        this.state.preferred_username
+      );
       let entries = [];
       if (ids !== undefined && ids.length > 0) {
         entries = await getUserData(this.state.jwtKey, ids);
@@ -66,7 +70,7 @@ class UserConsole extends React.Component {
   }
 }
 
-async function getUserIds(jwtKey, email) {
+async function getUserIds(jwtKey, preferred_username) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -74,7 +78,7 @@ async function getUserIds(jwtKey, email) {
   };
   return await API.get(
     USER_API,
-    "/ids?Search=" + encodeURIComponent(email),
+    "/ids?Search=" + encodeURIComponent(preferred_username),
     myInit
   )
     .then((result) => {

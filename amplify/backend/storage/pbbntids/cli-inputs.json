@@ -2,7 +2,7 @@
   "resourceName": "pbbntids",
   "tableName": "pbbntids",
   "partitionKey": {
-    "fieldName": "email",
+    "fieldName": "preferred_username",
     "fieldType": "string"
   },
   "triggerFunctions": [],

@@ -30,20 +30,20 @@ def handler(event, context):
         if event['queryStringParameters'] is not None and key2 in event[
                 'queryStringParameters']:
             query_str_params = event['queryStringParameters']
-            email = query_str_params['Search']
-            print(email)
-            email = unquote_plus(email)
-            email = email.lower()
-            print(email)
+            preferred_username = query_str_params['Search']
+            print(preferred_username)
+            preferred_username = unquote_plus(preferred_username)
+            preferred_username = preferred_username.lower()
+            print(preferred_username)
             query_kwargs = {
                 'TableName': IDS_TABLENAME,
                 'KeyConditionExpression': '#name = :value',
                 'ExpressionAttributeNames': {
-                    '#name': 'email'
+                    '#name': 'preferred_username'
                 },
                 'ExpressionAttributeValues': {
                     ':value': {
-                        'S': email
+                        'S': preferred_username
                     }
                 }
             }
@@ -61,16 +61,16 @@ def handler(event, context):
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
-        email = body["email"]
-        email = email.lower()
-        if re.match("\w+@", email):
+        preferred_username = body["preferred_username"]
+        preferred_username = preferred_username.lower()
+        if re.match("\w+@", preferred_username):
             comment = body["comment"]
             update_kwargs = {
                 'TableName': IDS_TABLENAME,
                 'UpdateExpression': "set #c=:c",
                 'Key': {
-                    'email': {
-                        'S': str(email)
+                    'preferred_username': {
+                        'S': str(preferred_username)
                     }
                 },
                 'ExpressionAttributeValues': {

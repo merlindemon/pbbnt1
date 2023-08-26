@@ -11,7 +11,7 @@ Auth.configure(awsconfig);
 class IdManager extends Component {
   state = {
     loading: true,
-    email: "",
+    preferred_username: "",
     id: "",
     jwtToken: "",
     entries: [],
@@ -21,7 +21,8 @@ class IdManager extends Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        email: user.signInUserSession.idToken.payload["email"],
+        preferred_username:
+          user.signInUserSession.idToken.payload["preferred_username"],
       });
       this.reloadEntries();
     });
@@ -31,38 +32,38 @@ class IdManager extends Component {
     if (this.state.loading === false) {
       this.setState({ loading: true });
     }
-    let data = await getEntireEmailTable(this.state.jwtKey);
+    let data = await getEntireUsernameTable(this.state.jwtKey);
     this.setState({ loading: false, entries: data });
   }
 
   async addButtonAction() {
-    if (this.state.email !== "" && this.state.id !== "") {
+    if (this.state.preferred_username !== "" && this.state.id !== "") {
       this.setState({ loading: true });
-      await associateEmailWithUserId(
+      await associateUsernameWithUserId(
         this.state.jwtKey,
-        this.state.email,
+        this.state.preferred_username,
         this.state.id
       );
-      this.setState({ id: "", email: "" });
+      this.setState({ id: "", preferred_username: "" });
       await this.reloadEntries();
     }
   }
 
   async removeButtonAction() {
-    if (this.state.email !== "" && this.state.id !== "") {
+    if (this.state.preferred_username !== "" && this.state.id !== "") {
       this.setState({ loading: true });
-      await deassociateEmailWithUserId(
+      await deassociateUsernameWithUserId(
         this.state.jwtKey,
-        this.state.email,
+        this.state.preferred_username,
         this.state.id
       );
-      this.setState({ id: "", email: "" });
+      this.setState({ id: "", preferred_username: "" });
       await this.reloadEntries();
     }
   }
 
-  handleEmail = (event) => {
-    this.setState({ email: event.target.value });
+  handleUsername = (event) => {
+    this.setState({ preferred_username: event.target.value });
   };
 
   handleId = (event) => {
@@ -76,10 +77,10 @@ class IdManager extends Component {
         <table className="entries">
           <tr>
             <td>
-              <label>Email: </label>
+              <label>Username: </label>
               <input
-                onChange={this.handleEmail}
-                value={this.state.email}
+                onChange={this.handleUsername}
+                value={this.state.preferred_username}
                 className="input2"
                 size="40"
               />
@@ -126,7 +127,7 @@ class IdManager extends Component {
   }
 }
 
-async function getEntireEmailTable(jwtKey) {
+async function getEntireUsernameTable(jwtKey) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -141,13 +142,13 @@ async function getEntireEmailTable(jwtKey) {
     });
 }
 
-async function associateEmailWithUserId(jwtKey, email, id) {
+async function associateUsernameWithUserId(jwtKey, preferred_username, id) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email.toLowerCase().trim(),
+      preferred_username: preferred_username.toLowerCase().trim(),
       id: id.trim(),
     },
   };
@@ -162,13 +163,13 @@ async function associateEmailWithUserId(jwtKey, email, id) {
   return response;
 }
 
-async function deassociateEmailWithUserId(jwtKey, email, id) {
+async function deassociateUsernameWithUserId(jwtKey, preferred_username, id) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email.toLowerCase().trim(),
+      preferred_username: preferred_username.toLowerCase().trim(),
       id: id.trim(),
     },
   };

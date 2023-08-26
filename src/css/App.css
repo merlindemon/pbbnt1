@@ -34,7 +34,7 @@
 
 .header {
   text-align: center;
-  background-image: url( '../images/jungle_cover.png' );
+  background-image: url( '../images/hidden_gems.png' );
   background-size: contain;
   background-repeat: no-repeat;
   height: 600px;
@@ -44,11 +44,11 @@
 button {
   margin: 0.5rem 1rem 0.5rem 0.5rem;
   background-color: #FDF482;
-  color: #154015;
+  color: #015668;
 }
 
 .safebutton {
-  background-color: #154015;
+  background-color: #015668;
   color: #FDF482;
   margin-left: 2rem;
   margin-bottom: 0.5rem;
@@ -81,10 +81,10 @@ button {
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-  border-color: #154015;
+  border-color: #015668;
   border-width: 2px;
   background-color: #FDF482;
-  color: #154015;
+  color: #015668;
 }
 
 .entries {
@@ -100,7 +100,7 @@ button {
   margin-bottom: 50px;
 }
 
-.entry-email {
+.entry-username {
   padding-left: 1rem;
   padding-right: 1rem;
 }
@@ -173,12 +173,12 @@ img {
 }
 
 .black {
-  background-color: #154015;
+  background-color: #015668;
 }
 
 :root {
-  --amplify-primary-color: #154015;
-  background-color: #154015;
+  --amplify-primary-color: #015668;
+  background-color: #015668;
   color: #FDF482;
   margin-top: 5px;
 }
@@ -197,6 +197,6 @@ img {
   background-size: 75px 75px;
   height: 75px;  
   width: 75px;
-  background-color: #154015;
+  background-color: #015668;
   border-color: #FDF482;
 }

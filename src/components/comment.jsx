@@ -13,7 +13,7 @@ class Comment extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      preferred_username: "",
       comment: "",
       groups: [],
       loading: false,
@@ -26,10 +26,13 @@ class Comment extends React.Component {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
         groups: user.signInUserSession.idToken.payload["cognito:groups"],
-        email: this.props.email,
+        preferred_username: this.props.preferred_username,
       });
     });
-    let comment = await retrieveComment(this.state.jwtKey, this.state.email);
+    let comment = await retrieveComment(
+      this.state.jwtKey,
+      this.state.preferred_username
+    );
     if (comment !== undefined) {
       this.setState({ comment, backgroundColor: "#03942a" });
     }
@@ -41,7 +44,11 @@ class Comment extends React.Component {
 
   async saveComments() {
     this.setState({ loading: true });
-    await setComment(this.state.jwtKey, this.state.email, this.state.comment);
+    await setComment(
+      this.state.jwtKey,
+      this.state.preferred_username,
+      this.state.comment
+    );
     this.setState({ loading: false, backgroundColor: "#03942a" });
     return "";
   }
@@ -80,7 +87,7 @@ class Comment extends React.Component {
   }
 }
 
-async function retrieveComment(jwtKey, email) {
+async function retrieveComment(jwtKey, preferred_username) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -88,7 +95,7 @@ async function retrieveComment(jwtKey, email) {
   };
   return await API.get(
     "pbbntids",
-    "/comment?Search=" + encodeURIComponent(email),
+    "/comment?Search=" + encodeURIComponent(preferred_username),
     myInit
   )
     .then((result) => {
@@ -104,13 +111,13 @@ async function retrieveComment(jwtKey, email) {
     });
 }
 
-async function setComment(jwtKey, email, comment) {
+async function setComment(jwtKey, preferred_username, comment) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      email: email,
+      preferred_username: preferred_username,
       comment: comment,
     },
   };

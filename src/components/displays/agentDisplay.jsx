@@ -14,8 +14,8 @@ class AgentDisplay extends Component {
   constructor(props) {
     super(undefined);
     this.state = {
-      agent_email: "",
-      player_emails: "",
+      agent_preferred_username: "",
+      player_preferred_usernames: "",
       displayAgentData: false,
       loading: true,
       jwtKey: "",
@@ -27,15 +27,18 @@ class AgentDisplay extends Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        agent_email: this.props.agent_email,
-        player_emails: this.props.ids,
+        agent_preferred_username: this.props.agent_preferred_username,
+        player_preferred_usernames: this.props.ids,
       });
     });
   }
 
   async loadGameData() {
     this.setState({ loading: true });
-    let data = await getGameData(this.state.jwtKey, this.state.agent_email);
+    let data = await getGameData(
+      this.state.jwtKey,
+      this.state.agent_preferred_username
+    );
     this.setState({ entries: data, loading: false });
   }
 
@@ -62,11 +65,13 @@ class AgentDisplay extends Component {
   render() {
     return (
       <tr>
-        <td>[{this.state.agent_email}]</td>
+        <td>[{this.state.agent_preferred_username}]</td>
         {this.state.displayAgentData ? (
           this.displayGameData()
         ) : (
-          <td className="ids-button">{this.state.player_emails}</td>
+          <td className="ids-button">
+            {this.state.player_preferred_usernames}
+          </td>
         )}
         <td>
           <button className="safebutton" onClick={() => this.toggleGameData()}>
@@ -78,7 +83,7 @@ class AgentDisplay extends Component {
   }
 }
 
-async function getGameData(jwtKey, agent_email) {
+async function getGameData(jwtKey, agent_preferred_username) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
@@ -86,7 +91,7 @@ async function getGameData(jwtKey, agent_email) {
   };
   return await API.get(
     ADMIN_API,
-    "/pbbntadmin?Search=" + encodeURIComponent(agent_email),
+    "/pbbntadmin?Search=" + encodeURIComponent(agent_preferred_username),
     myInit
   )
     .then((result) => {

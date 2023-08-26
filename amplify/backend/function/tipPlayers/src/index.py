@@ -18,14 +18,14 @@ def handler(event, context):
     if method == 'POST':
         print("Method POST")
         ttl, dt = getTTL()
-        player_email_to_agent_email = getAgentsInformation()
-        print(f"player_email_to_agent_email: {player_email_to_agent_email}")
+        player_preferred_username_to_agent_preferred_username = getAgentsInformation()
+        print(f"player_preferred_username_to_agent_preferred_username: {player_preferred_username_to_agent_preferred_username}")
         ids_data = getIdsData()
         print(f"ids_data: {ids_data}")
-        player_email_to_player_id = getEmailMapping(ids_data)
-        print(f"player_email_to_player_id: {player_email_to_player_id}")
-        player_id_to_player_email = flipIdsData(ids_data)
-        print(f"player_id_to_player_email: {player_id_to_player_email}")
+        player_preferred_username_to_player_id = getpreferred_usernameMapping(ids_data)
+        print(f"player_preferred_username_to_player_id: {player_preferred_username_to_player_id}")
+        player_id_to_player_preferred_username = flipIdsData(ids_data)
+        print(f"player_id_to_player_preferred_username: {player_id_to_player_preferred_username}")
         player_id_to_tip_percentage = getTipsPercentage(ids_data)
         print(f"player_id_to_tip_percentage: {player_id_to_tip_percentage}")
 
@@ -49,14 +49,14 @@ def handler(event, context):
             rakeback = (float(tips) * float(tips_percentage))
             round(rakeback, 2)
             print(f"rakeback: {rakeback}")
-            player_email = player_id_to_player_email[player_id]
-            print(f"player_email: {player_email}")
-            if player_email in player_email_to_agent_email:
+            player_preferred_username = player_id_to_player_preferred_username[player_id]
+            print(f"player_preferred_username: {player_preferred_username}")
+            if player_preferred_username in player_preferred_username_to_agent_preferred_username:
                 print("Player is affiliated with an agent")
                 #Player is affiliated with an agent, tip the agent
-                agent_email = player_email_to_agent_email[player_email]
-                print(f"agent_email: {agent_email}")
-                agent_id = player_email_to_player_id[agent_email]
+                agent_preferred_username = player_preferred_username_to_agent_preferred_username[player_preferred_username]
+                print(f"agent_preferred_username: {agent_preferred_username}")
+                agent_id = player_preferred_username_to_player_id[agent_preferred_username]
                 print(f"agent_id: {agent_id}")
                 tipAffiliatedAgent(rakeback, player_id, playername, agent_id,
                                    ttl, dt)
@@ -201,13 +201,13 @@ def getAgentsInformation():
     scan_kwargs = {'TableName': AGENTS_TABLE}
     response = client.scan(**scan_kwargs)
     agent_data = response['Items']
-    player_email_to_agent_email = {}
+    player_preferred_username_to_agent_preferred_username = {}
     for agent_entry in agent_data:
-        agent_email = agent_entry['agent_email']['S']
+        agent_preferred_username = agent_entry['agent_preferred_username']['S']
         for player_data in agent_entry['ids']['L']:
-            player_email = player_data['S']
-            player_email_to_agent_email[player_email] = agent_email
-    return player_email_to_agent_email
+            player_preferred_username = player_data['S']
+            player_preferred_username_to_agent_preferred_username[player_preferred_username] = agent_preferred_username
+    return player_preferred_username_to_agent_preferred_username
 
 
 def getIdsData():
@@ -218,25 +218,25 @@ def getIdsData():
 
 
 def flipIdsData(ids_data):
-    player_id_to_player_email = {}
+    player_id_to_player_preferred_username = {}
     for player_entry in ids_data:
         for identifier in player_entry['ids']['L']:
             identifier = identifier['S']
-            player_id_to_player_email[identifier] = player_entry['email']['S']
-    return player_id_to_player_email
+            player_id_to_player_preferred_username[identifier] = player_entry['preferred_username']['S']
+    return player_id_to_player_preferred_username
 
 
-def getEmailMapping(ids_data):
+def getpreferred_usernameMapping(ids_data):
     #This just grabs the first ID and ignores the rest, and is for the purpose of adding profit/transactions
-    #Since the app gathers all the player's(email) ids and combines them, adding it to "the wrong one" can't happen
-    player_email_to_player_id = {}
+    #Since the app gathers all the player's(preferred_username) ids and combines them, adding it to "the wrong one" can't happen
+    player_preferred_username_to_player_id = {}
     for player_data in ids_data:
-        player_email = player_data['email']['S']
+        player_preferred_username = player_data['preferred_username']['S']
         for identifier in player_data['ids']['L']:
             identifier = identifier['S']
-            player_email_to_player_id[player_email] = identifier
+            player_preferred_username_to_player_id[player_preferred_username] = identifier
             continue
-    return player_email_to_player_id
+    return player_preferred_username_to_player_id
 
 
 def getTipsPercentage(ids_data):

@@ -18,43 +18,43 @@ def handler(event, context):
         scan_kwargs = {'TableName': DATA_TABLENAME}
         gamedata = client.scan(**scan_kwargs)
 
-        #1: Get all the emails -> ids and map them to an array
+        #1: Get all the preferred_usernames -> ids and map them to an array
         scan_kwargs = {'TableName': IDS_TABLENAME}
         identifierdata = client.scan(**scan_kwargs)
         result_array = []
         if len(identifierdata['Items']) > 0:
             result_array = identifierdata['Items']
-        id_to_email = {}
-        email_to_credit_limit = {}
-        email_to_tips_percentage = {}
+        id_to_preferred_username = {}
+        preferred_username_to_credit_limit = {}
+        preferred_username_to_tips_percentage = {}
         for result in result_array:
             credit_limit = 0
-            email = result['email']['S']
+            preferred_username = result['preferred_username']['S']
             ids_array = []
             if 'ids' in result:
                 ids_array = result['ids']['L']
             if 'creditLimit' in result:
                 credit_limit = int(result['creditLimit']['N'])
-                email_to_credit_limit[email] = credit_limit
+                preferred_username_to_credit_limit[preferred_username] = credit_limit
             if 'tipsPercentage' in result:
                 tips_percentage = int(result['tipsPercentage']['N'])
-                email_to_tips_percentage[email] = tips_percentage
+                preferred_username_to_tips_percentage[preferred_username] = tips_percentage
             for identifier in ids_array:
                 identifier = identifier['S']
-                id_to_email[identifier] = email
+                id_to_preferred_username[identifier] = preferred_username
 
         modified_gamedata = {}
-        print(id_to_email)
+        print(id_to_preferred_username)
         for item in gamedata['Items']:
             identifier = item['ID']['S']
             player =    item['Player']['S']
-            email = ''
-            if identifier in id_to_email:
-                #If we have a user email -> id defined
-                email = id_to_email[identifier]
+            preferred_username = ''
+            if identifier in id_to_preferred_username:
+                #If we have a user preferred_username -> id defined
+                preferred_username = id_to_preferred_username[identifier]
             else:
                 letters = string.ascii_uppercase
-                email = "NoEmailListed?" + ''.join(random.choice(letters) for i in range(10))
+                preferred_username = "Nopreferred_usernameListed?" + ''.join(random.choice(letters) for i in range(10))
             #Go ahead and turn into array
             profit =    float(item['Profit']['N'])
             buyin =     float(item['BuyIn']['N'])
@@ -62,9 +62,9 @@ def handler(event, context):
             hands =     int(item['Hands']['N'])
             tips =      float(item['Tips']['N'])
             
-            if email in modified_gamedata:
+            if preferred_username in modified_gamedata:
                 #This user has multiple accounts, merge the data
-                existing_hash = modified_gamedata[email]
+                existing_hash = modified_gamedata[preferred_username]
                 existing_hash['ID'].append(identifier)
                 identifier = existing_hash['ID']
                 existing_hash['Player'].append(player)
@@ -81,12 +81,12 @@ def handler(event, context):
 
             credit_limit = int(0)
             tips_percentage = int(0)
-            if email in email_to_credit_limit:
-                credit_limit = int(email_to_credit_limit[email])
-            if email in email_to_tips_percentage:
-                tips_percentage = int(email_to_tips_percentage[email])
+            if preferred_username in preferred_username_to_credit_limit:
+                credit_limit = int(preferred_username_to_credit_limit[preferred_username])
+            if preferred_username in preferred_username_to_tips_percentage:
+                tips_percentage = int(preferred_username_to_tips_percentage[preferred_username])
 
-            modified_gamedata[email] = {
+            modified_gamedata[preferred_username] = {
                 'ID': identifier,
                 'Player': player,
                 'Profit': profit,
@@ -96,7 +96,7 @@ def handler(event, context):
                 'Tips': tips,
                 'TipsPercentage': tips_percentage,
                 'CreditLimit': credit_limit,
-                'Email': email
+                'preferred_username': preferred_username
             }
         
         print(modified_gamedata)
@@ -104,9 +104,9 @@ def handler(event, context):
         #Logic for when it's an agent, to limit results to only their players
         if event['queryStringParameters'] is not None and 'Search' in event['queryStringParameters']:
             query_string_parameters = event['queryStringParameters']
-            agent_email = query_string_parameters['Search']
-            agent_email = unquote_plus(agent_email)
-            modified_gamedata = agentFilter(modified_gamedata, agent_email)
+            agent_preferred_username = query_string_parameters['Search']
+            agent_preferred_username = unquote_plus(agent_preferred_username)
+            modified_gamedata = agentFilter(modified_gamedata, agent_preferred_username)
             
 
         #Final output
@@ -122,27 +122,27 @@ def handler(event, context):
             'body': json.dumps(modified_gamedata)
         }
 
-def agentFilter(modified_gamedata, agent_email):
-    agents_player_email_array = []
+def agentFilter(modified_gamedata, agent_preferred_username):
+    agents_player_preferred_username_array = []
     query_kwargs = {
                 'TableName': AGENTS_TABLENAME,
-                'KeyConditionExpression': '#agent_email = :value',
+                'KeyConditionExpression': '#agent_preferred_username = :value',
                 'ExpressionAttributeNames': {
-                    '#agent_email': 'agent_email'
+                    '#agent_preferred_username': 'agent_preferred_username'
                 },
                 'ExpressionAttributeValues': {
                     ':value': {
-                        'S': agent_email
+                        'S': agent_preferred_username
                     }
                 }
             }
     data = client.query(**query_kwargs)
     print(data)
     if len(data['Items']) > 0:
-        for email in data['Items'][0]['ids']['L']:
-            agents_player_email_array.append(email['S'])
-    print(agents_player_email_array)
-    for email in list(modified_gamedata):
-        if(email not in agents_player_email_array): #If the email isn't one of the agents players, remove it
-            del modified_gamedata[email]
+        for preferred_username in data['Items'][0]['ids']['L']:
+            agents_player_preferred_username_array.append(preferred_username['S'])
+    print(agents_player_preferred_username_array)
+    for preferred_username in list(modified_gamedata):
+        if(preferred_username not in agents_player_preferred_username_array): #If the preferred_username isn't one of the agents players, remove it
+            del modified_gamedata[preferred_username]
     return modified_gamedata

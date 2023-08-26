@@ -29,20 +29,20 @@ def handler(event, context):
         if event['queryStringParameters'] is not None and key2 in event[
                 'queryStringParameters']:
             query_str_params = event['queryStringParameters']
-            agent_email = query_str_params['Search']
-            print(agent_email)
-            agent_email = unquote_plus(agent_email)
-            agent_email = agent_email.lower()
-            print(agent_email)
+            agent_preferred_username = query_str_params['Search']
+            print(agent_preferred_username)
+            agent_preferred_username = unquote_plus(agent_preferred_username)
+            agent_preferred_username = agent_preferred_username.lower()
+            print(agent_preferred_username)
             query_kwargs = {
                 'TableName': AGENTS_TABLENAME,
                 'KeyConditionExpression': '#name = :value',
                 'ExpressionAttributeNames': {
-                    '#name': 'agent_email'
+                    '#name': 'agent_preferred_username'
                 },
                 'ExpressionAttributeValues': {
                     ':value': {
-                        'S': agent_email
+                        'S': agent_preferred_username
                     }
                 }
             }
@@ -74,18 +74,18 @@ def handler(event, context):
         body = event['body']
         print(body)
         body = json.loads(body)
-        agent_email = body["agent_email"]
-        agent_email = agent_email.lower()
-        identifier = body["player_email"]
+        agent_preferred_username = body["agent_preferred_username"]
+        agent_preferred_username = agent_preferred_username.lower()
+        identifier = body["player_preferred_username"]
         query_kwargs = {
             'TableName': AGENTS_TABLENAME,
             'KeyConditionExpression': '#name = :value',
             'ExpressionAttributeNames': {
-                '#name': 'agent_email'
+                '#name': 'agent_preferred_username'
             },
             'ExpressionAttributeValues': {
                 ':value': {
-                    'S': agent_email
+                    'S': agent_preferred_username
                 }
             }
         }
@@ -95,8 +95,8 @@ def handler(event, context):
             put_kwargs = {
                 'TableName': AGENTS_TABLENAME,
                 'Item': {
-                    'agent_email': {
-                        'S': agent_email
+                    'agent_preferred_username': {
+                        'S': agent_preferred_username
                     },
                     'ids': {
                         'L': [{
@@ -120,8 +120,8 @@ def handler(event, context):
             put_kwargs = {
                 'TableName': AGENTS_TABLENAME,
                 'Item': {
-                    'agent_email': {
-                        'S': agent_email
+                    'agent_preferred_username': {
+                        'S': agent_preferred_username
                     },
                     'ids': {
                         'L': ids
@@ -143,20 +143,20 @@ def handler(event, context):
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
-        agent_email = body["agent_email"]
-        agent_email = agent_email.lower()
-        request_player_email = body["player_email"]
-        print(request_player_email)
+        agent_preferred_username = body["agent_preferred_username"]
+        agent_preferred_username = agent_preferred_username.lower()
+        request_player_preferred_username = body["player_preferred_username"]
+        print(request_player_preferred_username)
         query_kwargs = {
             'TableName': AGENTS_TABLENAME,
             'KeyConditionExpression': '#name = :value',
             'ExpressionAttributeValues': {
                 ':value': {
-                    'S': agent_email
+                    'S': agent_preferred_username
                 }
             },
             'ExpressionAttributeNames': {
-                '#name': 'agent_email'
+                '#name': 'agent_preferred_username'
             }
         }
         data = client.query(**query_kwargs)
@@ -165,11 +165,11 @@ def handler(event, context):
             print('nothing to delete')
         else:
             previous_ids = data['Items'][0]['ids']['L']
-            unique_ids = {request_player_email}
-            unique_ids.remove(str(request_player_email))
+            unique_ids = {request_player_preferred_username}
+            unique_ids.remove(str(request_player_preferred_username))
             for id in previous_ids:
                 unique_ids.add(id['S'])
-            unique_ids.remove(request_player_email)
+            unique_ids.remove(request_player_preferred_username)
             ids_array = []
             for id in unique_ids:
                 ids_array.append({'S': id})
@@ -177,8 +177,8 @@ def handler(event, context):
             put_kwargs = {
                 'TableName': AGENTS_TABLENAME,
                 'Item': {
-                    'agent_email': {
-                        'S': agent_email
+                    'agent_preferred_username': {
+                        'S': agent_preferred_username
                     },
                     'ids': {
                         'L': ids

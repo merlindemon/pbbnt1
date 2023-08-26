@@ -28,20 +28,20 @@ def handler(event, context):
         print(event['queryStringParameters'])
         if event['queryStringParameters'] is not None and key2 in event['queryStringParameters']:
             query_str_params = event['queryStringParameters']
-            email = query_str_params['Search']
-            print(email)
-            email = unquote_plus(email)
-            email = email.lower()
-            print(email)
+            preferred_username = query_str_params['Search']
+            print(preferred_username)
+            preferred_username = unquote_plus(preferred_username)
+            preferred_username = preferred_username.lower()
+            print(preferred_username)
             query_kwargs = {
                 'TableName': IDS_TABLENAME,
                 'KeyConditionExpression': '#name = :value',
                 'ExpressionAttributeNames': {
-                    '#name': 'email'
+                    '#name': 'preferred_username'
                 },
                 'ExpressionAttributeValues': {
                     ':value': {
-                        'S': email
+                        'S': preferred_username
                     }
                 }
             }
@@ -69,9 +69,9 @@ def handler(event, context):
             for user in listUsers:
                 attributes = user["Attributes"]
                 for attribute in attributes:
-                    if attribute["Name"] == "email":
-                        email = attribute["Value"]
-                        manager_array.append(email)
+                    if attribute["Name"] == "preferred_username":
+                        preferred_username = attribute["Value"]
+                        manager_array.append(preferred_username)
                         
             response = cognito_client.list_users_in_group(
                 UserPoolId=USERPOOLID,
@@ -83,16 +83,16 @@ def handler(event, context):
             for user in listUsers:
                 attributes = user["Attributes"]
                 for attribute in attributes:
-                    if attribute["Name"] == "email":
-                        email = attribute["Value"]
-                        agent_array.append(email)
+                    if attribute["Name"] == "preferred_username":
+                        preferred_username = attribute["Value"]
+                        agent_array.append(preferred_username)
             
             for user in data['Items']:
-                if user["email"]["S"] in manager_array:
+                if user["preferred_username"]["S"] in manager_array:
                     user["manager"] = True
                 else:
                     user["manager"] = False
-                if user["email"]["S"] in agent_array:
+                if user["preferred_username"]["S"] in agent_array:
                     user["agent"] = True
                 else:
                     user["agent"] = False
@@ -110,19 +110,19 @@ def handler(event, context):
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
-        email = body["email"]
-        email = email.lower()
+        preferred_username = body["preferred_username"]
+        preferred_username = preferred_username.lower()
         group = body["group"]
         group = group.lower()
         addToGroup = body["boolean"]
         cognito_client = boto3.client('cognito-idp')
         response = cognito_client.list_users(
                 UserPoolId=USERPOOLID,
-                Filter=f"email = \"{email}\"",
+                Filter=f"preferred_username = \"{preferred_username}\"",
             )
         username = response["Users"][0]["Username"]
         if addToGroup: 
-            #Get user id from email
+            #Get user id from preferred_username
             #add user to group
             response = cognito_client.admin_add_user_to_group(
                 UserPoolId=USERPOOLID,
@@ -130,7 +130,7 @@ def handler(event, context):
                 GroupName=group
             )
         else: #Remove from group
-            #Get user id from email
+            #Get user id from preferred_username
             #add user to group
             response = cognito_client.admin_remove_user_from_group(
                 UserPoolId=USERPOOLID,
@@ -151,18 +151,18 @@ def handler(event, context):
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
-        email = body["email"]
-        email = email.lower()
+        preferred_username = body["preferred_username"]
+        preferred_username = preferred_username.lower()
         identifier = body["id"]
         query_kwargs = {
             'TableName': IDS_TABLENAME,
             'KeyConditionExpression': '#name = :value',
             'ExpressionAttributeNames': {
-                '#name': 'email'
+                '#name': 'preferred_username'
             },
             'ExpressionAttributeValues': {
                 ':value': {
-                    'S': email
+                    'S': preferred_username
                 }
             }
         }
@@ -172,8 +172,8 @@ def handler(event, context):
             put_kwargs = {
                 'TableName': IDS_TABLENAME,
                 'Item': {
-                    'email': {
-                        'S': email
+                    'preferred_username': {
+                        'S': preferred_username
                     },
                     'ids': {
                         'L': [{
@@ -197,8 +197,8 @@ def handler(event, context):
             put_kwargs = {
                 'TableName': IDS_TABLENAME,
                 'Item': {
-                    'email': {
-                        'S': email
+                    'preferred_username': {
+                        'S': preferred_username
                     },
                     'ids': {
                         'L': ids
@@ -220,8 +220,8 @@ def handler(event, context):
         # Get item to see if it exists, gather list of ids
         body = event['body']
         body = json.loads(body)
-        email = body["email"]
-        email = email.lower()
+        preferred_username = body["preferred_username"]
+        preferred_username = preferred_username.lower()
         request_id = body["id"]
         print(request_id)
         query_kwargs = {
@@ -229,11 +229,11 @@ def handler(event, context):
             'KeyConditionExpression': '#name = :value',
             'ExpressionAttributeValues': {
                 ':value': {
-                    'S': email
+                    'S': preferred_username
                 }
             },
             'ExpressionAttributeNames': {
-                '#name': 'email'
+                '#name': 'preferred_username'
             }
         }
         data = client.query(**query_kwargs)
@@ -254,8 +254,8 @@ def handler(event, context):
             put_kwargs = {
                 'TableName': IDS_TABLENAME,
                 'Item': {
-                    'email': {
-                        'S': email
+                    'preferred_username': {
+                        'S': preferred_username
                     },
                     'ids': {
                         'L': ids

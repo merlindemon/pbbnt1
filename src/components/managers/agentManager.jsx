@@ -13,8 +13,8 @@ Auth.configure(awsconfig);
 class AgentManager extends Component {
   state = {
     loading: true,
-    curr_user_email: "", //The email of the currently signed in user, who is an agent
-    player_email: "", //The player's email address who is being managed
+    curr_user_preferred_username: "", //The preferred_username of the currently signed in user, who is an agent
+    player_preferred_username: "", //The player's preferred_username address who is being managed
     jwtToken: "",
     entries: [],
   };
@@ -23,7 +23,8 @@ class AgentManager extends Component {
     await Auth.currentAuthenticatedUser().then((user) => {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
-        curr_user_email: user.signInUserSession.idToken.payload["email"],
+        curr_user_preferred_username:
+          user.signInUserSession.idToken.payload["preferred_username"],
       });
       this.reloadEntries();
     });
@@ -38,37 +39,49 @@ class AgentManager extends Component {
   }
 
   async addButtonAction() {
-    if (this.state.curr_user_email !== "" && this.state.player_email !== "") {
+    if (
+      this.state.curr_user_preferred_username !== "" &&
+      this.state.player_preferred_username !== ""
+    ) {
       this.setState({ loading: true });
-      await associateAgentEmailWithPlayer(
+      await associateAgentUsernameWithPlayer(
         this.state.jwtKey,
-        this.state.curr_user_email,
-        this.state.player_email
+        this.state.curr_user_preferred_username,
+        this.state.player_preferred_username
       );
-      this.setState({ player_email: "", curr_user_email: "" });
+      this.setState({
+        player_preferred_username: "",
+        curr_user_preferred_username: "",
+      });
       await this.reloadEntries();
     }
   }
 
   async removeButtonAction() {
-    if (this.state.curr_user_email !== "" && this.state.player_email !== "") {
+    if (
+      this.state.curr_user_preferred_username !== "" &&
+      this.state.player_preferred_username !== ""
+    ) {
       this.setState({ loading: true });
-      await deassociateAgentEmailWithPlayer(
+      await deassociateAgentUsernameWithPlayer(
         this.state.jwtKey,
-        this.state.curr_user_email,
-        this.state.player_email
+        this.state.curr_user_preferred_username,
+        this.state.player_preferred_username
       );
-      this.setState({ player_email: "", curr_user_email: "" });
+      this.setState({
+        player_preferred_username: "",
+        curr_user_preferred_username: "",
+      });
       await this.reloadEntries();
     }
   }
 
-  handleEmail = (event) => {
-    this.setState({ curr_user_email: event.target.value });
+  handleUsername = (event) => {
+    this.setState({ curr_user_preferred_username: event.target.value });
   };
 
   handleId = (event) => {
-    this.setState({ player_email: event.target.value });
+    this.setState({ player_preferred_username: event.target.value });
   };
 
   render() {
@@ -78,20 +91,20 @@ class AgentManager extends Component {
         <table className="entries">
           <tr>
             <td>
-              <label>Agent Email: </label>
+              <label>Agent Username: </label>
               <input
-                onChange={this.handleEmail}
-                value={this.state.curr_user_email}
+                onChange={this.handleUsername}
+                value={this.state.curr_user_preferred_username}
                 className="input2"
                 size="40"
               />
             </td>
             <td>
-              <label>Player Email: </label>
+              <label>Player Username: </label>
               <input
-                placeholder="someone@email.com"
+                placeholder="someone@preferred_username.com"
                 onChange={this.handleId}
-                value={this.state.player_email}
+                value={this.state.player_preferred_username}
                 className="input3"
                 size="40"
               />
@@ -104,7 +117,7 @@ class AgentManager extends Component {
                 className="safebutton"
                 onClick={() => this.addButtonAction()}
               >
-                Associate Player Email
+                Associate Player Username
               </button>
             </td>
             <td />
@@ -113,7 +126,7 @@ class AgentManager extends Component {
                 className="dangerousbutton"
                 onClick={() => this.removeButtonAction()}
               >
-                Remove Player Email
+                Remove Player Username
               </button>
             </td>
           </tr>
@@ -143,18 +156,18 @@ async function getEntireAgentsTable(jwtKey) {
     });
 }
 
-async function associateAgentEmailWithPlayer(
+async function associateAgentUsernameWithPlayer(
   jwtKey,
-  agent_email,
-  player_email
+  agent_preferred_username,
+  player_preferred_username
 ) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      agent_email: agent_email.toLowerCase().trim(),
-      player_email: player_email.toLowerCase().trim(),
+      agent_preferred_username: agent_preferred_username.toLowerCase().trim(),
+      player_preferred_username: player_preferred_username.toLowerCase().trim(),
     },
   };
   let response;
@@ -168,18 +181,18 @@ async function associateAgentEmailWithPlayer(
   return response;
 }
 
-async function deassociateAgentEmailWithPlayer(
+async function deassociateAgentUsernameWithPlayer(
   jwtKey,
-  agent_email,
-  player_email
+  agent_preferred_username,
+  player_preferred_username
 ) {
   const myInit = {
     headers: {
       Authorization: "Bearer " + jwtKey,
     },
     body: {
-      agent_email: agent_email.toLowerCase().trim(),
-      player_email: player_email.toLowerCase().trim(),
+      agent_preferred_username: agent_preferred_username.toLowerCase().trim(),
+      player_preferred_username: player_preferred_username.toLowerCase().trim(),
     },
   };
   let response;
