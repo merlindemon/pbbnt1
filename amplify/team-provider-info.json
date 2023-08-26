@@ -133,5 +133,99 @@
         "pbbnttransactions": {}
       }
     }
+  },
+  "hiddeng": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pbbnt1-hiddeng-143100-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-hiddeng-143100-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-hiddeng-143100-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pbbnt1-hiddeng-143100-deployment",
+      "UnauthRoleName": "amplify-pbbnt1-hiddeng-143100-unauthRole",
+      "StackName": "amplify-pbbnt1-hiddeng-143100",
+      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-hiddeng-143100/b547b260-443e-11ee-8655-02b7da19ba8b",
+      "AmplifyAppId": "dm3a7gosmss3v"
+    },
+    "categories": {
+      "function": {
+        "AdminQueriese020bed2": {},
+        "commentscrud": {},
+        "emailprocessing": {},
+        "pbbntadmin": {},
+        "pbbntagent": {},
+        "pbbntids": {},
+        "pbbntidsCreditLimit": {},
+        "pbbnttipsPercentage": {},
+        "pbbnttransactions": {},
+        "pbbntuser": {},
+        "resetHands": {},
+        "resetTips": {},
+        "tipPlayers": {},
+        "undoemailprocessing": {},
+        "pbbnt5cf00a19": {},
+        "dynamo317d232a": {},
+        "agents": {},
+        "EmailBucket": {}
+      }
+    }
+  },
+  "hiddengem": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pbbnt1-hiddengem-143916-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-hiddengem-143916-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-hiddengem-143916-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pbbnt1-hiddengem-143916-deployment",
+      "UnauthRoleName": "amplify-pbbnt1-hiddengem-143916-unauthRole",
+      "StackName": "amplify-pbbnt1-hiddengem-143916",
+      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-hiddengem-143916/dd193830-443f-11ee-a6fe-0a161cc6b883",
+      "AmplifyAppId": "dm3a7gosmss3v"
+    }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pbbnt1-dev-144341-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-144341-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-144341-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+      "UnauthRoleName": "amplify-pbbnt1-dev-144341-unauthRole",
+      "StackName": "amplify-pbbnt1-dev-144341",
+      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-dev-144341/7ae6b600-4440-11ee-b949-0ab9ed53405f",
+      "AmplifyAppId": "dm3a7gosmss3v",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-dev-144341-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "pbbnt5cf00a19": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueriese020bed2": {},
+        "commentscrud": {},
+        "emailprocessing": {},
+        "pbbntadmin": {},
+        "pbbntagent": {},
+        "pbbntids": {},
+        "pbbntidsCreditLimit": {},
+        "pbbnttipsPercentage": {},
+        "pbbnttransactions": {},
+        "pbbntuser": {},
+        "resetHands": {},
+        "resetTips": {},
+        "tipPlayers": {},
+        "undoemailprocessing": {},
+        "pbbnt5cf00a19": {},
+        "dynamo317d232a": {},
+        "agents": {},
+        "EmailBucket": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dm3a7gosmss3v",
+          "type": "manual"
+        }
+      }
+    }
   }
 }

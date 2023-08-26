@@ -40,16 +40,19 @@ const AuthStateApp = () => {
     </div>
   ) : (
     <AmplifyAuthContainer>
-      <AmplifyAuthenticator usernameAlias="email">
+      <AmplifyAuthenticator usernameAlias="preferred_username">
         <AmplifySignUp
           slot="sign-up"
           usernameAlias="username"
           formFields={[
             {
-              type: "email",
-              label: "Email login",
-              placeholder: "email",
-              inputProps: { required: true, autocomplete: "email" },
+              type: "preferred_username",
+              label: "preferred_username login",
+              placeholder: "preferred_username",
+              inputProps: {
+                required: true,
+                autocomplete: "preferred_username",
+              },
             },
             {
               type: "password",
@@ -76,7 +79,7 @@ const AuthStateApp = () => {
             },
           ]}
         />
-        <AmplifySignIn slot="sign-in" usernameAlias="email" />
+        <AmplifySignIn slot="sign-in" usernameAlias="preferred_username" />
       </AmplifyAuthenticator>
     </AmplifyAuthContainer>
   );
@@ -88,7 +91,7 @@ class App extends React.Component {
     this.state = {
       jwtKey: "",
       groups: [],
-      email: "",
+      preferred_username: "",
       ids: [],
     };
   }
@@ -98,7 +101,8 @@ class App extends React.Component {
       this.setState({
         jwtKey: user.signInUserSession.idToken.jwtToken,
         groups: user.signInUserSession.idToken.payload["cognito:groups"],
-        email: user.signInUserSession.idToken.payload["email"],
+        preferred_username:
+          user.signInUserSession.idToken.payload["preferred_username"],
       });
     });
   }
@@ -115,22 +119,34 @@ class App extends React.Component {
     let display;
     if (isAdmin) {
       display = (
-        <AdminConsole email={this.state.email} jwtKey={this.state.jwtKey} />
+        <AdminConsole
+          preferred_username={this.state.preferred_username}
+          jwtKey={this.state.jwtKey}
+        />
       );
     } else if (isManager) {
       display = (
-        <ManagerConsole email={this.state.email} jwtKey={this.state.jwtKey} />
+        <ManagerConsole
+          preferred_username={this.state.preferred_username}
+          jwtKey={this.state.jwtKey}
+        />
       );
     } else if (isAgent) {
       display = (
-        <AgentConsole email={this.state.email} jwtKey={this.state.jwtKey} />
+        <AgentConsole
+          preferred_username={this.state.preferred_username}
+          jwtKey={this.state.jwtKey}
+        />
       );
     } else {
       display =
-        this.state.email === "" ? (
+        this.state.preferred_username === "" ? (
           <LoadingSpinner />
         ) : (
-          <UserConsole jwtKey={this.state.jwtKey} email={this.state.email} />
+          <UserConsole
+            jwtKey={this.state.jwtKey}
+            preferred_username={this.state.preferred_username}
+          />
         );
     }
     return (
