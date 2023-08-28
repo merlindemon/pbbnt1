@@ -5,6 +5,9 @@
     "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "pbbnt5cf00a19",
     "userPoolName": "pbbnt5cf00a19_userpool_5cf00a19",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "smsAuthenticationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
     "mfaConfiguration": "OFF",
     "mfaTypes": [
       "SMS Text Message"
@@ -16,7 +19,6 @@
       "preferred_username"
     ],
     "aliasAttributes": [
-      "preferred_username"
     ],
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,

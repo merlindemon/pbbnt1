@@ -1,4 +1,110 @@
 {
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pbbnt1-dev-144341-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-144341-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-144341-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+      "UnauthRoleName": "amplify-pbbnt1-dev-144341-unauthRole",
+      "StackName": "amplify-pbbnt1-dev-144341",
+      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-dev-144341/7ae6b600-4440-11ee-b949-0ab9ed53405f",
+      "AmplifyAppId": "dm3a7gosmss3v",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-dev-144341-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "pbbnt5cf00a19": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueriese020bed2": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/AdminQueriese020bed2-75686254743261634155-build.zip"
+        },
+        "commentscrud": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/commentscrud-47577a6f647864645235-build.zip"
+        },
+        "emailprocessing": {
+          "dynamoDb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/emailprocessing-7a724e774a373441714c-build.zip"
+        },
+        "pbbntadmin": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbntadmin-5852366470342b2f4d35-build.zip"
+        },
+        "pbbntagent": {
+          "dyanmodb": "",
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbntagent-3368676e617570774a73-build.zip"
+        },
+        "pbbntids": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbntids-4a4b7079356153694879-build.zip"
+        },
+        "pbbntidsCreditLimit": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbntidsCreditLimit-74384c336c76744b5657-build.zip"
+        },
+        "pbbnttipsPercentage": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbnttipsPercentage-5567314761434c6b622f-build.zip"
+        },
+        "pbbnttransactions": {
+          "tz": "1",
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbnttransactions-54756e4a34306b514c31-build.zip"
+        },
+        "pbbntuser": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/pbbntuser-3164476e5847497a3544-build.zip"
+        },
+        "resetHands": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/resetHands-7554727147566e394268-build.zip"
+        },
+        "resetTips": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/resetTips-456a564b656a666d5475-build.zip"
+        },
+        "tipPlayers": {
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/tipPlayers-61324765576c596d4664-build.zip"
+        },
+        "undoemailprocessing": {
+          "dynamoDb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
+          "s3Key": "amplify-builds/undoemailprocessing-75433749585466583549-build.zip"
+        },
+        "pbbnt5cf00a19": {},
+        "dynamo317d232a": {},
+        "agents": {},
+        "EmailBucket": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dm3a7gosmss3v",
+          "type": "manual"
+        }
+      },
+      "api": {
+        "AdminQueries": {},
+        "pbbntadmin": {},
+        "pbbntagents": {},
+        "pbbntids": {},
+        "pbbntuser": {}
+      },
+      "storage": {
+        "EmailBucket": {},
+        "agents": {},
+        "dynamo317d232a": {},
+        "pbbntids": {},
+        "pbbnttransactions": {}
+      }
+    }
+  },
   "test": {
     "awscloudformation": {
       "AuthRoleName": "amplify-pbbnt1-test-55859-authRole",
@@ -182,18 +288,18 @@
       "AmplifyAppId": "dm3a7gosmss3v"
     }
   },
-  "dev": {
+  "hgem": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-pbbnt1-dev-144341-authRole",
-      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-144341-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-dev-144341-authRole",
+      "AuthRoleName": "amplify-pbbnt1-hgem-63205-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-hgem-63205-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-hgem-63205-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-pbbnt1-dev-144341-deployment",
-      "UnauthRoleName": "amplify-pbbnt1-dev-144341-unauthRole",
-      "StackName": "amplify-pbbnt1-dev-144341",
-      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-dev-144341/7ae6b600-4440-11ee-b949-0ab9ed53405f",
+      "DeploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+      "UnauthRoleName": "amplify-pbbnt1-hgem-63205-unauthRole",
+      "StackName": "amplify-pbbnt1-hgem-63205",
+      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-hgem-63205/22fbe470-458e-11ee-b802-06026243ba71",
       "AmplifyAppId": "dm3a7gosmss3v",
-      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-dev-144341-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-hgem-63205-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
     },
     "categories": {
       "auth": {
@@ -201,20 +307,66 @@
         "userPoolGroups": {}
       },
       "function": {
-        "AdminQueriese020bed2": {},
-        "commentscrud": {},
-        "emailprocessing": {},
-        "pbbntadmin": {},
-        "pbbntagent": {},
-        "pbbntids": {},
-        "pbbntidsCreditLimit": {},
-        "pbbnttipsPercentage": {},
-        "pbbnttransactions": {},
-        "pbbntuser": {},
-        "resetHands": {},
-        "resetTips": {},
-        "tipPlayers": {},
-        "undoemailprocessing": {},
+        "AdminQueriese020bed2": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/AdminQueriese020bed2-75686254743261634155-build.zip"
+        },
+        "commentscrud": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/commentscrud-47577a6f647864645235-build.zip"
+        },
+        "emailprocessing": {
+          "dynamoDb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/emailprocessing-7a724e774a373441714c-build.zip"
+        },
+        "pbbntadmin": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbntadmin-5852366470342b2f4d35-build.zip"
+        },
+        "pbbntagent": {
+          "dyanmodb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbntagent-3368676e617570774a73-build.zip"
+        },
+        "pbbntids": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbntids-4a4b7079356153694879-build.zip"
+        },
+        "pbbntidsCreditLimit": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbntidsCreditLimit-74384c336c76744b5657-build.zip"
+        },
+        "pbbnttipsPercentage": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbnttipsPercentage-5567314761434c6b622f-build.zip"
+        },
+        "pbbnttransactions": {
+          "tz": "1",
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbnttransactions-54756e4a34306b514c31-build.zip"
+        },
+        "pbbntuser": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/pbbntuser-3164476e5847497a3544-build.zip"
+        },
+        "resetHands": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/resetHands-7554727147566e394268-build.zip"
+        },
+        "resetTips": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/resetTips-456a564b656a666d5475-build.zip"
+        },
+        "tipPlayers": {
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/tipPlayers-61324765576c596d4664-build.zip"
+        },
+        "undoemailprocessing": {
+          "dynamoDb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-hgem-63205-deployment",
+          "s3Key": "amplify-builds/undoemailprocessing-75433749585466583549-build.zip"
+        },
         "pbbnt5cf00a19": {},
         "dynamo317d232a": {},
         "agents": {},
@@ -225,6 +377,20 @@
           "appId": "dm3a7gosmss3v",
           "type": "manual"
         }
+      },
+      "api": {
+        "AdminQueries": {},
+        "pbbntadmin": {},
+        "pbbntagents": {},
+        "pbbntids": {},
+        "pbbntuser": {}
+      },
+      "storage": {
+        "EmailBucket": {},
+        "agents": {},
+        "dynamo317d232a": {},
+        "pbbntids": {},
+        "pbbnttransactions": {}
       }
     }
   }
