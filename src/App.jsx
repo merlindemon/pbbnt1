@@ -40,7 +40,7 @@ const AuthStateApp = () => {
     </div>
   ) : (
     <AmplifyAuthContainer>
-      <AmplifyAuthenticator usernameAlias="preferred_username">
+      <AmplifyAuthenticator usernameAlias="username">
         <AmplifySignUp
           slot="sign-up"
           usernameAlias="username"
@@ -79,7 +79,7 @@ const AuthStateApp = () => {
             },
           ]}
         />
-        <AmplifySignIn slot="sign-in" usernameAlias="preferred_username" />
+        <AmplifySignIn slot="sign-in" usernameAlias="username" />
       </AmplifyAuthenticator>
     </AmplifyAuthContainer>
   );

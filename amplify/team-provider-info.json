@@ -393,5 +393,111 @@
         "pbbnttransactions": {}
       }
     }
+  },
+  "csi": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-pbbnt1-csi-95916-authRole",
+      "UnauthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-csi-95916-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::104005586102:role/amplify-pbbnt1-csi-95916-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+      "UnauthRoleName": "amplify-pbbnt1-csi-95916-unauthRole",
+      "StackName": "amplify-pbbnt1-csi-95916",
+      "StackId": "arn:aws:cloudformation:us-east-2:104005586102:stack/amplify-pbbnt1-csi-95916/14837df0-45ab-11ee-9f2a-060e65b464e9",
+      "AmplifyAppId": "dm3a7gosmss3v",
+      "APIGatewayAuthURL": "https://s3.amazonaws.com/amplify-pbbnt1-csi-95916-deployment/amplify-cfn-templates/api/APIGatewayAuthStack.json"
+    },
+    "categories": {
+      "auth": {
+        "pbbnt5cf00a19": {},
+        "userPoolGroups": {}
+      },
+      "function": {
+        "AdminQueriese020bed2": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/AdminQueriese020bed2-75686254743261634155-build.zip"
+        },
+        "commentscrud": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/commentscrud-47577a6f647864645235-build.zip"
+        },
+        "emailprocessing": {
+          "dynamoDb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/emailprocessing-7a724e774a373441714c-build.zip"
+        },
+        "pbbntadmin": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbntadmin-5852366470342b2f4d35-build.zip"
+        },
+        "pbbntagent": {
+          "dyanmodb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbntagent-3368676e617570774a73-build.zip"
+        },
+        "pbbntids": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbntids-6131485676704863534f-build.zip"
+        },
+        "pbbntidsCreditLimit": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbntidsCreditLimit-74384c336c76744b5657-build.zip"
+        },
+        "pbbnttipsPercentage": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbnttipsPercentage-5567314761434c6b622f-build.zip"
+        },
+        "pbbnttransactions": {
+          "tz": "1",
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbnttransactions-54756e4a34306b514c31-build.zip"
+        },
+        "pbbntuser": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/pbbntuser-3164476e5847497a3544-build.zip"
+        },
+        "resetHands": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/resetHands-7554727147566e394268-build.zip"
+        },
+        "resetTips": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/resetTips-456a564b656a666d5475-build.zip"
+        },
+        "tipPlayers": {
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/tipPlayers-61324765576c596d4664-build.zip"
+        },
+        "undoemailprocessing": {
+          "dynamoDb": "1",
+          "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
+          "s3Key": "amplify-builds/undoemailprocessing-75433749585466583549-build.zip"
+        },
+        "pbbnt5cf00a19": {},
+        "dynamo317d232a": {},
+        "agents": {},
+        "EmailBucket": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "dm3a7gosmss3v",
+          "type": "manual"
+        }
+      },
+      "api": {
+        "AdminQueries": {},
+        "pbbntadmin": {},
+        "pbbntagents": {},
+        "pbbntids": {},
+        "pbbntuser": {}
+      },
+      "storage": {
+        "EmailBucket": {},
+        "agents": {},
+        "dynamo317d232a": {},
+        "pbbntids": {},
+        "pbbnttransactions": {}
+      }
+    }
   }
 }
