@@ -437,7 +437,7 @@
         },
         "pbbntids": {
           "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",
-          "s3Key": "amplify-builds/pbbntids-6131485676704863534f-build.zip"
+          "s3Key": "amplify-builds/pbbntids-725254676c6762614f6f-build.zip"
         },
         "pbbntidsCreditLimit": {
           "deploymentBucketName": "amplify-pbbnt1-csi-95916-deployment",

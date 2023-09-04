@@ -55,6 +55,12 @@ const AuthStateApp = () => {
               },
             },
             {
+              type: "email",
+              label: "Email Address (Optional)",
+              placeholder: "",
+              inputProps: { required: false, autocomplete: "email" },
+            },
+            {
               type: "password",
               label: "Password",
               placeholder: "password",
@@ -72,7 +78,6 @@ const AuthStateApp = () => {
             {
               type: "username",
               label: "Do not Edit field",
-              // placeholder: uuid(),
               value: uuid(),
               readonly: true,
               inputProps: { required: false },

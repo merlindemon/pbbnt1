@@ -23,10 +23,12 @@
     "userpoolClientGenerateSecret": false,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
-      "preferred_username"
+      "preferred_username",
+      "email"
     ],
     "userpoolClientReadAttributes": [
-      "preferred_username"
+      "preferred_username",
+      "email"
     ],
     "userpoolClientLambdaRole": "pbbnt55cf00a19_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
